@@ -5,7 +5,7 @@ public class TrainController: MonoBehaviour, Imovement
 {
     [SerializeField] private TrainSO _data;
 
-    private List<ManData> _passengers = new();
+    [SerializeField] private List<ManData> _passengers = new();
 
     public float GetSpeed()
     {
@@ -17,6 +17,6 @@ public class TrainController: MonoBehaviour, Imovement
         Debug.Log($"Took the man with role {_passenger.role} & trait {_passenger.trait}");
         _passengers.Add(_passenger);
 
-        //ToDo: change LayingMen to Passengers
+        //ToDo: spawn Passengers / (not list?)
     }
 }
