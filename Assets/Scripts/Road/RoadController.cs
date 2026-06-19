@@ -10,12 +10,13 @@ public enum RoadType
 
 public class RoadController : MonoBehaviour
 {
-    public Action<GameObject, bool> OnRoadStateChanged;
+    public Action<RoadController, bool> OnRoadStateChanged;
 
     [SerializeField] private float roadLength = 10f;
 
     [SerializeField] private GameObject RailPrefab;
     [SerializeField] private RoadType _roadType;
+    public RoadType GetRoadType => _roadType;
     public float RoadLength => roadLength;
 
     private bool _isLeftActive = false;
@@ -99,7 +100,7 @@ public class RoadController : MonoBehaviour
         if (_isRoadActive != shouldBeActive)
         {
             _isRoadActive = shouldBeActive;
-            OnRoadStateChanged?.Invoke(gameObject, _isRoadActive);
+            OnRoadStateChanged?.Invoke(this, _isRoadActive);
         }
     }
 

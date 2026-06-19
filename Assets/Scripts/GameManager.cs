@@ -53,4 +53,16 @@ public class GameManager : MonoBehaviour
     {
         state = newState;
     }
+
+    public void SetChoosingState()
+    {
+        ChangeState(GameState.choosing);
+        Debug.Log("Enter choosing state");
+    }
+
+    public void SetMovingState()
+    {
+        ChangeState(GameState.moving);
+        Debug.Log("Enter moving state");
+    }
 }

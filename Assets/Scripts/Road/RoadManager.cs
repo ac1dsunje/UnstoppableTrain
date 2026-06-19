@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class RoadManager : MonoBehaviour
 {
+    [SerializeField] private GameManager _gameManager;
+
     [SerializeField] private int basicRoadCount = 4;
     [SerializeField] private int choosingRoadCount = 1;
 
@@ -12,14 +14,12 @@ public class RoadManager : MonoBehaviour
 
     [SerializeField] private TrainController _train;
 
-    private List<GameObject> roads;
+    private List<RoadController> roads = new();
     private int currentPatternIndex = 0;
     private Vector3 nextSpawnPosition = Vector3.zero;
 
     private void Awake()
     {
-        roads = new List<GameObject>();
-
         int totalRoads = basicRoadCount + choosingRoadCount;
         for (int i = 0; i < totalRoads; i++)
         {
@@ -35,7 +35,7 @@ public class RoadManager : MonoBehaviour
         bool isChoosingRoad = positionInPattern >= basicRoadCount;
         GameObject prefabToSpawn = isChoosingRoad ? choosingRoadPrefab : movingRoadPrefab;
 
-        GameObject newRoad = Instantiate(prefabToSpawn, nextSpawnPosition, Quaternion.identity);
+        RoadController newRoad = Instantiate(prefabToSpawn, nextSpawnPosition, Quaternion.identity).GetComponent<RoadController>();
         roads.Add(newRoad);
 
         RoadController roadController = newRoad.GetComponent<RoadController>();
@@ -47,7 +47,7 @@ public class RoadManager : MonoBehaviour
         currentPatternIndex++;
     }
 
-    private void OnRoadStateChanged(GameObject road, bool isActive)
+    private void OnRoadStateChanged(RoadController road, bool isActive)
     {
         if (!isActive)
         {
@@ -56,29 +56,40 @@ public class RoadManager : MonoBehaviour
 
             StartCoroutine(DestroyOldAndSetNewRoad(road));
         }
+        else if (isActive)
+        {
+            switch (road.GetRoadType)
+            {
+                case RoadType.Choosing:
+                    _gameManager.SetChoosingState();
+                    break;
+
+                case RoadType.Moving:
+                    _gameManager.SetMovingState();
+                    break;
+            }
+        }
+            
     }
 
-    private IEnumerator DestroyOldAndSetNewRoad(GameObject road)
+    private IEnumerator DestroyOldAndSetNewRoad(RoadController road)
     {
         yield return new WaitForSeconds(2);
 
         roads.Remove(road);
-        Destroy(road);
+        Destroy(road.gameObject);
 
         SpawnNextRoad();
     }
 
     private void OnDestroy()
     {
-        foreach (GameObject road in roads)
+        foreach (var road in roads)
         {
             if (road != null)
             {
-                RoadController roadController = road.GetComponent<RoadController>();
-                if (roadController != null)
-                {
-                    roadController.OnRoadStateChanged -= OnRoadStateChanged;
-                }
+                road.TryGetComponent<RoadController>(out RoadController roadController);
+                roadController.OnRoadStateChanged -= OnRoadStateChanged;
             }
         }
     }
