@@ -37,14 +37,14 @@ public class GameManager : MonoBehaviour
 
     private void TryMoveLeft()
     {
-        if (state != GameState.moving) return;
+        if (state != GameState.choosing) return;
             
         OnMoveLeft.Invoke();
     }
 
     private void TryMoveRight()
     {
-        if (state != GameState.moving) return;
+        if (state != GameState.choosing) return;
 
         OnMoveRight.Invoke();
     }

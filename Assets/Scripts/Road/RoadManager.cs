@@ -52,10 +52,7 @@ public class RoadManager : MonoBehaviour
         if (!isActive)
         {
             RoadController roadController = road.GetComponent<RoadController>();
-            if (roadController != null)
-            {
-                roadController.OnRoadStateChanged -= OnRoadStateChanged;
-            }
+            roadController.OnRoadStateChanged -= OnRoadStateChanged;
 
             StartCoroutine(DestroyOldAndSetNewRoad(road));
         }
