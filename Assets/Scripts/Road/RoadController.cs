@@ -5,7 +5,7 @@ public class RoadController : MonoBehaviour
 {
     public Action<GameObject, bool> OnRoadStateChanged;
 
-    [SerializeField] private float roadLength = 10f; // Длина дороги по оси Z
+    [SerializeField] private float roadLength = 10f;
     public float RoadLength => roadLength;
 
     private bool _isLeftActive = false;
