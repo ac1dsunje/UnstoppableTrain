@@ -10,6 +10,8 @@ public class RoadManager : MonoBehaviour
     [SerializeField] private GameObject movingRoadPrefab;
     [SerializeField] private GameObject choosingRoadPrefab;
 
+    [SerializeField] private TrainController _train;
+
     private List<GameObject> roads;
     private int currentPatternIndex = 0;
     private Vector3 nextSpawnPosition = Vector3.zero;
@@ -37,6 +39,7 @@ public class RoadManager : MonoBehaviour
         roads.Add(newRoad);
 
         RoadController roadController = newRoad.GetComponent<RoadController>();
+        roadController.SetTrainLink(_train);
 
         roadController.OnRoadStateChanged += OnRoadStateChanged;
         nextSpawnPosition = newRoad.transform.position + new Vector3(0, 0, roadController.RoadLength);

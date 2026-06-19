@@ -3,6 +3,7 @@ using UnityEngine;
 public enum GameState
 {
     moving,
+    checkingPassengers,
     choosing
 }
 
