@@ -9,13 +9,16 @@ public class LayingManController : MonoBehaviour
 
     private void Start()
     {
-        RandomizeRoleAndTrait();
+        SetRandomData();
     }
 
-    private void RandomizeRoleAndTrait()
+    private void SetRandomData()
     {
-        Data.role = (Role)Random.Range(0, 4);
-        Data.trait = (Trait)Random.Range(0, 4);
+        int count = Enum.GetValues(typeof(Role)).Length;
+        Data.role = (Role)Random.Range(0, count);
+
+        count = Enum.GetValues(typeof(Trait)).Length;
+        Data.trait = (Trait)Random.Range(0, count);
     }
 
     private void OnCollisionEnter(Collision collision)
