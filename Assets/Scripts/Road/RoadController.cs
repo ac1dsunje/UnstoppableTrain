@@ -16,6 +16,7 @@ public class RoadController : MonoBehaviour
 
     [SerializeField] private GameObject RailPrefab;
     [SerializeField] private RoadType _roadType;
+    [SerializeField] private int _maxMenOnTheRail = 3;
     public RoadType GetRoadType => _roadType;
     public float RoadLength => roadLength;
 
@@ -72,10 +73,10 @@ public class RoadController : MonoBehaviour
         if (_roadType == RoadType.Choosing)
         {
 
-            int randLeft = Random.Range(1, 3);
+            int randLeft = Random.Range(1, _maxMenOnTheRail+1);
             _leftRail.SpawnPassengers(randLeft);
 
-            int randRight = Random.Range(1, 3);
+            int randRight = Random.Range(1, _maxMenOnTheRail + 1);
             _rightRail.SpawnPassengers(randRight);
         }
     }
