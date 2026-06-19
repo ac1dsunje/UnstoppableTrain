@@ -126,4 +126,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 112439bddd57c764b92fb090c7975ab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RailController
-  _passengerPrefab: {fileID: 6900726263591375678, guid: 97fc243ce6ae7114abd56d827897fbe7, type: 3}
+  _layingManPrefab: {fileID: 564454119608622762, guid: cf995d632dcb2fd40be2e4dbfbb159da, type: 3}

@@ -10,8 +10,9 @@ public enum GameState
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private InputHandler _input;
-
-    [SerializeField] private GameState state;
+    [SerializeField] private CameraController _cam;
+    [SerializeField] private LayingMenOverlayManager _uiManager;
+    private GameState state;
 
 
     public Action OnMoveLeft;
@@ -60,11 +61,15 @@ public class GameManager : MonoBehaviour
     {
         ChangeState(GameState.choosing);
         Time.timeScale = 0f;
+        _cam.SetChoosingPos();
+        _uiManager.ShowScreen();
     }
 
     public void SetMovingState()
     {
         ChangeState(GameState.moving);
         Time.timeScale = 1f;
+        _cam.SetMovingPos();
+        _uiManager.HideScreen();
     }
 }

@@ -20,9 +20,9 @@ public class RoadController : MonoBehaviour
     public RoadType GetRoadType => _roadType;
     public float RoadLength => roadLength;
 
-    public bool IsLeftActive { get; private set; } = false;
-    public bool IsRightActive { get; private set; } = false;
-    private bool _isRoadActive = false;
+    public bool IsLeftActive { get; private set; }
+    public bool IsRightActive { get; private set; }
+    private bool _isRoadActive;
 
     private RailController _leftRail;
     private RailController _rightRail;
@@ -37,8 +37,8 @@ public class RoadController : MonoBehaviour
         _leftRail.OnThisActive += OnLeftRailStateChanged;
         _rightRail.OnThisActive += OnRightRailStateChanged;
 
-        _leftRail.OnAllPassengersDied += TakeAllRight;
-        _rightRail.OnAllPassengersDied += TakeAllLeft;
+        _leftRail.OnAllLayingMenDied += TakeAllRight;
+        _rightRail.OnAllLayingMenDied += TakeAllLeft;
     }
 
     private void OnDisable()
@@ -46,8 +46,8 @@ public class RoadController : MonoBehaviour
         _leftRail.OnThisActive -= OnLeftRailStateChanged;
         _rightRail.OnThisActive -= OnRightRailStateChanged;
 
-        _leftRail.OnAllPassengersDied -= TakeAllRight;
-        _rightRail.OnAllPassengersDied -= TakeAllLeft;
+        _leftRail.OnAllLayingMenDied -= TakeAllRight;
+        _rightRail.OnAllLayingMenDied -= TakeAllLeft;
     }
 
     private void Awake()
@@ -77,10 +77,10 @@ public class RoadController : MonoBehaviour
         {
 
             int randLeft = Random.Range(1, _maxMenOnTheRail+1);
-            _leftRail.SpawnPassengers(randLeft);
+            _leftRail.SpawnManyLayingMen(randLeft);
 
             int randRight = Random.Range(1, _maxMenOnTheRail + 1);
-            _rightRail.SpawnPassengers(randRight);
+            _rightRail.SpawnManyLayingMen(randRight);
         }
     }
 
@@ -109,19 +109,19 @@ public class RoadController : MonoBehaviour
 
     private void TakeAllLeft()
     {
-        foreach (var passenger in _leftRail.Passengers)
+        foreach (var passenger in _leftRail.LayingMen)
         {
             _train.TakePassenger(passenger.Data);
-            Destroy(passenger);
+            Destroy(passenger.gameObject);
         }
     }
 
     private void TakeAllRight()
     {
-        foreach (var passenger in _rightRail.Passengers)
+        foreach (var passenger in _rightRail.LayingMen)
         {
             _train.TakePassenger(passenger.Data);
-            Destroy(passenger);
+            Destroy(passenger.gameObject);
         }
     }
 }

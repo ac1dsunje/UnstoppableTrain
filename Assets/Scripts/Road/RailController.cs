@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class RailController : MonoBehaviour
 {
-    [SerializeField] private GameObject _passengerPrefab;
-    private List<LayingManController> _passengers = new();
-    public List<LayingManController> Passengers => _passengers;
+    [SerializeField] private GameObject _layingManPrefab;
+    private List<LayingManController> _layingMen = new();
+    public List<LayingManController> LayingMen => _layingMen;
 
 
     public Action<bool> OnThisActive;
-    public Action OnAllPassengersDied;
+    public Action OnAllLayingMenDied;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -20,20 +20,20 @@ public class RailController : MonoBehaviour
         }
     }
 
-    public void SpawnPassengers(int count)
+    public void SpawnManyLayingMen(int count)
     {
         for (int i = 0; i < count; i++) 
         {
-            SpawnPassenger(i);
+            SpawnLayingMan(i);
         }
     }
 
-    private void SpawnPassenger(int step)
+    private void SpawnLayingMan(int step)
     {
-        Vector3 pos = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z + step * 2);
-        LayingManController _passenger = Instantiate(_passengerPrefab, pos, Quaternion.identity, transform).GetComponent<LayingManController>();
-        _passengers.Add(_passenger);
-        _passenger.OnDeath += OnPassengerDeath;
+        Vector3 pos = new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z + step * 2);
+        LayingManController _layingMan = Instantiate(_layingManPrefab, pos, Quaternion.identity, transform).GetComponent<LayingManController>();
+        _layingMen.Add(_layingMan);
+        _layingMan.OnDeath += OnLayingManDeath;
     }
 
     private void OnCollisionExit(Collision collision)
@@ -56,19 +56,19 @@ public class RailController : MonoBehaviour
 
     private void OnDestroy()
     {
-        foreach(var passenger in _passengers)
+        foreach(var item in _layingMen)
         {
-            passenger.OnDeath -= OnPassengerDeath;
+            item.OnDeath -= OnLayingManDeath;
         }
     }
 
-    private void OnPassengerDeath(LayingManController passenger)
+    private void OnLayingManDeath(LayingManController layingMan)
     {
-        _passengers.Remove(passenger);
+        _layingMen.Remove(layingMan);
 
-        if (_passengers.Count == 0)
+        if (_layingMen.Count == 0)
         {
-            OnAllPassengersDied.Invoke();
+            OnAllLayingMenDied.Invoke();
         }
     }
 }
