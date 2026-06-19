@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
         if (state != GameState.choosing) return;
             
         OnMoveLeft.Invoke();
+        SetMovingState();
     }
 
     private void TryMoveRight()
@@ -47,6 +48,7 @@ public class GameManager : MonoBehaviour
         if (state != GameState.choosing) return;
 
         OnMoveRight.Invoke();
+        SetMovingState();
     }
 
     private void ChangeState(GameState newState)
@@ -57,12 +59,12 @@ public class GameManager : MonoBehaviour
     public void SetChoosingState()
     {
         ChangeState(GameState.choosing);
-        Debug.Log("Enter choosing state");
+        Time.timeScale = 0f;
     }
 
     public void SetMovingState()
     {
         ChangeState(GameState.moving);
-        Debug.Log("Enter moving state");
+        Time.timeScale = 1f;
     }
 }

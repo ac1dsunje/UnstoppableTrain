@@ -27,6 +27,9 @@ public class RoadController : MonoBehaviour
     private RailController _leftRail;
     private RailController _rightRail;
 
+    public RailController LeftRail => _leftRail;
+    public RailController RightRail => _rightRail;
+
     private TrainController _train;
 
     private void OnEnable()

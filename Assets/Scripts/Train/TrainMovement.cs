@@ -4,8 +4,9 @@ using UnityEngine;
 public class TrainMovement : MonoBehaviour
 {
     [SerializeField] private GameManager _gameManager;
-    private Imovement _movementController;
+    private Imovement _controller;
     private Rigidbody _rigidBody;
+    private RoadController _currentRoad;
 
     private void OnEnable()
     {
@@ -23,7 +24,7 @@ public class TrainMovement : MonoBehaviour
     {
 
         _rigidBody = GetComponent<Rigidbody>();
-        _movementController = GetComponent<Imovement>();
+        _controller = GetComponent<Imovement>();
     }
 
     private void FixedUpdate()
@@ -31,20 +32,26 @@ public class TrainMovement : MonoBehaviour
         MoveForward();
     }
 
+    private void MoveForward()
+    {
+        _rigidBody.linearVelocity = transform.forward * _controller.GetSpeed();
+    }
+
     private void MoveLeft()
     {
-        if (_movementController.GetCurrentRoad().IsLeftActive) return;
-        // ToDo : move train to the left rail & some animations?
+        _currentRoad = _controller.GetCurrentRoad();
+        if (_currentRoad.IsLeftActive) return;
+
+        transform.position = new Vector3(_currentRoad.LeftRail.transform.position.x, transform.position.y, transform.position.z);
+        // some animations?
     }
 
     private void MoveRight()
     {
-        if (_movementController.GetCurrentRoad().IsRightActive) return;
-        // ToDo : move train to the right rail & some animations?
-    }
+        _currentRoad = _controller.GetCurrentRoad();
+        if (_currentRoad.IsRightActive) return;
 
-    private void MoveForward()
-    {
-        _rigidBody.linearVelocity = transform.forward * _movementController.GetSpeed();
+        transform.position = new Vector3(_currentRoad.RightRail.transform.position.x, transform.position.y, transform.position.z);
+        // some animations?
     }
 }
