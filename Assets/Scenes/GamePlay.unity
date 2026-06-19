@@ -399,6 +399,43 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!1 &584527529 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3058819273101387152, guid: fd9b1700837b19a45964cef707393612, type: 3}
+  m_PrefabInstance: {fileID: 7536341726507883234}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &584527532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584527529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2ab1047729b14142bfe500cef6c9fcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RoadController
+  roadLength: 10
+  _leftRail: {fileID: 776953006}
+  _rightRail: {fileID: 2125817932}
+--- !u!1 &776953001 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2209986048163914585, guid: fd9b1700837b19a45964cef707393612, type: 3}
+  m_PrefabInstance: {fileID: 7536341726507883234}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &776953006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776953001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 112439bddd57c764b92fb090c7975ab2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RailController
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,29 +485,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1027033981 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8869947801639233936, guid: 6e5dfcc0e967fb54a82e89a57ec0a78f, type: 3}
-  m_PrefabInstance: {fileID: 3629849714391215122}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1027033982 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1760095338225452417, guid: 6e5dfcc0e967fb54a82e89a57ec0a78f, type: 3}
   m_PrefabInstance: {fileID: 3629849714391215122}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1027033985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1027033981}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd8b740cfd609564bb984e7ea2c3d4d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TrainMovement
-  _gameManager: {fileID: 1650542361}
 --- !u!1 &1094652988
 GameObject:
   m_ObjectHideFlags: 0
@@ -502,6 +521,7 @@ Transform:
   m_Children:
   - {fileID: 1650542360}
   - {fileID: 1579466958}
+  - {fileID: 1652282651}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1579466957
@@ -594,6 +614,71 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   _input: {fileID: 1579466959}
   state: 0
+--- !u!1 &1652282650
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1652282651}
+  - component: {fileID: 1652282652}
+  m_Layer: 0
+  m_Name: RoadManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1652282651
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652282650}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1094652989}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1652282652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652282650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d04fc3a981161c14eba91c97af709a45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RoadManager
+  basicRoadCount: 4
+  choosingRoadCount: 1
+  movingRoadPrefab: {fileID: 3058819273101387152, guid: fd9b1700837b19a45964cef707393612, type: 3}
+  choosingRoadPrefab: {fileID: 3058819273101387152, guid: fd9b1700837b19a45964cef707393612, type: 3}
+--- !u!1 &2125817927 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4259866266452936084, guid: fd9b1700837b19a45964cef707393612, type: 3}
+  m_PrefabInstance: {fileID: 7536341726507883234}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2125817932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125817927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 112439bddd57c764b92fb090c7975ab2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RailController
 --- !u!1001 &3629849714391215122
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -642,15 +727,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7920293998929501353, guid: 6e5dfcc0e967fb54a82e89a57ec0a78f, type: 3}
-      propertyPath: _data
-      value: 
-      objectReference: {fileID: 11400000, guid: 50fbbd64f1990544887d2287be5c80ab, type: 2}
-    - target: {fileID: 7920293998929501353, guid: 6e5dfcc0e967fb54a82e89a57ec0a78f, type: 3}
-      propertyPath: _input
-      value: 
-      objectReference: {fileID: 1579466959}
-    - target: {fileID: 7920293998929501353, guid: 6e5dfcc0e967fb54a82e89a57ec0a78f, type: 3}
+    - target: {fileID: 5384228613855419829, guid: 6e5dfcc0e967fb54a82e89a57ec0a78f, type: 3}
       propertyPath: _gameManager
       value: 
       objectReference: {fileID: 1650542361}
@@ -661,10 +738,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8869947801639233936, guid: 6e5dfcc0e967fb54a82e89a57ec0a78f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1027033985}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e5dfcc0e967fb54a82e89a57ec0a78f, type: 3}
 --- !u!1001 &7536341726507883234
 PrefabInstance:
@@ -761,7 +835,16 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3058819273101387152, guid: fd9b1700837b19a45964cef707393612, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 584527532}
+    - targetCorrespondingSourceObject: {fileID: 2209986048163914585, guid: fd9b1700837b19a45964cef707393612, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 776953006}
+    - targetCorrespondingSourceObject: {fileID: 4259866266452936084, guid: fd9b1700837b19a45964cef707393612, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2125817932}
   m_SourcePrefab: {fileID: 100100000, guid: fd9b1700837b19a45964cef707393612, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

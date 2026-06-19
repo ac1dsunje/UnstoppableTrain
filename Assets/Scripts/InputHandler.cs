@@ -13,7 +13,7 @@ public class InputHandler : MonoBehaviour
             OnLeft?.Invoke();
         }
 
-        if (Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.D))
         {
             OnRight?.Invoke();
         }
