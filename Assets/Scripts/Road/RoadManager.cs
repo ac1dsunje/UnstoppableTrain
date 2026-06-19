@@ -58,6 +58,7 @@ public class RoadManager : MonoBehaviour
         }
         else if (isActive)
         {
+            _train.SetCurrentRoad(road);
             switch (road.GetRoadType)
             {
                 case RoadType.Choosing:

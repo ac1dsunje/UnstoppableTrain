@@ -33,12 +33,14 @@ public class TrainMovement : MonoBehaviour
 
     private void MoveLeft()
     {
-        Debug.Log("Move left");
+        if (_movementController.GetCurrentRoad().IsLeftActive) return;
+        // ToDo : move train to the left rail & some animations?
     }
 
     private void MoveRight()
     {
-        Debug.Log("Move right");
+        if (_movementController.GetCurrentRoad().IsRightActive) return;
+        // ToDo : move train to the right rail & some animations?
     }
 
     private void MoveForward()

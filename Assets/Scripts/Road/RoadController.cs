@@ -20,8 +20,8 @@ public class RoadController : MonoBehaviour
     public RoadType GetRoadType => _roadType;
     public float RoadLength => roadLength;
 
-    private bool _isLeftActive = false;
-    private bool _isRightActive = false;
+    public bool IsLeftActive { get; private set; } = false;
+    public bool IsRightActive { get; private set; } = false;
     private bool _isRoadActive = false;
 
     private RailController _leftRail;
@@ -81,22 +81,21 @@ public class RoadController : MonoBehaviour
         }
     }
 
-
     private void OnLeftRailStateChanged(bool state)
     {
-        _isLeftActive = state;
+        IsLeftActive = state;
         UpdateRoadState();
     }
 
     private void OnRightRailStateChanged(bool state)
     {
-        _isRightActive = state;
+        IsRightActive = state;
         UpdateRoadState();
     }
 
     private void UpdateRoadState()
     {
-        bool shouldBeActive = _isLeftActive || _isRightActive;
+        bool shouldBeActive = IsLeftActive || IsRightActive;
 
         if (_isRoadActive != shouldBeActive)
         {

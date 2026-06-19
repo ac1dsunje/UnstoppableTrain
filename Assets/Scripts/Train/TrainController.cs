@@ -6,6 +6,17 @@ public class TrainController: MonoBehaviour, Imovement
     [SerializeField] private TrainSO _data;
 
     [SerializeField] private List<ManData> _passengers = new();
+    private RoadController _currentRoad;
+
+    public void SetCurrentRoad(RoadController currentRoad)
+    {
+        _currentRoad = currentRoad;
+    }
+
+    public RoadController GetCurrentRoad()
+    {
+        return _currentRoad;
+    }
 
     public float GetSpeed()
     {
