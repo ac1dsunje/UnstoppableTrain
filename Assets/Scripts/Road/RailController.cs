@@ -12,14 +12,6 @@ public class RailController : MonoBehaviour
     public Action<bool> OnThisActive;
     public Action OnAllLayingMenDied;
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Train")
-        {
-            SetRailActive();
-        }
-    }
-
     public void SpawnManyLayingMen(int count)
     {
         for (int i = 0; i < count; i++) 
@@ -34,6 +26,22 @@ public class RailController : MonoBehaviour
         LayingManController _layingMan = Instantiate(_layingManPrefab, pos, Quaternion.identity, transform).GetComponent<LayingManController>();
         _layingMen.Add(_layingMan);
         _layingMan.OnDeath += OnLayingManDeath;
+    }
+
+    private void OnDestroy()
+    {
+        foreach (var item in _layingMen)
+        {
+            item.OnDeath -= OnLayingManDeath;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Train")
+        {
+            SetRailActive();
+        }
     }
 
     private void OnCollisionExit(Collision collision)
@@ -52,14 +60,6 @@ public class RailController : MonoBehaviour
     private void SetRailUnActive()
     {
         OnThisActive.Invoke(false);
-    }
-
-    private void OnDestroy()
-    {
-        foreach(var item in _layingMen)
-        {
-            item.OnDeath -= OnLayingManDeath;
-        }
     }
 
     private void OnLayingManDeath(LayingManController layingMan)
