@@ -22,7 +22,7 @@ public class RailController : MonoBehaviour
 
     private void SpawnLayingMan(int step)
     {
-        Vector3 pos = new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z + step * 2);
+        Vector3 pos = new Vector3(transform.position.x, transform.position.y, transform.position.z + step * 2);
         LayingManController _layingMan = Instantiate(_layingManPrefab, pos, Quaternion.identity, transform).GetComponent<LayingManController>();
         _layingMen.Add(_layingMan);
         _layingMan.OnDeath += OnLayingManDeath;
