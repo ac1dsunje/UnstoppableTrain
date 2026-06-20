@@ -22,4 +22,5 @@ public class ManData
 {
     public Role role;
     public Trait trait;
+    public int chunks; // how many chunks this passenger is going to stay in the train
 }

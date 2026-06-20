@@ -19,6 +19,8 @@ public class LayingManController : MonoBehaviour
 
         count = Enum.GetValues(typeof(Trait)).Length;
         Data.trait = (Trait)Random.Range(0, count);
+
+        Data.chunks = Random.Range(1, 7);
     }
 
     private void OnCollisionEnter(Collision collision)
