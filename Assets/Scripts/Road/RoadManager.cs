@@ -38,7 +38,7 @@ public class RoadManager : MonoBehaviour
         RoadController newRoad = Instantiate(prefabToSpawn, nextSpawnPosition, Quaternion.identity).GetComponent<RoadController>();
         roads.Add(newRoad);
 
-        RoadController roadController = newRoad.GetComponent<RoadController>();
+        RoadController roadController = newRoad;
         roadController.SetTrainLink(_train);
 
         roadController.OnRoadStateChanged += OnRoadStateChanged;
@@ -51,8 +51,7 @@ public class RoadManager : MonoBehaviour
     {
         if (!isActive)
         {
-            RoadController roadController = road.GetComponent<RoadController>();
-            roadController.OnRoadStateChanged -= OnRoadStateChanged;
+            road.OnRoadStateChanged -= OnRoadStateChanged;
 
             StartCoroutine(DestroyOldAndSetNewRoad(road));
         }
@@ -89,8 +88,7 @@ public class RoadManager : MonoBehaviour
         {
             if (road != null)
             {
-                road.TryGetComponent<RoadController>(out RoadController roadController);
-                roadController.OnRoadStateChanged -= OnRoadStateChanged;
+                road.OnRoadStateChanged -= OnRoadStateChanged;
             }
         }
     }

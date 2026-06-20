@@ -68,7 +68,9 @@ public class RoadController : MonoBehaviour
     private void CreateRails()
     {
         _leftRail = Instantiate(RailPrefab, new Vector3(transform.position.x - 1.5f, transform.position.y, transform.position.z), Quaternion.identity, transform).GetComponent<RailController>();
+        // ToDo : add enviroment
         _rightRail = Instantiate(RailPrefab, new Vector3(transform.position.x + 1.5f, transform.position.y, transform.position.z), Quaternion.identity, transform).GetComponent<RailController>();
+        // ToDo : add enviroment
     }
 
     private void TrySpawnPassengers()
