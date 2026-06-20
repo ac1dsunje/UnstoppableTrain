@@ -11,12 +11,13 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private InputHandler _input;
     [SerializeField] private CameraController _cam;
-    [SerializeField] private LayingMenOverlayManager _uiManager;
     private GameState state;
 
 
     public Action OnMoveLeft;
     public Action OnMoveRight;
+
+    public Action<GameState> OnStateChanged;
 
     private void Awake()
     {
@@ -62,7 +63,8 @@ public class GameManager : MonoBehaviour
         ChangeState(GameState.choosing);
         Time.timeScale = 0f;
         _cam.SetChoosingPos();
-        _uiManager.ShowScreen();
+
+        OnStateChanged?.Invoke(state);
     }
 
     public void SetMovingState()
@@ -70,6 +72,7 @@ public class GameManager : MonoBehaviour
         ChangeState(GameState.moving);
         Time.timeScale = 1f;
         _cam.SetMovingPos();
-        _uiManager.HideScreen();
+
+        OnStateChanged?.Invoke(state);
     }
 }

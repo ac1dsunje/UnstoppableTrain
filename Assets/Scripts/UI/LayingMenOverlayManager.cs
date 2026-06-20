@@ -4,11 +4,12 @@ using UnityEngine.UI;
 
 public class LayingMenOverlayManager : ScreenManager
 {
-    [SerializeField] private TrainController _train;
     [SerializeField] private LayingManSlotUI _slotPrefab;
 
     [SerializeField] private Transform _leftContainer;
     [SerializeField] private Transform _rightContainer;
+
+    [SerializeField] private TrainController _train;
 
     private List<LayingManSlotUI> _pool = new List<LayingManSlotUI>();
     private List<LayingManSlotUI> _activeSlots = new List<LayingManSlotUI>();
