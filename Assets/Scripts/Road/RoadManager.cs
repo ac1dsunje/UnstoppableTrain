@@ -6,8 +6,8 @@ public class RoadManager : MonoBehaviour
 {
     [SerializeField] private GameManager _gameManager;
 
-    [SerializeField] private int basicRoadCount = 4;
-    [SerializeField] private int choosingRoadCount = 1;
+    [SerializeField] private int _choosingRoadChance;
+    [SerializeField] private int _maxRoads;
 
     [SerializeField] private GameObject movingRoadPrefab;
     [SerializeField] private GameObject choosingRoadPrefab;
@@ -20,8 +20,7 @@ public class RoadManager : MonoBehaviour
 
     private void Awake()
     {
-        int totalRoads = basicRoadCount + choosingRoadCount;
-        for (int i = 0; i < totalRoads; i++)
+        for (int i = 0; i < _maxRoads; i++)
         {
             SpawnNextRoad();
         }
@@ -29,11 +28,9 @@ public class RoadManager : MonoBehaviour
 
     private void SpawnNextRoad()
     {
-        int patternLength = basicRoadCount + choosingRoadCount;
-        int positionInPattern = currentPatternIndex % patternLength;
+        int rand = Random.Range(0, 100);
 
-        bool isChoosingRoad = positionInPattern >= basicRoadCount;
-        GameObject prefabToSpawn = isChoosingRoad ? choosingRoadPrefab : movingRoadPrefab;
+        GameObject prefabToSpawn = rand < _choosingRoadChance ? choosingRoadPrefab : movingRoadPrefab;
 
         RoadController newRoad = Instantiate(prefabToSpawn, nextSpawnPosition, Quaternion.identity, transform).GetComponent<RoadController>();
         roads.Add(newRoad);

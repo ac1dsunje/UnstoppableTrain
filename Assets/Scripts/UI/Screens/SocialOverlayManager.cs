@@ -25,6 +25,7 @@ public class SocialOverlyManager : ScreenManager
 
     public SocialOverlyManager Initialize(GameManager _gm)
     {
+        HideScreen();
         _gameManager = _gm;
         return this;
     }

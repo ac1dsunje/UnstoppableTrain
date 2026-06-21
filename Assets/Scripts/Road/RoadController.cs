@@ -10,7 +10,6 @@ public enum RoadType
 
 public class RoadController : MonoBehaviour
 {
-
     [SerializeField] private float roadLength = 10f;
     [SerializeField] private GameObject RailPrefab;
     [SerializeField] private RoadType _roadType;

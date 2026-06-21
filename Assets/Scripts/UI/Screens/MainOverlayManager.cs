@@ -23,6 +23,7 @@ public class MainOverlayManager : ScreenManager
 
     public MainOverlayManager Initialize(TrainController train)
     {
+        HideScreen();
         _train = train;
         _train.OnStatsUpdated += UpdateStats;
         return this;
