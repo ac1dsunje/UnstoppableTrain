@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class TrainController: MonoBehaviour, Imovement
+public class TrainController : MonoBehaviour, Imovement
 {
     [SerializeField] private TrainSO _data;
     [SerializeField] private GameObject _passengerPrefab;
     [SerializeField] private Transform _passengersContainer;
-    private TrainStats _stats = new();
-    public List<PassengerController> Passengers { get; private set; } = new();
+    [SerializeField] private TrainStats _stats = new();
 
     private RoadController _currentRoad;
+
+    // Общие изменения статистики (список пассажиров, capacity и т.п.) — для UI.
     public Action<TrainStats> OnStatsUpdated;
+
+    // Факт проезда станции — для пассажиров (декремент StationsLeft).
+    public Action OnStationPassed;
 
     private float _speedScale = 1f;
 
@@ -26,60 +30,55 @@ public class TrainController: MonoBehaviour, Imovement
         _currentRoad = currentRoad;
 
         _stats.chunksPassed++;
-        OnStatsUpdated.Invoke(_stats);
+
+        // 1. Сначала уведомляем пассажиров — они декрементируют StationsLeft,
+        //    и те, кому нужно, выйдут (внутри Leave дёрнется OnStatsUpdated).
+        OnStationPassed?.Invoke();
+
+        // 2. Затем обновляем UI: список пассажиров уже актуален,
+        //    а chunksPassed — свежий.
+        OnStatsUpdated?.Invoke(_stats);
     }
 
-    public RoadController GetCurrentRoad()
-    {
-        return _currentRoad;
-    }
+    public RoadController GetCurrentRoad() => _currentRoad;
 
-    public float GetSpeed()
-    {
-        return _data.MoveSpeed * _speedScale;
-    }
+    public float GetSpeed() => _data.MoveSpeed * _speedScale;
 
-    public void SetSpeedScale(float speed)
-    {
-        _speedScale = speed;
-    }
+    public void SetSpeedScale(float speed) => _speedScale = speed;
 
-    private int GetMaxCapacity()
-    {
-        return _data.MaxAmount;
-    }
+    private int GetMaxCapacity() => _data.MaxAmount;
 
     private void SpawnFirstPassenger()
     {
-        ManData _data = new();
+        ManData data = new ManData
+        {
+            role = Role.Driver,
+            trait = (Trait)Random.Range(0, Enum.GetValues(typeof(Trait)).Length),
+            StationsNeeded = 10
+        };
 
-        _data.role = Role.Driver;
-
-        int count = Enum.GetValues(typeof(Trait)).Length;
-        _data.trait = (Trait)Random.Range(0, count);
-
-        _data.StationsNeeded = 10;
-
-        SpawnPassenger(_data);
+        SpawnPassenger(data);
     }
 
-    public void TakeLayingMan(ManData _data)
+    public void TakeLayingMan(ManData data)
     {
-        if (Passengers.Count >= GetMaxCapacity()) return;
-
-        SpawnPassenger(_data);
+        if (_stats.Passengers.Count >= GetMaxCapacity()) return;
+        SpawnPassenger(data);
     }
 
     private void SpawnPassenger(ManData data)
     {
-        PassengerController passenger = Instantiate(_passengerPrefab, transform.position, Quaternion.identity, _passengersContainer).GetComponent<PassengerController>().Initialize(this, data);
-        Passengers.Add(passenger);
-        OnStatsUpdated.Invoke(_stats);
+        var passenger = Instantiate(_passengerPrefab, transform.position, Quaternion.identity, _passengersContainer)
+            .GetComponent<PassengerController>()
+            .Initialize(this, data);
+
+        _stats.Passengers.Add(passenger);
+        OnStatsUpdated?.Invoke(_stats);
     }
 
-    public void GetPassengerOut(PassengerController passenger) 
+    public void GetPassengerOut(PassengerController passenger)
     {
-        Passengers.Remove(passenger);
-        OnStatsUpdated.Invoke(_stats);
+        _stats.Passengers.Remove(passenger);
+        OnStatsUpdated?.Invoke(_stats);
     }
 }

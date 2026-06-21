@@ -1,21 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using TMPro;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 
 public class MainOverlayManager : ScreenManager
 {
     [SerializeField] private TextMeshProUGUI _chunksPassedText;
-    
-    [SerializeField] private TextMeshProUGUI _rolesText;
-    [SerializeField] private TextMeshProUGUI _traitsText;
+    [SerializeField] private Transform _passengersInfoContainer;
+
+    [SerializeField] private PassengerInfoSlotUI _passengerInfoSlotPrefab;
 
     private TrainController _train;
 
+    private List<PassengerInfoSlotUI> _passengersSlots = new();
+    private List<PassengerController> _passengersControllers = new();
+
     private void OnDisable()
     {
-        _train.OnStatsUpdated -= UpdateStats;
+        if (_train != null)
+            _train.OnStatsUpdated -= UpdateStats;
     }
 
     public MainOverlayManager Initialize(TrainController train)
@@ -25,53 +28,64 @@ public class MainOverlayManager : ScreenManager
         return this;
     }
 
-    public override void ShowScreen()
+    private void UpdatePassengers(List<PassengerController> passengers)
     {
-        Show();
+        if (passengers == null) return;
+
+        DeletePassengers(passengers);
+
+        AddOrRefreshPassengers(passengers);
     }
 
-    public override void HideScreen()
+    private void DeletePassengers(List<PassengerController> passengers)
     {
-        Hide();
+        for (int i = _passengersControllers.Count - 1; i >= 0; i--)
+        {
+            var controller = _passengersControllers[i];
+            if (controller == null || !passengers.Contains(controller))
+            {
+                if (_passengersSlots[i] != null)
+                    Destroy(_passengersSlots[i].gameObject);
+
+                _passengersSlots.RemoveAt(i);
+                _passengersControllers.RemoveAt(i);
+            }
+        }
     }
+
+    private void AddOrRefreshPassengers(List<PassengerController> passengers)
+    {
+        foreach (var passenger in passengers)
+        {
+            if (passenger == null) continue;
+
+            int index = _passengersControllers.IndexOf(passenger);
+            if (index == -1)
+            {
+                SpawnPassenger(passenger);
+            }
+            else
+            {
+                _passengersSlots[index].Refresh();
+            }
+        }
+    }
+
+    private void SpawnPassenger(PassengerController passenger)
+    {
+        var item = Instantiate(_passengerInfoSlotPrefab, _passengersInfoContainer);
+        var slotUI = item.GetComponent<PassengerInfoSlotUI>().Initialize(passenger.GetData);
+        _passengersControllers.Add(passenger);
+        _passengersSlots.Add(slotUI);
+    }
+
+    public override void ShowScreen() => Show();
+
+    public override void HideScreen() => Hide();
 
     private void UpdateStats(TrainStats stats)
     {
         _chunksPassedText.text = $"Stations passed: {stats.chunksPassed}";
-
-        _rolesText.text = GetRolesInfo(_train.Passengers);
-        _traitsText.text = GetTraitsInfo(_train.Passengers);
-    }
-
-    // todo: add passenger info slot ui & delete code under
-
-    private string GetRolesInfo(List<PassengerController> passengers)
-    {
-        if (passengers == null || passengers.Count == 0)
-            return " ";
-
-        string info = "";
-        foreach (Role role in Enum.GetValues(typeof(Role)))
-        {
-            int count = passengers.Count(p => p.GetData.role == role);
-            info += $"{role}: {count}\n";
-        }
-
-        return info.TrimEnd('\n');
-    }
-
-    private string GetTraitsInfo(List<PassengerController> passengers)
-    {
-        if (passengers == null || passengers.Count == 0)
-            return " ";
-
-        string info = "";
-        foreach (Trait trait in Enum.GetValues(typeof(Trait)))
-        {
-            int count = passengers.Count(p => p.GetData.trait == trait);
-            info += $"{trait}: {count}\n";
-        }
-
-        return info.TrimEnd('\n');
+        UpdatePassengers(stats.Passengers);
     }
 }
