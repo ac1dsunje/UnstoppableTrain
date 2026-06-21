@@ -20,6 +20,7 @@ public enum Trait
 [Serializable]
 public class ManData
 {
+    public string Name;
     public Role role;
     public Trait trait;
     public int StationsNeeded; // how many chunks this passenger is going to stay in the train

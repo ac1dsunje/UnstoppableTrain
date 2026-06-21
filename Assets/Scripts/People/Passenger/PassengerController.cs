@@ -6,6 +6,7 @@ public class PassengerController : MonoBehaviour
     [SerializeField] private ManData _data = new();
     
     public ManData GetData => _data;
+    public ITrait TraitBehavior { get; private set; }
 
     private void OnDisable()
     {
@@ -18,6 +19,8 @@ public class PassengerController : MonoBehaviour
         _train = train;
         _data = data;
         _data.StationsLeft = _data.StationsNeeded;
+
+        TraitBehavior = TraitFactory.Create(data.trait);
 
         _train.OnStationPassed += CheckStationIndex;
 
@@ -34,6 +37,13 @@ public class PassengerController : MonoBehaviour
     }
 
     private void Leave()
+    {
+        _train.OnStationPassed -= CheckStationIndex;
+        _train.GetPassengerOut(this);
+        Destroy(gameObject);
+    }
+
+    public void Kill()
     {
         _train.OnStationPassed -= CheckStationIndex;
         _train.GetPassengerOut(this);

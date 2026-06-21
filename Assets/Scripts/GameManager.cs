@@ -12,8 +12,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private InputHandler _input;
     [SerializeField] private CameraController _cam;
     [SerializeField] private TrainController _train;
-    private GameState state;
+    [SerializeField] private SocialManager _socialManager;
 
+    private GameState state;
 
     public Action OnMoveLeft;
     public Action OnMoveRight;
@@ -84,5 +85,6 @@ public class GameManager : MonoBehaviour
         _cam.SetChoosingPos();
 
         OnStateChanged?.Invoke(state);
+        _socialManager.StartSocialPhase();
     }
 }

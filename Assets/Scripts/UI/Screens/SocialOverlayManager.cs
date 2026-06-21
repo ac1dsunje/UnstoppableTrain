@@ -6,37 +6,54 @@ public class SocialOverlyManager : ScreenManager
 {
     [SerializeField] private Button _acceptButton;
     [SerializeField] private TextMeshProUGUI _infoText;
-    private GameManager _gameManager;
 
-    private void OnEnable()
+    private GameManager _gameManager;
+    private SocialManager _socialManager;
+
+    public SocialOverlyManager Initialize(GameManager gm, SocialManager sm)
     {
-        _acceptButton.onClick.AddListener(AcceptButtonPress);
+        HideScreen();
+        _gameManager = gm;
+
+        _socialManager = sm;
+        _socialManager.OnMessageGenerated += AddMessage;
+        _socialManager.OnPhaseFinished += OnPhaseFinished;
+
+        return this;
     }
+
+    private void OnEnable() => _acceptButton.onClick.AddListener(AcceptButtonPress);
 
     private void OnDisable()
     {
         _acceptButton.onClick.RemoveListener(AcceptButtonPress);
+        _socialManager.OnMessageGenerated -= AddMessage;
+        _socialManager.OnPhaseFinished -= OnPhaseFinished;
+    }
+
+    private void AddMessage(string message)
+    {
+        _infoText.text += message + "\n";
+    }
+
+    private void OnPhaseFinished()
+    {
+        _acceptButton.gameObject.SetActive(true);
     }
 
     private void AcceptButtonPress()
     {
+        _infoText.text = "";
+        _acceptButton.gameObject.SetActive(false);
         _gameManager.SetMovingState();
     }
 
-    public SocialOverlyManager Initialize(GameManager _gm)
-    {
-        HideScreen();
-        _gameManager = _gm;
-        return this;
-    }
-
-    public override void HideScreen()
-    {
-        Hide();
-    }
+    public override void HideScreen() => Hide();
 
     public override void ShowScreen()
     {
+        _infoText.text = "";
+        _acceptButton.gameObject.SetActive(false);
         Show();
     }
 }

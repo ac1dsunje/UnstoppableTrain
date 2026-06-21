@@ -41,10 +41,13 @@ public class TrainController : MonoBehaviour, Imovement
 
     private int GetMaxCapacity() => _data.MaxAmount;
 
+    public List<PassengerController> GetPassengers() => _stats.Passengers;
+
     private void SpawnFirstPassenger()
     {
         ManData data = new ManData
         {
+            Name = "John",
             role = Role.Driver,
             trait = (Trait)Random.Range(0, Enum.GetValues(typeof(Trait)).Length),
             StationsNeeded = 10
