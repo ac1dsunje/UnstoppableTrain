@@ -36,7 +36,7 @@ public class UIManager : MonoBehaviour
                 break;
 
             case GameState.choosing:
-                _mainOverlayManager.HideScreen();
+                _mainOverlayManager.ShowScreen();
                 _socialOverlaymanager.HideScreen();
                 break;
 

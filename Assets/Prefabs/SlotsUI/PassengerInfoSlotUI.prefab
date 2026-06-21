@@ -429,7 +429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da6a4d9e7f3b57646b394a6c57fa416a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PassengerInfoSlotUI
-  _nameText: {fileID: 0}
+  _nameText: {fileID: 4203379739771518381}
   _roleText: {fileID: 5744212341720911348}
   _traitText: {fileID: 7174002844937673069}
   _stationsLeftText: {fileID: 8564330638041282935}

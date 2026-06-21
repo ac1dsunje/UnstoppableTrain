@@ -80,11 +80,15 @@ public class GameManager : MonoBehaviour
 
     public void SetSocialState()
     {
+        if (!_socialManager.TryStartSocialPhase())
+        {
+            return;
+        }
+
         ChangeState(GameState.social);
         _train.SetSpeedScale(0f);
         _cam.SetChoosingPos();
 
         OnStateChanged?.Invoke(state);
-        _socialManager.StartSocialPhase();
     }
 }

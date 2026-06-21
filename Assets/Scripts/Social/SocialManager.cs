@@ -12,12 +12,7 @@ public class SocialManager : MonoBehaviour
     public event Action<string> OnMessageGenerated;
     public event Action OnPhaseFinished;
 
-    public void StartSocialPhase()
-    {
-        StartCoroutine(SocialPhaseCoroutine());
-    }
-
-    private IEnumerator SocialPhaseCoroutine()
+    public bool TryStartSocialPhase()
     {
         var context = new SocialContext
         {
@@ -28,20 +23,25 @@ public class SocialManager : MonoBehaviour
 
         if (string.IsNullOrEmpty(message))
         {
-            OnMessageGenerated?.Invoke("The journey was peaceful.");
-            yield return new WaitForSeconds(_messageDelay);
-            OnPhaseFinished?.Invoke();
-            yield break;
+            return false;
         }
 
-        OnMessageGenerated?.Invoke(message);
+        StartCoroutine(SocialPhaseCoroutine(context, message));
+        return true;
+    }
+
+    private IEnumerator SocialPhaseCoroutine(SocialContext context, string firstMessage)
+    {
+        yield return null;
+
+        OnMessageGenerated?.Invoke(firstMessage);
         yield return new WaitForSeconds(_messageDelay);
 
         var resolvePassengers = context.AllPassengers
             .Where(p => p.TraitBehavior.Phase == TraitPhase.Resolve)
             .ToList();
 
-        message = ExecutePhaseForPassengers(context, resolvePassengers);
+        string message = ExecutePhaseForPassengers(context, resolvePassengers);
 
         if (!string.IsNullOrEmpty(message))
         {
