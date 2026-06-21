@@ -3,8 +3,8 @@
 public class PassengerController : MonoBehaviour
 {
     [SerializeField] private TrainController _train;
-    [SerializeField] private int _stationsLeft;
-    [SerializeField] private ManData _data = new();
+    public ManData Data { get; private set; } = new();
+    
 
     private void OnDisable()
     {
@@ -14,8 +14,8 @@ public class PassengerController : MonoBehaviour
     public PassengerController Initialize(TrainController train, ManData data)
     {
         _train = train;
-        _data = data;
-        _stationsLeft = _data.StationsNeeded;
+        Data = data;
+        Data.StationsLeft = Data.StationsNeeded;
 
         _train.OnStatsUpdated += CheckStationIndex;
 
@@ -24,8 +24,8 @@ public class PassengerController : MonoBehaviour
 
     private void CheckStationIndex(TrainStats stats)
     {
-        _stationsLeft--;
-        if (_stationsLeft == 0)
+        Data.StationsLeft--;
+        if (Data.StationsLeft == 0)
         {
             Leave();
         }
@@ -34,7 +34,7 @@ public class PassengerController : MonoBehaviour
     private void Leave()
     {
         _train.OnStatsUpdated -= CheckStationIndex;
-        _train.GetPassengerOut(_data);
+        _train.GetPassengerOut(this);
         Destroy(gameObject);
     }
 }

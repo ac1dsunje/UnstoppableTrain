@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,6 +9,7 @@ public class TrainController: MonoBehaviour, Imovement
     [SerializeField] private GameObject _passengerPrefab;
     [SerializeField] private Transform _passengersContainer;
     private TrainStats _stats = new();
+    public List<PassengerController> Passengers { get; private set; } = new();
 
     private RoadController _currentRoad;
     public Action<TrainStats> OnStatsUpdated;
@@ -63,21 +65,21 @@ public class TrainController: MonoBehaviour, Imovement
 
     public void TakeLayingMan(ManData _data)
     {
-        if (_stats._passengers.Count >= GetMaxCapacity()) return;
+        if (Passengers.Count >= GetMaxCapacity()) return;
 
         SpawnPassenger(_data);
     }
 
     private void SpawnPassenger(ManData data)
     {
-        _stats._passengers.Add(data);
+        PassengerController passenger = Instantiate(_passengerPrefab, transform.position, Quaternion.identity, _passengersContainer).GetComponent<PassengerController>().Initialize(this, data);
+        Passengers.Add(passenger);
         OnStatsUpdated.Invoke(_stats);
-        Instantiate(_passengerPrefab, transform.position, Quaternion.identity, _passengersContainer).GetComponent<PassengerController>().Initialize(this, data);
     }
 
-    public void GetPassengerOut(ManData data) 
+    public void GetPassengerOut(PassengerController passenger) 
     {
-        _stats._passengers.Remove(data);
+        Passengers.Remove(passenger);
         OnStatsUpdated.Invoke(_stats);
     }
 }

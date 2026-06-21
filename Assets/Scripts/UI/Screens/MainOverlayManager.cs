@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -36,36 +37,38 @@ public class MainOverlayManager : ScreenManager
 
     private void UpdateStats(TrainStats stats)
     {
-        _chunksPassedText.text = $"chunks passed: {stats.chunksPassed}";
+        _chunksPassedText.text = $"Stations passed: {stats.chunksPassed}";
 
-        _rolesText.text = GetRolesInfo(stats);
-        _traitsText.text = GetTraitsInfo(stats);
+        _rolesText.text = GetRolesInfo(_train.Passengers);
+        _traitsText.text = GetTraitsInfo(_train.Passengers);
     }
 
-    private string GetRolesInfo(TrainStats stats)
+    // todo: add passenger info slot ui & delete code under
+
+    private string GetRolesInfo(List<PassengerController> passengers)
     {
-        if (stats._passengers == null || stats._passengers.Count == 0)
+        if (passengers == null || passengers.Count == 0)
             return " ";
 
         string info = "";
         foreach (Role role in Enum.GetValues(typeof(Role)))
         {
-            int count = stats._passengers.Count(p => p.role == role);
+            int count = passengers.Count(p => p.Data.role == role);
             info += $"{role}: {count}\n";
         }
 
         return info.TrimEnd('\n');
     }
 
-    private string GetTraitsInfo(TrainStats stats)
+    private string GetTraitsInfo(List<PassengerController> passengers)
     {
-        if (stats._passengers == null || stats._passengers.Count == 0)
+        if (passengers == null || passengers.Count == 0)
             return " ";
 
         string info = "";
         foreach (Trait trait in Enum.GetValues(typeof(Trait)))
         {
-            int count = stats._passengers.Count(p => p.trait == trait);
+            int count = passengers.Count(p => p.Data.trait == trait);
             info += $"{trait}: {count}\n";
         }
 
