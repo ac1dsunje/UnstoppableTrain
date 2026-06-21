@@ -8,7 +8,7 @@ public class TrainController : MonoBehaviour, Imovement
     [SerializeField] private TrainSO _data;
     [SerializeField] private GameObject _passengerPrefab;
     [SerializeField] private Transform _passengersContainer;
-    [SerializeField] private TrainStats _stats = new();
+    private TrainStats _stats = new();
 
     private RoadController _currentRoad;
 

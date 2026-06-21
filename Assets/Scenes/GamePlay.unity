@@ -307,7 +307,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -931,7 +931,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 675735393}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -959,9 +959,9 @@ MonoBehaviour:
   m_Content: {fileID: 1080433577}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
-  m_Inertia: 1
+  m_Inertia: 0
   m_DecelerationRate: 0.135
   m_ScrollSensitivity: 10
   m_Viewport: {fileID: 1322937203}
@@ -1857,8 +1857,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoadManager
   _gameManager: {fileID: 1650542361}
-  _choosingRoadChance: 25
-  _maxRoads: 7
+  _choosingRoadChance: 35
+  _maxRoads: 10
   movingRoadPrefab: {fileID: 3058819273101387152, guid: fd9b1700837b19a45964cef707393612, type: 3}
   choosingRoadPrefab: {fileID: 3058819273101387152, guid: 33e7c0b85220fac4f978b8ef706b809b, type: 3}
   _train: {fileID: 1027033983}

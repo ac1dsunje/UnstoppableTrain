@@ -17,13 +17,11 @@ public class MainOverlayManager : ScreenManager
 
     private void OnDisable()
     {
-        if (_train != null)
-            _train.OnStatsUpdated -= UpdateStats;
+        _train.OnStatsUpdated -= UpdateStats;
     }
 
     public MainOverlayManager Initialize(TrainController train)
     {
-        HideScreen();
         _train = train;
         _train.OnStatsUpdated += UpdateStats;
         return this;

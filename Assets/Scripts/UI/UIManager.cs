@@ -8,7 +8,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private SocialManager _socialManager;
 
     private MainOverlayManager _mainOverlayManager;
-    private SocialOverlyManager _socialOverlaymanager;
+    private SocialOverlayManager _socialOverlaymanager;
 
     private void OnEnable()
     {
@@ -23,7 +23,7 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         _mainOverlayManager = GetComponent<MainOverlayManager>().Initialize(_train);
-        _socialOverlaymanager = GetComponent<SocialOverlyManager>().Initialize(_gameManager, _socialManager);
+        _socialOverlaymanager = GetComponent<SocialOverlayManager>().Initialize(_gameManager, _socialManager);
     }
 
     private void HandleStateChanged(GameState state)

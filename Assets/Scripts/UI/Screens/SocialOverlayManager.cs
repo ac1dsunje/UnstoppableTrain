@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SocialOverlyManager : ScreenManager
+public class SocialOverlayManager : ScreenManager
 {
     [SerializeField] private Button _acceptButton;
     [SerializeField] private TextMeshProUGUI _infoText;
@@ -10,7 +10,7 @@ public class SocialOverlyManager : ScreenManager
     private GameManager _gameManager;
     private SocialManager _socialManager;
 
-    public SocialOverlyManager Initialize(GameManager gm, SocialManager sm)
+    public SocialOverlayManager Initialize(GameManager gm, SocialManager sm)
     {
         HideScreen();
         _gameManager = gm;

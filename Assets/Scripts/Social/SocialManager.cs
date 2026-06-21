@@ -65,9 +65,7 @@ public class SocialManager : MonoBehaviour
         }
         else
         {
-            var validVictims = context.AllPassengers
-                .Where(p => p.GetData.trait != Trait.Psychopath)
-                .ToList();
+            var validVictims = context.AllPassengers;
 
             if (validVictims.Count > 0)
             {
