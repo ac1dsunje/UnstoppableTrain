@@ -5,5 +5,5 @@ using System.Collections.Generic;
 public class TrainStats
 {
     public int chunksPassed = -1;
-    public List<ManData> _passengers;
+    public List<ManData> _passengers = new();
 }

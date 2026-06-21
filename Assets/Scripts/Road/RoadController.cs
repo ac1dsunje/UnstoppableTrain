@@ -113,7 +113,7 @@ public class RoadController : MonoBehaviour
     {
         foreach (var passenger in _leftRail.LayingMen)
         {
-            _train.TakePassenger(passenger.Data);
+            _train.TakeLayingMan(passenger.Data);
             Destroy(passenger.gameObject);
         }
     }
@@ -122,7 +122,7 @@ public class RoadController : MonoBehaviour
     {
         foreach (var passenger in _rightRail.LayingMen)
         {
-            _train.TakePassenger(passenger.Data);
+            _train.TakeLayingMan(passenger.Data);
             Destroy(passenger.gameObject);
         }
     }

@@ -2024,6 +2024,10 @@ PrefabInstance:
       propertyPath: _gameManager
       value: 
       objectReference: {fileID: 1650542361}
+    - target: {fileID: 7920293998929501353, guid: 6e5dfcc0e967fb54a82e89a57ec0a78f, type: 3}
+      propertyPath: _passengerPrefab
+      value: 
+      objectReference: {fileID: 564454119608622762, guid: 82c31e912af5e5346a17599f7ab38838, type: 3}
     - target: {fileID: 8869947801639233936, guid: 6e5dfcc0e967fb54a82e89a57ec0a78f, type: 3}
       propertyPath: m_Name
       value: Train
