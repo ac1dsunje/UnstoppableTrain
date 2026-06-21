@@ -53,7 +53,7 @@ public class MainOverlayManager : ScreenManager
         string info = "";
         foreach (Role role in Enum.GetValues(typeof(Role)))
         {
-            int count = passengers.Count(p => p.Data.role == role);
+            int count = passengers.Count(p => p.GetData.role == role);
             info += $"{role}: {count}\n";
         }
 
@@ -68,7 +68,7 @@ public class MainOverlayManager : ScreenManager
         string info = "";
         foreach (Trait trait in Enum.GetValues(typeof(Trait)))
         {
-            int count = passengers.Count(p => p.Data.trait == trait);
+            int count = passengers.Count(p => p.GetData.trait == trait);
             info += $"{trait}: {count}\n";
         }
 
