@@ -1840,7 +1840,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoadManager
   _gameManager: {fileID: 1650542361}
-  _choosingRoadChance: 90
+  _choosingRoadChance: 25
   _maxRoads: 7
   movingRoadPrefab: {fileID: 3058819273101387152, guid: fd9b1700837b19a45964cef707393612, type: 3}
   choosingRoadPrefab: {fileID: 3058819273101387152, guid: 33e7c0b85220fac4f978b8ef706b809b, type: 3}
@@ -2276,6 +2276,10 @@ PrefabInstance:
       propertyPath: _gameManager
       value: 
       objectReference: {fileID: 1650542361}
+    - target: {fileID: 5384228613855419829, guid: 6e5dfcc0e967fb54a82e89a57ec0a78f, type: 3}
+      propertyPath: _switchRailsTime
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 8869947801639233936, guid: 6e5dfcc0e967fb54a82e89a57ec0a78f, type: 3}
       propertyPath: m_Name
       value: Train
