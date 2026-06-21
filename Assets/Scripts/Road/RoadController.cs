@@ -123,6 +123,18 @@ public class RoadController : MonoBehaviour
         {
             _isRoadActive = shouldBeActive;
             OnRoadStateChanged?.Invoke(this, _isRoadActive);
+
+            if (_isRoadActive)
+            {
+                foreach(var man in _leftRail.LayingMen)
+                {
+                    man.SetActiveState();
+                }
+                foreach (var man in _rightRail.LayingMen)
+                {
+                    man.SetActiveState();
+                }
+            }
         }
     }
 

@@ -642,7 +642,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 473642104}
-  - component: {fileID: 473642105}
   - component: {fileID: 473642106}
   - component: {fileID: 473642107}
   - component: {fileID: 473642108}
@@ -668,22 +667,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1094652989}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &473642105
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 473642103}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63a870394cf45fc49b6124fb0017a9da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UIManager
-  _screenCanvasGroup: {fileID: 556677986}
-  _slotPrefab: {fileID: 6813757054803081644, guid: 0ac0857b8e522bb42b3ed3fb7484e7bc, type: 3}
-  _leftContainer: {fileID: 1963193638}
-  _rightContainer: {fileID: 198442484}
 --- !u!114 &473642106
 MonoBehaviour:
   m_ObjectHideFlags: 0

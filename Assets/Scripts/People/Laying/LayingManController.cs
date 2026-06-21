@@ -8,6 +8,12 @@ public class LayingManController : MonoBehaviour
     [SerializeField] private int _maxStationsNeeded = 15;
     public ManData Data;
     public Action<LayingManController> OnDeath;
+    public bool isActive { get; private set; }
+
+    public void SetActiveState()
+    {
+        isActive = true;
+    }
 
     private void Start()
     {

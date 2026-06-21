@@ -7,7 +7,6 @@ public class LayingManSlotUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _traitText;
     [SerializeField] private TextMeshProUGUI _stationsText;
 
-
     public void Set(ManData data)
     {
         SetTexts(data);
