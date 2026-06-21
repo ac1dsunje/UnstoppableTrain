@@ -10,13 +10,16 @@ public enum RoadType
 
 public class RoadController : MonoBehaviour
 {
-    public Action<RoadController, bool> OnRoadStateChanged;
 
     [SerializeField] private float roadLength = 10f;
-
     [SerializeField] private GameObject RailPrefab;
     [SerializeField] private RoadType _roadType;
     [SerializeField] private int _maxMenOnTheRail = 3;
+    [SerializeField] private EnvironmentAtlas _environmentAtlas;
+
+    [SerializeField] private float xOffset = 1.5f;
+
+    public Action<RoadController, bool> OnRoadStateChanged;
     public RoadType GetRoadType => _roadType;
     public float RoadLength => roadLength;
 
@@ -67,10 +70,24 @@ public class RoadController : MonoBehaviour
 
     private void CreateRails()
     {
-        _leftRail = Instantiate(RailPrefab, new Vector3(transform.position.x - 1.5f, transform.position.y, transform.position.z), Quaternion.identity, transform).GetComponent<RailController>();
-        // ToDo : add enviroment
-        _rightRail = Instantiate(RailPrefab, new Vector3(transform.position.x + 1.5f, transform.position.y, transform.position.z), Quaternion.identity, transform).GetComponent<RailController>();
-        // ToDo : add enviroment
+        _leftRail = CreateRail(-xOffset, true);
+        
+        _rightRail = CreateRail(xOffset, false);
+    }
+
+    private RailController CreateRail(float xOffset, bool xFlip)
+    {
+        var rail = Instantiate(RailPrefab, new Vector3(transform.position.x + xOffset, transform.position.y, transform.position.z), Quaternion.identity, transform).GetComponent<RailController>();
+        int rand = Random.Range(0, _environmentAtlas.EnvironmentObjects.Count);
+        Transform railTransform = rail.transform;
+        GameObject env = _environmentAtlas.EnvironmentObjects[rand];
+        Transform envTransform = Instantiate(env, new Vector3(railTransform.position.x + 2 * xOffset, railTransform.position.y, railTransform.position.z), Quaternion.identity, railTransform).GetComponent<Transform>();
+
+        if (xFlip)
+        {
+            envTransform.localScale = new Vector3(-1, 1, 1);
+        }
+        return rail;
     }
 
     private void TrySpawnPassengers()

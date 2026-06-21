@@ -65,3 +65,4 @@ MonoBehaviour:
   RailPrefab: {fileID: 7920926727020237154, guid: 06d98aa38d293fb4885a7ca1b56506f6, type: 3}
   _roadType: 0
   _maxMenOnTheRail: 3
+  _environmentAtlas: {fileID: 11400000, guid: 1a54b416ac81dfb42876517c7f20aee2, type: 2}

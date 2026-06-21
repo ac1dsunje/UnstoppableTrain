@@ -1857,7 +1857,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoadManager
   _gameManager: {fileID: 1650542361}
-  basicRoadCount: 2
+  basicRoadCount: 4
   choosingRoadCount: 1
   movingRoadPrefab: {fileID: 3058819273101387152, guid: fd9b1700837b19a45964cef707393612, type: 3}
   choosingRoadPrefab: {fileID: 3058819273101387152, guid: 33e7c0b85220fac4f978b8ef706b809b, type: 3}
