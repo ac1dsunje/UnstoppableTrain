@@ -5,6 +5,7 @@ public class TrainController: MonoBehaviour, Imovement
 {
     [SerializeField] private TrainSO _data;
     [SerializeField] private GameObject _passengerPrefab;
+    [SerializeField] private Transform _passengersContainer;
     private TrainStats _stats = new();
 
     private RoadController _currentRoad;
@@ -45,7 +46,7 @@ public class TrainController: MonoBehaviour, Imovement
 
     private void SpawnPassenger(ManData data)
     {
-        Instantiate(_passengerPrefab, transform.position, Quaternion.identity, transform).GetComponent<PassengerController>().Initialize(this, data);
+        Instantiate(_passengerPrefab, transform.position, Quaternion.identity, _passengersContainer).GetComponent<PassengerController>().Initialize(this, data);
     }
 
     public void GetPassengerOut(ManData data) 

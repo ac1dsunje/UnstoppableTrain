@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7561408783917040779
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 388346275500345251}
+  m_Layer: 0
+  m_Name: PassengerContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &388346275500345251
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7561408783917040779}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1760095338225452417}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8869947801639233936
 GameObject:
   m_ObjectHideFlags: 0
@@ -34,6 +65,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 841693164916273443}
+  - {fileID: 388346275500345251}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7920293998929501353
@@ -49,9 +81,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrainMovement
   _data: {fileID: 11400000, guid: 50fbbd64f1990544887d2287be5c80ab, type: 2}
-  _stats:
-    chunksPassed: -1
-    _passengers: []
+  _passengerPrefab: {fileID: 564454119608622762, guid: 82c31e912af5e5346a17599f7ab38838, type: 3}
+  _passengersContainer: {fileID: 388346275500345251}
 --- !u!114 &5384228613855419829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,7 +238,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 2645ac6d5e0ee224f8dee7ded409e5fb, type: 2}
     - target: {fileID: 919132149155446097, guid: 0824302adde87df47a4a130be4bd79aa, type: 3}
       propertyPath: m_Name
-      value: Train
+      value: Model
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
