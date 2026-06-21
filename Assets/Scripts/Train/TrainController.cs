@@ -12,10 +12,8 @@ public class TrainController : MonoBehaviour, Imovement
 
     private RoadController _currentRoad;
 
-    // Общие изменения статистики (список пассажиров, capacity и т.п.) — для UI.
     public Action<TrainStats> OnStatsUpdated;
 
-    // Факт проезда станции — для пассажиров (декремент StationsLeft).
     public Action OnStationPassed;
 
     private float _speedScale = 1f;
@@ -31,13 +29,8 @@ public class TrainController : MonoBehaviour, Imovement
 
         _stats.chunksPassed++;
 
-        // 1. Сначала уведомляем пассажиров — они декрементируют StationsLeft,
-        //    и те, кому нужно, выйдут (внутри Leave дёрнется OnStatsUpdated).
-        OnStationPassed?.Invoke();
-
-        // 2. Затем обновляем UI: список пассажиров уже актуален,
-        //    а chunksPassed — свежий.
-        OnStatsUpdated?.Invoke(_stats);
+        OnStationPassed.Invoke();
+        OnStatsUpdated.Invoke(_stats);
     }
 
     public RoadController GetCurrentRoad() => _currentRoad;
