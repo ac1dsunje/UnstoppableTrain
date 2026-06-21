@@ -1,5 +1,4 @@
 ﻿using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,13 +29,13 @@ public class SocialOverlyManager : ScreenManager
         return this;
     }
 
-    public void HideScreen()
+    public override void HideScreen()
     {
-        base.Hide();
+        Hide();
     }
 
-    public void ShowScreen()
+    public override void ShowScreen()
     {
-        base.Show();
+        Show();
     }
 }

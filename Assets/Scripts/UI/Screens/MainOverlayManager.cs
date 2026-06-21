@@ -28,14 +28,14 @@ public class MainOverlayManager : ScreenManager
         return this;
     }
 
-    public void ShowScreen()
+    public override void ShowScreen()
     {
-        base.Show();
+        Show();
     }
 
-    public void HideScreen()
+    public override void HideScreen()
     {
-        base.Hide();
+        Hide();
     }
 
     private void UpdateStats(TrainStats stats)

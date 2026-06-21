@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ScreenManager : MonoBehaviour
+public abstract class ScreenManager : MonoBehaviour
 {
     [SerializeField] protected CanvasGroup _screenCanvasGroup;
 
@@ -17,4 +17,7 @@ public class ScreenManager : MonoBehaviour
         _screenCanvasGroup.blocksRaycasts = false;
         _screenCanvasGroup.interactable = false;
     }
+
+    public abstract void ShowScreen();
+    public abstract void HideScreen();
 }

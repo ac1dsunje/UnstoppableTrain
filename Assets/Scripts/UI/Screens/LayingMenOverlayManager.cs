@@ -13,13 +13,13 @@ public class LayingMenOverlayManager : ScreenManager
 
     private TrainController _train;
 
-    public void ShowScreen()
+    public override void ShowScreen()
     {
         CollectData();
         Show();
     }
 
-    public void HideScreen()
+    public override void HideScreen()
     {
         ReturnAllToPool();
         Hide();
