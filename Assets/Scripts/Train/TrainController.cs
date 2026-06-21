@@ -12,6 +12,8 @@ public class TrainController: MonoBehaviour, Imovement
     private RoadController _currentRoad;
     public Action<TrainStats> OnStatsUpdated;
 
+    private float _speedScale = 1f;
+
     private void Awake()
     {
         SpawnFirstPassenger();
@@ -32,7 +34,12 @@ public class TrainController: MonoBehaviour, Imovement
 
     public float GetSpeed()
     {
-        return _data.MoveSpeed;
+        return _data.MoveSpeed * _speedScale;
+    }
+
+    public void SetSpeedScale(float speed)
+    {
+        _speedScale = speed;
     }
 
     private int GetMaxCapacity()

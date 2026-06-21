@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private InputHandler _input;
     [SerializeField] private CameraController _cam;
+    [SerializeField] private TrainController _train;
     private GameState state;
 
 
@@ -61,7 +62,7 @@ public class GameManager : MonoBehaviour
     public void SetChoosingState()
     {
         ChangeState(GameState.choosing);
-        Time.timeScale = 0f;
+        _train.SetSpeedScale(0f);
         _cam.SetChoosingPos();
 
         OnStateChanged?.Invoke(state);
@@ -70,7 +71,7 @@ public class GameManager : MonoBehaviour
     public void SetMovingState()
     {
         ChangeState(GameState.moving);
-        Time.timeScale = 1f;
+        _train.SetSpeedScale(1f);
         _cam.SetMovingPos();
 
         OnStateChanged?.Invoke(state);
