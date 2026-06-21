@@ -8,10 +8,10 @@ public class LayingMenOverlayManager : ScreenManager
     [SerializeField] private Transform _leftContainer;
     [SerializeField] private Transform _rightContainer;
 
-    [SerializeField] private TrainController _train;
-
     private List<LayingManSlotUI> _pool = new List<LayingManSlotUI>();
     private List<LayingManSlotUI> _activeSlots = new List<LayingManSlotUI>();
+
+    private TrainController _train;
 
     public void ShowScreen()
     {
@@ -23,6 +23,12 @@ public class LayingMenOverlayManager : ScreenManager
     {
         ReturnAllToPool();
         Hide();
+    }
+
+    public LayingMenOverlayManager Initialize(TrainController train)
+    {
+        _train = train;
+        return this;
     }
 
     private void CollectData()

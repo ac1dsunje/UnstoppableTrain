@@ -64,7 +64,7 @@ public class RoadManager : MonoBehaviour
                     break;
 
                 case RoadType.Moving:
-                    _gameManager.SetMovingState();
+                    _gameManager.SetSocialState();
                     break;
             }
         }

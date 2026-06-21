@@ -3,7 +3,7 @@ using UnityEngine;
 public enum GameState
 {
     moving,
-    checkingPassengers,
+    social,
     choosing
 }
 
@@ -73,6 +73,15 @@ public class GameManager : MonoBehaviour
         ChangeState(GameState.moving);
         _train.SetSpeedScale(1f);
         _cam.SetMovingPos();
+
+        OnStateChanged?.Invoke(state);
+    }
+
+    public void SetSocialState()
+    {
+        ChangeState(GameState.social);
+        _train.SetSpeedScale(0f);
+        _cam.SetChoosingPos();
 
         OnStateChanged?.Invoke(state);
     }

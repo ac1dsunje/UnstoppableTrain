@@ -10,7 +10,7 @@ public class MainOverlayManager : ScreenManager
     [SerializeField] private TextMeshProUGUI _rolesText;
     [SerializeField] private TextMeshProUGUI _traitsText;
 
-    [SerializeField] private TrainController _train;
+    private TrainController _train;
 
     private void OnEnable()
     {
@@ -20,6 +20,12 @@ public class MainOverlayManager : ScreenManager
     private void OnDisable()
     {
         _train.OnStatsUpdated -= UpdateStats;
+    }
+
+    public MainOverlayManager Initialize(TrainController train)
+    {
+        _train = train;
+        return this;
     }
 
     public void ShowScreen()
