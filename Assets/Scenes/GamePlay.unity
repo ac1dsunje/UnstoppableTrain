@@ -720,7 +720,6 @@ MonoBehaviour:
   _slotPrefab: {fileID: 6813757054803081644, guid: 0ac0857b8e522bb42b3ed3fb7484e7bc, type: 3}
   _leftContainer: {fileID: 1963193638}
   _rightContainer: {fileID: 198442484}
-  _train: {fileID: 1027033983}
 --- !u!114 &473642106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -737,7 +736,6 @@ MonoBehaviour:
   _chunksPassedText: {fileID: 1801654091}
   _rolesText: {fileID: 1072588698}
   _traitsText: {fileID: 2085545332}
-  _train: {fileID: 1027033983}
 --- !u!114 &473642107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -751,6 +749,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIManager
   _gameManager: {fileID: 1650542361}
+  _train: {fileID: 1027033983}
 --- !u!114 &473642108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -765,6 +764,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SocialOverlyManager
   _screenCanvasGroup: {fileID: 2073699692}
   _acceptButton: {fileID: 1282590182}
+  _infoText: {fileID: 295165911}
 --- !u!1 &503240794
 GameObject:
   m_ObjectHideFlags: 0
