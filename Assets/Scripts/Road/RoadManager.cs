@@ -38,11 +38,10 @@ public class RoadManager : MonoBehaviour
         RoadController newRoad = Instantiate(prefabToSpawn, nextSpawnPosition, Quaternion.identity, transform).GetComponent<RoadController>();
         roads.Add(newRoad);
 
-        RoadController roadController = newRoad;
-        roadController.SetTrainLink(_train);
+        newRoad.SetTrainLink(_train);
 
-        roadController.OnRoadStateChanged += OnRoadStateChanged;
-        nextSpawnPosition = newRoad.transform.position + new Vector3(0, 0, roadController.RoadLength);
+        newRoad.OnRoadStateChanged += OnRoadStateChanged;
+        nextSpawnPosition = newRoad.transform.position + new Vector3(0, 0, newRoad.RoadLength);
 
         currentPatternIndex++;
     }
