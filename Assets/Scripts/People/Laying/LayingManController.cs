@@ -31,9 +31,9 @@ public class LayingManController : MonoBehaviour
         Data.StationsNeeded = Random.Range(_minStationsNeeded, _maxStationsNeeded+1);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Train"))
+        if (other.CompareTag("Train"))
         {
             OnDeath.Invoke(this);
             Destroy(gameObject);

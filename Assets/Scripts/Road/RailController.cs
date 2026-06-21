@@ -36,17 +36,17 @@ public class RailController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag == "Train")
+        if (other.CompareTag("Train"))
         {
             SetRailActive();
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
-        if (collision.gameObject.tag == "Train")
+        if (other.CompareTag("Train"))
         {
             SetRailUnActive();
         }
