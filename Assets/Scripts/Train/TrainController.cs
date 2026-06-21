@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class TrainController: MonoBehaviour, Imovement
 {
@@ -10,6 +11,11 @@ public class TrainController: MonoBehaviour, Imovement
 
     private RoadController _currentRoad;
     public Action<TrainStats> OnStatsUpdated;
+
+    private void Awake()
+    {
+        SpawnFirstPassenger();
+    }
 
     public void SetCurrentRoad(RoadController currentRoad)
     {
@@ -34,18 +40,31 @@ public class TrainController: MonoBehaviour, Imovement
         return _data.MaxAmount;
     }
 
-    public void TakeLayingMan(ManData _passenger)
+    private void SpawnFirstPassenger()
+    {
+        ManData _data = new();
+
+        _data.role = Role.Driver;
+
+        int count = Enum.GetValues(typeof(Trait)).Length;
+        _data.trait = (Trait)Random.Range(0, count);
+
+        _data.StationsNeeded = 10;
+
+        SpawnPassenger(_data);
+    }
+
+    public void TakeLayingMan(ManData _data)
     {
         if (_stats._passengers.Count >= GetMaxCapacity()) return;
 
-        _stats._passengers.Add(_passenger);
-        OnStatsUpdated.Invoke(_stats);
-
-        SpawnPassenger(_passenger);
+        SpawnPassenger(_data);
     }
 
     private void SpawnPassenger(ManData data)
     {
+        _stats._passengers.Add(data);
+        OnStatsUpdated.Invoke(_stats);
         Instantiate(_passengerPrefab, transform.position, Quaternion.identity, _passengersContainer).GetComponent<PassengerController>().Initialize(this, data);
     }
 
