@@ -8,8 +8,8 @@ public class LayingMenOverlayManager : ScreenManager
     [SerializeField] private Transform _leftContainer;
     [SerializeField] private Transform _rightContainer;
 
-    private List<LayingManSlotUI> _pool = new List<LayingManSlotUI>();
-    private List<LayingManSlotUI> _activeSlots = new List<LayingManSlotUI>();
+    private List<LayingManSlotUI> _pool = new();
+    private List<LayingManSlotUI> _activeSlots = new();
 
     private TrainController _train;
 
