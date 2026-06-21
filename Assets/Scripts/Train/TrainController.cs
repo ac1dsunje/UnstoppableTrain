@@ -14,7 +14,7 @@ public class TrainController: MonoBehaviour, Imovement
 
     private float _speedScale = 1f;
 
-    private void Awake()
+    private void Start()
     {
         SpawnFirstPassenger();
     }

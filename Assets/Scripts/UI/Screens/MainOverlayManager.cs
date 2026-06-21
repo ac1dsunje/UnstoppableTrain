@@ -12,11 +12,6 @@ public class MainOverlayManager : ScreenManager
 
     private TrainController _train;
 
-    private void OnEnable()
-    {
-        _train.OnStatsUpdated += UpdateStats;
-    }
-
     private void OnDisable()
     {
         _train.OnStatsUpdated -= UpdateStats;
@@ -25,6 +20,7 @@ public class MainOverlayManager : ScreenManager
     public MainOverlayManager Initialize(TrainController train)
     {
         _train = train;
+        _train.OnStatsUpdated += UpdateStats;
         return this;
     }
 
