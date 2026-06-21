@@ -35,7 +35,7 @@ public class RoadManager : MonoBehaviour
         bool isChoosingRoad = positionInPattern >= basicRoadCount;
         GameObject prefabToSpawn = isChoosingRoad ? choosingRoadPrefab : movingRoadPrefab;
 
-        RoadController newRoad = Instantiate(prefabToSpawn, nextSpawnPosition, Quaternion.identity).GetComponent<RoadController>();
+        RoadController newRoad = Instantiate(prefabToSpawn, nextSpawnPosition, Quaternion.identity, transform).GetComponent<RoadController>();
         roads.Add(newRoad);
 
         RoadController roadController = newRoad;

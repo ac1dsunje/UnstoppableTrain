@@ -46,9 +46,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 466e80473a6b4a444b5cadb8e5df4b63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PassengerController
+  _minStationsNeeded: 1
+  _maxStationsNeeded: 30
   Data:
     role: 0
     trait: 0
+    StationsNeeded: 0
 --- !u!65 &2055043596465502827
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ public class LayingManSlotUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _roleText;
     [SerializeField] private TextMeshProUGUI _traitText;
+    [SerializeField] private TextMeshProUGUI _stationsText;
 
 
     public void Set(ManData data)
@@ -16,5 +17,6 @@ public class LayingManSlotUI : MonoBehaviour
     {
         _roleText.text = $"Role - {data.role.ToString()}";
         _traitText.text = $"Trait - {data.trait.ToString()}";
+        _stationsText.text = $"Stations - {data.StationsNeeded.ToString()}";
     }
 }

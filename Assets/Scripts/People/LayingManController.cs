@@ -4,6 +4,8 @@ using Random = UnityEngine.Random;
 
 public class LayingManController : MonoBehaviour
 {
+    [SerializeField] private int _minStationsNeeded = 1;
+    [SerializeField] private int _maxStationsNeeded = 15;
     public ManData Data;
     public Action<LayingManController> OnDeath;
 
@@ -20,7 +22,7 @@ public class LayingManController : MonoBehaviour
         count = Enum.GetValues(typeof(Trait)).Length;
         Data.trait = (Trait)Random.Range(0, count);
 
-        Data.chunks = Random.Range(1, 7);
+        Data.StationsNeeded = Random.Range(_minStationsNeeded, _maxStationsNeeded+1);
     }
 
     private void OnCollisionEnter(Collision collision)

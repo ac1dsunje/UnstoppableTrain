@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: BaseTrain
   m_EditorClassIdentifier: Assembly-CSharp::TrainSO
   <MoveSpeed>k__BackingField: 3
-  <MaxAmount>k__BackingField: 15
+  <MaxAmount>k__BackingField: 10

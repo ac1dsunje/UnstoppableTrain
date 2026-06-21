@@ -5,7 +5,7 @@ public class TrainController: MonoBehaviour, Imovement
 {
     [SerializeField] private TrainSO _data;
     [SerializeField] private GameObject _passengerPrefab;
-    [SerializeField] private TrainStats _stats = new();
+    private TrainStats _stats = new();
 
     private RoadController _currentRoad;
     public Action<TrainStats> OnStatsUpdated;
@@ -28,19 +28,24 @@ public class TrainController: MonoBehaviour, Imovement
         return _data.MoveSpeed;
     }
 
+    private int GetMaxCapacity()
+    {
+        return _data.MaxAmount;
+    }
+
     public void TakeLayingMan(ManData _passenger)
     {
-        if (_stats._passengers.Count >= _data.MaxAmount) return;
+        if (_stats._passengers.Count >= GetMaxCapacity()) return;
 
         _stats._passengers.Add(_passenger);
         OnStatsUpdated.Invoke(_stats);
 
-        SpawnPassenger(_passenger, _stats.chunksPassed);
+        SpawnPassenger(_passenger);
     }
 
-    private void SpawnPassenger(ManData data, int currentChunkIndex)
+    private void SpawnPassenger(ManData data)
     {
-        Instantiate(_passengerPrefab, transform.position, Quaternion.identity, transform).GetComponent<PassengerController>().Initialize(this, data, currentChunkIndex);
+        Instantiate(_passengerPrefab, transform.position, Quaternion.identity, transform).GetComponent<PassengerController>().Initialize(this, data);
     }
 
     public void GetPassengerOut(ManData data) 
