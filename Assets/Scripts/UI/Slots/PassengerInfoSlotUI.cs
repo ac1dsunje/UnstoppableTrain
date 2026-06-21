@@ -17,10 +17,6 @@ public class PassengerInfoSlotUI : MonoBehaviour
         UpdateTexts();
         return this;
     }
-
-    /// <summary>
-    /// Перерисовывает тексты по актуальным данным (например, когда изменилось StationsLeft).
-    /// </summary>
     public void Refresh()
     {
         UpdateTexts();
