@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4199f55114e253245b4c81a73a739d7f, type: 3}
   m_Name: NormalRolesSO
   m_EditorClassIdentifier: Assembly-CSharp::RolePreset
-  Weights:
+  <Weights>k__BackingField:
   - Role: 0
     Weight: 25
   - Role: 1

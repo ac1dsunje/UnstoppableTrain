@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d49d83d143afa984da03fd783846dbc6, type: 3}
   m_Name: NormalTraitsSO
   m_EditorClassIdentifier: Assembly-CSharp::TraitPreset
-  Weights:
+  <Weights>k__BackingField:
   - Trait: 0
     Weight: 25
   - Trait: 1

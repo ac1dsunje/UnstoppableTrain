@@ -3,5 +3,5 @@
 [CreateAssetMenu(fileName = "TraitPreset", menuName = "Game/Trait Preset")]
 public class TraitPreset : ScriptableObject
 {
-    public TraitWeight[] Weights;
+    [field: SerializeField] public TraitWeight[] Weights { get; private set; }
 }

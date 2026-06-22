@@ -682,6 +682,7 @@ MonoBehaviour:
   GamePlay: Assets/Scenes/GamePlay.unity
   rolePreset: {fileID: 11400000, guid: e13fd680284ae02429ac7501bc5994bd, type: 2}
   traitPreset: {fileID: 11400000, guid: 3d80d7d674c9ea4478be04bc9ed187b8, type: 2}
+  stationtPreset: {fileID: 11400000, guid: a152c847c1c80224894db6854fc2e510, type: 2}
 --- !u!4 &2143103627
 Transform:
   m_ObjectHideFlags: 0

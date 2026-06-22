@@ -9,11 +9,13 @@ public class Bootstrap : MonoBehaviour
 
     [SerializeField] private RolePreset rolePreset;
     [SerializeField] private TraitPreset traitPreset;
+    [SerializeField] private StationsPreset stationtPreset;
 
     private IEnumerator Start()
     {
         RoleSelector.SetWeights(rolePreset.Weights);
         TraitSelector.SetWeights(traitPreset.Weights);
+        StationsSelector.SetRange(stationtPreset.Range);
 
         yield return new WaitForSeconds(1f);
 
