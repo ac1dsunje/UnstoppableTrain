@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using Random = UnityEngine.Random;
+﻿using Random = UnityEngine.Random;
 
 public static class StationsSelector
 {
@@ -8,15 +7,5 @@ public static class StationsSelector
     public static int GetRandom()
     {
         return Random.Range(_currentRange.MinAmount, _currentRange.MaxAmount + 1);
-    }
-
-    public static void SetRange(StationsRange newRange)
-    {
-        _currentRange = newRange;
-    }
-
-    public static void SetRange(int min, int max)
-    {
-        _currentRange = new StationsRange(min, max);
     }
 }

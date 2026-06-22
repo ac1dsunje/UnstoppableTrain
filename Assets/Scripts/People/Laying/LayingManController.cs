@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class LayingManController : MonoBehaviour
 {
-    public ManData Data;
+    public ManData Data { get; private set; }
     public Action<LayingManController> OnDeath;
     public bool isActive { get; private set; }
 
