@@ -8,9 +8,6 @@ public class TrainController : MonoBehaviour, Imovement
     [SerializeField] private GameObject _passengerPrefab;
     [SerializeField] private Transform _passengersContainer;
 
-    [SerializeField] private int _minStationsForFirstPassenger = 7;
-    [SerializeField] private int _maxStationsForFirstPassenger = 15;
-
     private TrainStats _stats = new();
 
     private RoadController _currentRoad;
@@ -50,8 +47,7 @@ public class TrainController : MonoBehaviour, Imovement
     {
         ManData data = ManFactory.Create(
             role: Role.Driver,
-            minStations: _minStationsForFirstPassenger,
-            maxStations: _maxStationsForFirstPassenger
+            stationsNeeded: 10
         );
 
         SpawnPassenger(data);

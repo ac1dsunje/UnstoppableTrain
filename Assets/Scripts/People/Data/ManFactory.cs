@@ -10,16 +10,11 @@ public static class ManFactory
         "Sage", "Sawyer", "Sydney", "Drew", "Ellis", "Hayden", "Lennox", "Tatum"
     };
 
-    private const int DefaultMinStations = 1;
-    private const int DefaultMaxStations = 15;
-
     public static ManData Create(
-        string name = null,
-        Role? role = null,
-        Trait? trait = null,
-        int? stationsNeeded = null,
-        int? minStations = null,
-        int? maxStations = null)
+    string name = null,
+    Role? role = null,
+    Trait? trait = null,
+    int? stationsNeeded = null)
     {
         if (string.IsNullOrEmpty(name))
         {
@@ -28,18 +23,7 @@ public static class ManFactory
 
         Role actualRole = role ?? RoleSelector.GetRandom();
         Trait actualTrait = trait ?? TraitSelector.GetRandom();
-
-        int actualStations;
-        if (stationsNeeded.HasValue)
-        {
-            actualStations = stationsNeeded.Value;
-        }
-        else
-        {
-            int min = minStations ?? DefaultMinStations;
-            int max = maxStations ?? DefaultMaxStations;
-            actualStations = Random.Range(min, max + 1);
-        }
+        int actualStations = stationsNeeded ?? StationsSelector.GetRandom();
 
         return new ManData
         {

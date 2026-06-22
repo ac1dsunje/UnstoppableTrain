@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class LayingManController : MonoBehaviour
 {
-    [SerializeField] private int _minStationsNeeded = 1;
-    [SerializeField] private int _maxStationsNeeded = 15;
     public ManData Data;
     public Action<LayingManController> OnDeath;
     public bool isActive { get; private set; }
@@ -16,10 +14,7 @@ public class LayingManController : MonoBehaviour
 
     private void Start()
     {
-        Data = ManFactory.Create(
-            minStations: _minStationsNeeded,
-            maxStations: _maxStationsNeeded
-        );
+        Data = ManFactory.Create();
     }
 
     private void OnTriggerEnter(Collider other)
