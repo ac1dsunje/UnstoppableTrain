@@ -9,7 +9,7 @@ public class PsychopathTrait : ITrait
         if (context.ConflictStarted) return false;
 
         int wallflowers = context.GetCount(Trait.Wallflower);
-        float chance = wallflowers * 0.10f;
+        float chance = wallflowers * 0.10f + 0.1f;
         return Random.value < chance;
     }
 

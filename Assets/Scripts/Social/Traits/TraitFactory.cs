@@ -1,4 +1,12 @@
-﻿public static class TraitFactory
+﻿public enum Trait
+{
+    Wallflower,
+    Leader,
+    Psychopath,
+    Empath
+}
+
+public static class TraitFactory
 {
     public static ITrait Create(Trait trait)
     {

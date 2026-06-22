@@ -9,14 +9,6 @@ public enum Role
     NoSkill
 }
 
-public enum Trait
-{
-    Wallflower,
-    Leader,
-    Psychopath,
-    Empath
-}
-
 [Serializable]
 public class ManData
 {
