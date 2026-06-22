@@ -53,7 +53,7 @@ public class SocialEventManager : EventManagerBase
 
         if (!string.IsNullOrEmpty(message))
         {
-            SendMessage(message);
+            SendPhaseMessage(message);
             yield return new WaitForSeconds(_messageDelay);
         }
         else
