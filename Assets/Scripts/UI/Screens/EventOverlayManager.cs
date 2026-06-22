@@ -2,22 +2,22 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SocialEventOverlayManager : ScreenManager
+public class EventOverlayManager : ScreenManager
 {
     [SerializeField] private Button _acceptButton;
     [SerializeField] private TextMeshProUGUI _infoText;
 
     private GameManager _gameManager;
-    private SocialEventManager _socialManager;
+    private GameEventsManager _eventsManager;
 
-    public SocialEventOverlayManager Initialize(GameManager gm, SocialEventManager sm)
+    public EventOverlayManager Initialize(GameManager gm, GameEventsManager em)
     {
         HideScreen();
         _gameManager = gm;
+        _eventsManager = em;
 
-        _socialManager = sm;
-        _socialManager.OnMessageGenerated += AddMessage;
-        _socialManager.OnPhaseFinished += OnPhaseFinished;
+        _eventsManager.OnMessageGenerated += AddMessage;
+        _eventsManager.OnPhaseFinished += OnPhaseFinished;
 
         return this;
     }
@@ -27,8 +27,10 @@ public class SocialEventOverlayManager : ScreenManager
     private void OnDisable()
     {
         _acceptButton.onClick.RemoveListener(AcceptButtonPress);
-        _socialManager.OnMessageGenerated -= AddMessage;
-        _socialManager.OnPhaseFinished -= OnPhaseFinished;
+
+        if (_eventsManager == null) return;
+        _eventsManager.OnMessageGenerated -= AddMessage;
+        _eventsManager.OnPhaseFinished -= OnPhaseFinished;
     }
 
     private void AddMessage(string message)

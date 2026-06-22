@@ -1,15 +1,13 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public enum GameState
 {
     moving,
-    social,
-    disaster,
     choosing,
-    station
+    station,
+    @event
 }
 
 public class GameManager : MonoBehaviour
@@ -17,20 +15,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] private InputHandler _input;
     [SerializeField] private CameraController _cam;
     [SerializeField] private TrainController _train;
-    [SerializeField] private SocialEventManager _socialManager;
+    [SerializeField] private GameEventsManager _eventsManager;
 
-    private GameState state;
+    [SerializeField] private GameState state;
 
     public Action OnMoveLeft;
     public Action OnMoveRight;
-
     public Action<GameState> OnStateChanged;
 
     private void Awake()
     {
         ChangeState(GameState.moving);
     }
-
 
     private void OnEnable()
     {
@@ -47,96 +43,60 @@ public class GameManager : MonoBehaviour
     private void TryMoveLeft()
     {
         if (state != GameState.choosing) return;
-            
-        OnMoveLeft.Invoke();
+        OnMoveLeft?.Invoke();
         SetMovingState();
     }
 
     private void TryMoveRight()
     {
         if (state != GameState.choosing) return;
-
-        OnMoveRight.Invoke();
+        OnMoveRight?.Invoke();
         SetMovingState();
     }
 
     private void ChangeState(GameState newState)
     {
         state = newState;
-    }
-
-    public void SetChoosingState()
-    {
-        ChangeState(GameState.choosing);
-        _train.SetSpeedScale(0f);
-        _cam.SetChoosingPos();
-
         OnStateChanged?.Invoke(state);
     }
 
     public void SetMovingState()
     {
-        ChangeState(GameState.moving);
         _train.SetSpeedScale(1f);
         _cam.SetMovingPos();
+        ChangeState(GameState.moving);
+    }
 
-        OnStateChanged?.Invoke(state);
+    public void SetChoosingState()
+    {
+        _train.SetSpeedScale(0f);
+        _cam.SetChoosingPos();
+        ChangeState(GameState.choosing);
     }
 
     public void SetStationState()
     {
-        ChangeState(GameState.station);
         _train.SetSpeedScale(0f);
         _cam.SetChoosingPos();
-
+        ChangeState(GameState.station);
         StartCoroutine(WaitAtStation());
-        OnStateChanged?.Invoke(state);
     }
 
     private IEnumerator WaitAtStation()
     {
-        Debug.Log("passengers getting out.. please wait");
+        // ToDo : add passengers getting out animation
+        Debug.Log("Passengers getting out... please wait");
         yield return new WaitForSeconds(2f);
         SetMovingState();
     }
 
     public void SetEventState()
     {
-        if (Random.value < 0.5f)
-        {
-            SetSocialState();
-        }
-        else
-        {
-            SetDisasterState();
-        }
-    }
+        bool started = _eventsManager.TryStartEvent();
+        if (!started) return;
 
-    private void SetSocialState()
-    {
-        if (!_socialManager.TryStartSocialPhase())
-        {
-            return;
-        }
-
-        ChangeState(GameState.social);
         _train.SetSpeedScale(0f);
         _cam.SetChoosingPos();
-
-        OnStateChanged?.Invoke(state);
-    }
-
-    private void SetDisasterState()
-    {
-        if (!_socialManager.TryStartSocialPhase())
-        {
-            return;
-        }
-
-        ChangeState(GameState.social);
-        _train.SetSpeedScale(0f);
-        _cam.SetChoosingPos();
-
-        OnStateChanged?.Invoke(state);
+        ChangeState(GameState.@event);
     }
 }

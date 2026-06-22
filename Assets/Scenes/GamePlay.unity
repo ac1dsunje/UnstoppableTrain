@@ -1057,7 +1057,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UIManager
   _gameManager: {fileID: 1650542361}
   _train: {fileID: 1027033983}
-  _socialManager: {fileID: 1650542362}
+  _eventsManager: {fileID: 902484052}
 --- !u!114 &473642108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1507,6 +1507,97 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &902484047
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 902484048}
+  - component: {fileID: 902484052}
+  - component: {fileID: 902484051}
+  - component: {fileID: 902484050}
+  - component: {fileID: 902484049}
+  m_Layer: 0
+  m_Name: EventsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &902484048
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902484047}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1094652989}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &902484049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902484047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10a36154e2cbcc947aa633ec293941d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BreakdownEventManager
+  _messageDelay: 1.2
+--- !u!114 &902484050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902484047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 825f71b9f3774504588a992d39445400, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EpidemicEventManager
+  _messageDelay: 1.2
+--- !u!114 &902484051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902484047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2aff0f9f9ae82864e968490483329207, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SocialEventManager
+  _train: {fileID: 1027033983}
+  _messageDelay: 1.2
+--- !u!114 &902484052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902484047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4345d02b5c8c780488be7bbb24f9af05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameEventsManager
+  _train: {fileID: 1027033983}
+  _socialManager: {fileID: 902484051}
+  _epidemicManager: {fileID: 902484050}
+  _breakdownManager: {fileID: 902484049}
 --- !u!4 &1027033982 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1760095338225452417, guid: 6e5dfcc0e967fb54a82e89a57ec0a78f, type: 3}
@@ -1633,6 +1724,7 @@ Transform:
   - {fileID: 1579466958}
   - {fileID: 1652282651}
   - {fileID: 473642104}
+  - {fileID: 902484048}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1102016220
@@ -2367,7 +2459,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1650542360}
   - component: {fileID: 1650542361}
-  - component: {fileID: 1650542362}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2405,21 +2496,7 @@ MonoBehaviour:
   _input: {fileID: 1579466959}
   _cam: {fileID: 330585548}
   _train: {fileID: 1027033983}
-  _socialManager: {fileID: 1650542362}
---- !u!114 &1650542362
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1650542359}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2aff0f9f9ae82864e968490483329207, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SocialManager
-  _train: {fileID: 1027033983}
-  _messageDelay: 1.2
+  _eventsManager: {fileID: 902484052}
 --- !u!1 &1652282650
 GameObject:
   m_ObjectHideFlags: 0
@@ -2465,13 +2542,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoadManager
   _gameManager: {fileID: 1650542361}
+  _train: {fileID: 1027033983}
   _choosingRoadChance: 35
   _stationRoadChance: 15
   _maxRoads: 10
   movingRoadPrefab: {fileID: 3058819273101387152, guid: fd9b1700837b19a45964cef707393612, type: 3}
   choosingRoadPrefab: {fileID: 7180160364947763013, guid: a0f0f5b926970ad4f8721fddfdd8f9c4, type: 3}
   stationRoadPrefab: {fileID: 7180160364947763013, guid: 2a3e7ad53118bf54d9fc8c31a35e7961, type: 3}
-  _train: {fileID: 1027033983}
 --- !u!1001 &1656333657
 PrefabInstance:
   m_ObjectHideFlags: 0

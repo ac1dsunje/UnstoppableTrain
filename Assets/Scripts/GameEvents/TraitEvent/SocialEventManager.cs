@@ -6,17 +6,16 @@ using UnityEngine;
 
 public class SocialEventManager : MonoBehaviour
 {
-    [SerializeField] private TrainController _train;
     [SerializeField] private float _messageDelay = 1.2f;
 
     public event Action<string> OnMessageGenerated;
     public event Action OnPhaseFinished;
 
-    public bool TryStartSocialPhase()
+    public bool TryStartSocialPhase(List<PassengerController> passengers)
     {
         var context = new SocialContext
         {
-            AllPassengers = new List<PassengerController>(_train.GetPassengers())
+            AllPassengers = passengers
         };
 
         string message = ExecutePhase(context, TraitPhase.Initiate);
