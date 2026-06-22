@@ -1,13 +1,15 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum GameState
 {
     moving,
     choosing,
     station,
-    @event
+    @event,
+    end
 }
 
 public class GameManager : MonoBehaviour
@@ -32,12 +34,16 @@ public class GameManager : MonoBehaviour
     {
         _input.OnLeft += TryMoveLeft;
         _input.OnRight += TryMoveRight;
+        _input.OnRestart += TryRestartGame;
+        _train.OnAllDriversLeft += SetEndState;
     }
 
     private void OnDisable()
     {
         _input.OnLeft -= TryMoveLeft;
         _input.OnRight -= TryMoveRight;
+        _input.OnRestart -= TryRestartGame;
+        _train.OnAllDriversLeft -= SetEndState;
     }
 
     private void TryMoveLeft()
@@ -52,6 +58,12 @@ public class GameManager : MonoBehaviour
         if (state != GameState.choosing) return;
         OnMoveRight?.Invoke();
         SetMovingState();
+    }
+
+    private void TryRestartGame()
+    {
+        if (state != GameState.end) return;
+        SceneManager.LoadScene("GamePlay");
     }
 
     private void ChangeState(GameState newState)
@@ -98,5 +110,11 @@ public class GameManager : MonoBehaviour
         _train.SetSpeedScale(0f);
         _cam.SetChoosingPos();
         ChangeState(GameState.@event);
+    }
+
+    private void SetEndState()
+    {
+        _train.SetSpeedScale(0f);
+        ChangeState(GameState.end);
     }
 }
