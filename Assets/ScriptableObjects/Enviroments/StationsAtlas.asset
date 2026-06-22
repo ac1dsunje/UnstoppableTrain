@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: StationsAtlas
   m_EditorClassIdentifier: Assembly-CSharp::TreeSO
   EnvironmentObjects:
-  - {fileID: 7920926727020237154, guid: 1c91bf621fe1b0147a7585cbb832010b, type: 3}
+  - {fileID: 7920926727020237154, guid: 7e5211c0fed7f9e45bde19c612395077, type: 3}
