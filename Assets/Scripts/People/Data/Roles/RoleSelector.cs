@@ -1,11 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
+
+
+[Serializable]
+public struct RoleWeight
+{
+    public Role Role;
+    public float Weight;
+
+    public RoleWeight(Role role, float weight)
+    {
+        Role = role;
+        Weight = weight;
+    }
+}
 
 public static class RoleSelector
 {
-    // ToDo: use SetWeights in bootstrap
-    private static List<RoleWeight> _weights = new(RolePresets.Normal);
+    private static List<RoleWeight> _weights = new();
 
     public static Role GetRandom()
     {

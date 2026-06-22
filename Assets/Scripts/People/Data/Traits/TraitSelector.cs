@@ -1,11 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
+using Random = UnityEngine.Random;
+
+[Serializable]
+public struct TraitWeight
+{
+    public Trait Trait;
+    public float Weight;
+
+    public TraitWeight(Trait trait, float weight)
+    {
+        Trait = trait;
+        Weight = weight;
+    }
+}
 
 public static class TraitSelector
 {
-    // ToDo: use SetWeights in bootstrap
-    private static List<TraitWeight> _weights = new(TraitPresets.Normal);
+    private static List<TraitWeight> _weights = new();
 
     public static Trait GetRandom()
     {

@@ -7,11 +7,15 @@ public class Bootstrap : MonoBehaviour
     [Scene]
     [SerializeField] private string GamePlay;
 
+    [SerializeField] private RolePreset rolePreset;
+    [SerializeField] private TraitPreset traitPreset;
+
     private IEnumerator Start()
     {
-        // ToDo: init modules here
+        RoleSelector.SetWeights(rolePreset.Weights);
+        TraitSelector.SetWeights(traitPreset.Weights);
 
-        yield return new WaitForSeconds(1f); // just imitation of loading
+        yield return new WaitForSeconds(1f);
 
         SceneManager.LoadScene(GamePlay);
     }
