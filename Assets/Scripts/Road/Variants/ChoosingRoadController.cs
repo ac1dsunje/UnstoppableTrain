@@ -6,6 +6,11 @@ public class ChoosingRoadController : RoadController
 
     protected override void InitializeRoad()
     {
+        SpawnLayingMen();
+    }
+
+    private void SpawnLayingMen()
+    {
         int randLeft = Random.Range(1, _maxMenOnTheRail + 1);
         LeftRail.SpawnManyLayingMen(randLeft);
 
