@@ -30,7 +30,7 @@ public static class ManFactory
 
         Role actualRole = role ?? (Role)Random.Range(0, Enum.GetValues(typeof(Role)).Length);
 
-        Trait actualTrait = trait ?? (Trait)Random.Range(0, Enum.GetValues(typeof(Trait)).Length);
+        Trait actualTrait = trait ?? TraitSelector.GetRandom();
 
         int actualStations;
         if (stationsNeeded.HasValue)
