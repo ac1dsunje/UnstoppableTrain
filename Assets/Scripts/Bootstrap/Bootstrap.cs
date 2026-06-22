@@ -4,18 +4,15 @@ using UnityEngine.SceneManagement;
 
 public class Bootstrap : MonoBehaviour
 {
+    [Scene]
+    [SerializeField] private string GamePlay;
 
     private IEnumerator Start()
     {
         // ToDo: init modules here
 
-        var loadingDuration = 1f;
-        while (loadingDuration > 0f)
-        {
-            loadingDuration = Time.deltaTime;
-            yield return null;
-        }
+        yield return new WaitForSeconds(1f); // just imitation of loading
 
-        SceneManager.LoadScene("GamePlay");
+        SceneManager.LoadScene(GamePlay);
     }
 }

@@ -774,7 +774,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
   _target: {fileID: 1027033982}
   _followingOffset: {x: 0, y: 5, z: -5}
-  _birdOffset: {x: 0, y: 13, z: 8}
+  _birdOffset: {x: 0, y: 7, z: 8}
   _time: 1
 --- !u!1001 &400300636
 PrefabInstance:
