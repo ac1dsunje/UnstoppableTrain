@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8550090913397305759}
-  - component: {fileID: 5540254201466365425}
+  - component: {fileID: 4839288125791440852}
   m_Layer: 0
   m_Name: Road
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5540254201466365425
+--- !u!114 &4839288125791440852
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,12 +41,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3058819273101387152}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2ab1047729b14142bfe500cef6c9fcf, type: 3}
+  m_Script: {fileID: 11500000, guid: aeb18e5e86b6c5c4d92757dc815a3507, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RoadController
+  m_EditorClassIdentifier: Assembly-CSharp::MovingRoadController
   roadLength: 10
   RailPrefab: {fileID: 7920926727020237154, guid: 06d98aa38d293fb4885a7ca1b56506f6, type: 3}
-  _roadType: 0
   _maxMenOnTheRail: 3
   _environmentAtlas: {fileID: 11400000, guid: 1a54b416ac81dfb42876517c7f20aee2, type: 2}
-  xOffset: 1.5

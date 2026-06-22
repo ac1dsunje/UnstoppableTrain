@@ -5,6 +5,7 @@ using UnityEngine;
 public class RoadManager : MonoBehaviour
 {
     [SerializeField] private GameManager _gameManager;
+    [SerializeField] private TrainController _train;
 
     [SerializeField] private int _choosingRoadChance;
     [SerializeField] private int _stationRoadChance;
@@ -14,11 +15,8 @@ public class RoadManager : MonoBehaviour
     [SerializeField] private GameObject choosingRoadPrefab;
     [SerializeField] private GameObject stationRoadPrefab;
 
-    [SerializeField] private TrainController _train;
-
     private List<RoadController> roads = new();
     private Vector3 nextSpawnPosition = Vector3.zero;
-
     private static WaitForSeconds _waitFor1Seconds = new WaitForSeconds(1f);
 
     private void Awake()
@@ -32,67 +30,40 @@ public class RoadManager : MonoBehaviour
     private void SpawnNextRoad()
     {
         int rand = Random.Range(0, 100);
-
         GameObject prefabToSpawn;
 
-        if (rand < _choosingRoadChance)
-        {
-            prefabToSpawn = choosingRoadPrefab;
-        }
-        else if (rand < _choosingRoadChance + _stationRoadChance)
-        {
-            prefabToSpawn = stationRoadPrefab;
-        }
-        else
-        {
-            prefabToSpawn = movingRoadPrefab;
-        }
+        if (rand < _choosingRoadChance) prefabToSpawn = choosingRoadPrefab;
+        else if (rand < _choosingRoadChance + _stationRoadChance) prefabToSpawn = stationRoadPrefab;
+        else prefabToSpawn = movingRoadPrefab;
 
-        RoadController newRoad = Instantiate(prefabToSpawn, nextSpawnPosition, Quaternion.identity, transform).GetComponent<RoadController>();
+        RoadController newRoad = Instantiate(prefabToSpawn, nextSpawnPosition, Quaternion.identity, transform)
+            .GetComponent<RoadController>()
+            .Initialize(_train, _gameManager);
+
         roads.Add(newRoad);
-
-        newRoad.SetTrainLink(_train);
-
         newRoad.OnRoadStateChanged += OnRoadStateChanged;
+
         nextSpawnPosition = newRoad.transform.position + new Vector3(0, 0, newRoad.RoadLength);
     }
 
     private void OnRoadStateChanged(RoadController road, bool isActive)
     {
-        if (!isActive)
-        {
-            road.OnRoadStateChanged -= OnRoadStateChanged;
-
-            StartCoroutine(DestroyOldAndSetNewRoad(road));
-        }
-        else if (isActive)
+        if (isActive)
         {
             _train.SetCurrentRoad(road);
-            switch (road.GetRoadType)
-            {
-                case RoadType.Choosing:
-                    _gameManager.SetChoosingState();
-                    break;
-
-                case RoadType.Moving:
-                    _gameManager.SetSocialState();
-                    break;
-
-                case RoadType.Station:
-                    _gameManager.SetStationState();
-                    break;
-            }
         }
-            
+        else
+        {
+            road.OnRoadStateChanged -= OnRoadStateChanged;
+            StartCoroutine(DestroyOldAndSetNewRoad(road));
+        }
     }
 
     private IEnumerator DestroyOldAndSetNewRoad(RoadController road)
     {
         yield return _waitFor1Seconds;
-
         roads.Remove(road);
         Destroy(road.gameObject);
-
         SpawnNextRoad();
     }
 
@@ -100,10 +71,7 @@ public class RoadManager : MonoBehaviour
     {
         foreach (var road in roads)
         {
-            if (road != null)
-            {
-                road.OnRoadStateChanged -= OnRoadStateChanged;
-            }
+            if (road != null) road.OnRoadStateChanged -= OnRoadStateChanged;
         }
     }
 }

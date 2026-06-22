@@ -48,7 +48,7 @@ public class TrainController : MonoBehaviour, Imovement
     {
         ManData data = ManFactory.Create(
             role: Role.Driver,
-            stationsNeeded: 10
+            stationsNeeded: 3
         );
 
         SpawnPassenger(data);

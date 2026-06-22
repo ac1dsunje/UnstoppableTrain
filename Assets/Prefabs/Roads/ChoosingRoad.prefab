@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1211257696267041544}
-  - component: {fileID: 4519762051551164116}
+  - component: {fileID: 6030350089991932492}
   m_Layer: 0
   m_Name: ChoosingRoad
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4519762051551164116
+--- !u!114 &6030350089991932492
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,12 +41,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7180160364947763013}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2ab1047729b14142bfe500cef6c9fcf, type: 3}
+  m_Script: {fileID: 11500000, guid: 17dc221a023518b45b7b1c0b83756625, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RoadController
+  m_EditorClassIdentifier: Assembly-CSharp::ChoosingRoadController
   roadLength: 10
   RailPrefab: {fileID: 7920926727020237154, guid: 06d98aa38d293fb4885a7ca1b56506f6, type: 3}
-  _roadType: 1
   _maxMenOnTheRail: 3
   _environmentAtlas: {fileID: 11400000, guid: 1a54b416ac81dfb42876517c7f20aee2, type: 2}
-  xOffset: 1.5
