@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour
 
     private void ChangeState(GameState newState)
     {
+        if (state == GameState.end) return;
         state = newState;
         OnStateChanged?.Invoke(state);
     }

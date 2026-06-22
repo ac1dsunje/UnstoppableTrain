@@ -25,8 +25,8 @@ public class BreakdownEventManager : EventManagerBase
         }
         else
         {
-            SendPhaseMessage("No mechanic on board! The train is stuck...");
-            yield return new WaitForSeconds(_messageDelay);
+            SendPhaseMessage("No mechanic on board! The train is stuck...\nPassengers need more time to fix the train...");
+            yield return new WaitForSeconds(_messageDelay * 3);
         }
 
         FinishPhase();

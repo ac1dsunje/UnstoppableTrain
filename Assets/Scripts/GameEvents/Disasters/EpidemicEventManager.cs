@@ -27,7 +27,7 @@ public class EpidemicEventManager : EventManagerBase
             .Where(p => p.GetData.role == Role.Doctor)
             .ToList();
 
-        var context = new DisasterContext { AllPassengers = passengers };
+        var context = new EpidemicContext { AllPassengers = passengers };
 
         foreach (var patient in infected)
         {
