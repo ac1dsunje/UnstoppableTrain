@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using Random = UnityEngine.Random;
+﻿using Random = UnityEngine.Random;
 
 public static class ManFactory
 {
@@ -28,8 +26,7 @@ public static class ManFactory
             name = _neutralNames[Random.Range(0, _neutralNames.Length)];
         }
 
-        Role actualRole = role ?? (Role)Random.Range(0, Enum.GetValues(typeof(Role)).Length);
-
+        Role actualRole = role ?? RoleSelector.GetRandom();
         Trait actualTrait = trait ?? TraitSelector.GetRandom();
 
         int actualStations;
