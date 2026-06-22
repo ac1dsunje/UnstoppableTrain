@@ -10,6 +10,6 @@ public enum TraitPhase
 public interface ITrait
 {
     TraitPhase Phase { get; }
-    bool CheckCondition(SocialContext context, PassengerController owner);
-    string Do(SocialContext context, PassengerController owner);
+    bool CheckCondition(TraitContext context, PassengerController owner);
+    string Do(TraitContext context, PassengerController owner);
 }

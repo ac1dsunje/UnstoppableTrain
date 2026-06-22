@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private InputHandler _input;
     [SerializeField] private CameraController _cam;
     [SerializeField] private TrainController _train;
-    [SerializeField] private SocialManager _socialManager;
+    [SerializeField] private TraitManager _socialManager;
 
     private GameState state;
 
@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
 
     public void SetSocialState()
     {
-        if (!_socialManager.TryStartSocialPhase())
+        if (!_socialManager.TryStartTraitPhase())
         {
             return;
         }

@@ -4,7 +4,7 @@ public class LeaderTrait : ITrait
 {
     public TraitPhase Phase => TraitPhase.Resolve;
 
-    public bool CheckCondition(SocialContext context, PassengerController owner)
+    public bool CheckCondition(TraitContext context, PassengerController owner)
     {
         if (!context.ConflictStarted || context.ConflictResolved) return false;
 
@@ -13,7 +13,7 @@ public class LeaderTrait : ITrait
         return Random.value < chance;
     }
 
-    public string Do(SocialContext context, PassengerController owner)
+    public string Do(TraitContext context, PassengerController owner)
     {
         context.ConflictResolved = true;
         return "Leaders managed to stop the conflict!";
