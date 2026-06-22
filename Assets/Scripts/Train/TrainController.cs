@@ -1,13 +1,16 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class TrainController : MonoBehaviour, Imovement
 {
     [SerializeField] private TrainSO _data;
     [SerializeField] private GameObject _passengerPrefab;
     [SerializeField] private Transform _passengersContainer;
+
+    [SerializeField] private int _minStationsForFirstPassenger = 7;
+    [SerializeField] private int _maxStationsForFirstPassenger = 15;
+
     private TrainStats _stats = new();
 
     private RoadController _currentRoad;
@@ -45,13 +48,11 @@ public class TrainController : MonoBehaviour, Imovement
 
     private void SpawnFirstPassenger()
     {
-        ManData data = new ManData
-        {
-            Name = "John",
-            role = Role.Driver,
-            trait = (Trait)Random.Range(0, Enum.GetValues(typeof(Trait)).Length),
-            StationsNeeded = 10
-        };
+        ManData data = ManFactory.Create(
+            role: Role.Driver,
+            minStations: _minStationsForFirstPassenger,
+            maxStations: _maxStationsForFirstPassenger
+        );
 
         SpawnPassenger(data);
     }
