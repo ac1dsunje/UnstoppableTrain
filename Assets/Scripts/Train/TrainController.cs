@@ -21,7 +21,7 @@ public class TrainController : MonoBehaviour, Imovement
 
     private void Start()
     {
-        SpawnFirstPassenger();
+        SpawnInitialTeam();
     }
 
     public void SetCurrentRoad(RoadController currentRoad)
@@ -45,11 +45,25 @@ public class TrainController : MonoBehaviour, Imovement
 
     public List<PassengerController> GetPassengers() => _stats.Passengers;
 
-    private void SpawnFirstPassenger()
+    private void SpawnInitialTeam()
     {
         ManData data = ManFactory.Create(
             role: Role.Driver,
             stationsNeeded: 3
+        );
+
+        SpawnPassenger(data);
+
+        data = ManFactory.Create(
+            role: Role.Mechanic,
+            stationsNeeded: 2
+        );
+
+        SpawnPassenger(data);
+
+        data = ManFactory.Create(
+            role: Role.Doctor,
+            stationsNeeded: 2
         );
 
         SpawnPassenger(data);
@@ -79,6 +93,7 @@ public class TrainController : MonoBehaviour, Imovement
             !_stats.Passengers.Any(p => p.GetData.role == Role.Driver))
         {
             OnAllDriversLeft?.Invoke();
+            return;
         }
 
         OnStatsUpdated?.Invoke(_stats);

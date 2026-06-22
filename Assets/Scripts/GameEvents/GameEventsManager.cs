@@ -26,7 +26,7 @@ public class GameEventsManager : MonoBehaviour
 
     public bool TryStartEvent()
     {
-        int roll = UnityEngine.Random.Range(0, 3);
+        int roll = UnityEngine.Random.Range(0, 6);
 
         List<PassengerController> passengers = new();
 

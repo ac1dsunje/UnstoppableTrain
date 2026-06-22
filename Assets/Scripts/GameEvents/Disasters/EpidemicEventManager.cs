@@ -17,9 +17,9 @@ public class EpidemicEventManager : EventManagerBase
         SendPhaseMessage("An epidemic has broken out in the cabin!");
         yield return new WaitForSeconds(_messageDelay);
 
-        int infectedCount = UnityEngine.Random.Range(1, passengers.Count + 1);
+        int infectedCount = Random.Range(1, passengers.Count + 1);
         var infected = passengers
-            .OrderBy(_ => UnityEngine.Random.value)
+            .OrderBy(_ => Random.value)
             .Take(infectedCount)
             .ToList();
 
