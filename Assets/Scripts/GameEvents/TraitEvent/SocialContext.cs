@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-public class TraitContext
+public class SocialContext
 {
     public List<PassengerController> AllPassengers;
     public bool ConflictStarted = false;

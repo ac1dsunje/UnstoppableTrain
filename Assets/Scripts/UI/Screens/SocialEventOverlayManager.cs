@@ -2,15 +2,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TraitEventOverlayManager : ScreenManager
+public class SocialEventOverlayManager : ScreenManager
 {
     [SerializeField] private Button _acceptButton;
     [SerializeField] private TextMeshProUGUI _infoText;
 
     private GameManager _gameManager;
-    private TraitManager _socialManager;
+    private SocialEventManager _socialManager;
 
-    public TraitEventOverlayManager Initialize(GameManager gm, TraitManager sm)
+    public SocialEventOverlayManager Initialize(GameManager gm, SocialEventManager sm)
     {
         HideScreen();
         _gameManager = gm;

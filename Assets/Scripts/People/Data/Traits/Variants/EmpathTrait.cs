@@ -4,7 +4,7 @@ public class EmpathTrait : ITrait
 {
     public TraitPhase Phase => TraitPhase.ModifyOutcome;
 
-    public bool CheckCondition(TraitContext context, PassengerController owner)
+    public bool CheckCondition(SocialContext context, PassengerController owner)
     {
         if (!context.ConflictStarted || context.ConflictResolved || context.Victim != null) return false;
 
@@ -12,7 +12,7 @@ public class EmpathTrait : ITrait
         return Random.value < sacrificeChance;
     }
 
-    public string Do(TraitContext context, PassengerController owner)
+    public string Do(SocialContext context, PassengerController owner)
     {
         context.Victim = owner;
         return $"{owner.GetData.Name} sacrificed themselves!";

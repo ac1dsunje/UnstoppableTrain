@@ -1,10 +1,13 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
+
 public enum GameState
 {
     moving,
     social,
+    disaster,
     choosing,
     station
 }
@@ -14,7 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private InputHandler _input;
     [SerializeField] private CameraController _cam;
     [SerializeField] private TrainController _train;
-    [SerializeField] private TraitManager _socialManager;
+    [SerializeField] private SocialEventManager _socialManager;
 
     private GameState state;
 
@@ -97,9 +100,35 @@ public class GameManager : MonoBehaviour
         SetMovingState();
     }
 
-    public void SetSocialState()
+    public void SetEventState()
     {
-        if (!_socialManager.TryStartTraitPhase())
+        if (Random.value < 0.5f)
+        {
+            SetSocialState();
+        }
+        else
+        {
+            SetDisasterState();
+        }
+    }
+
+    private void SetSocialState()
+    {
+        if (!_socialManager.TryStartSocialPhase())
+        {
+            return;
+        }
+
+        ChangeState(GameState.social);
+        _train.SetSpeedScale(0f);
+        _cam.SetChoosingPos();
+
+        OnStateChanged?.Invoke(state);
+    }
+
+    private void SetDisasterState()
+    {
+        if (!_socialManager.TryStartSocialPhase())
         {
             return;
         }

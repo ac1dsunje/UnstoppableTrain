@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class TraitManager : MonoBehaviour
+public class SocialEventManager : MonoBehaviour
 {
     [SerializeField] private TrainController _train;
     [SerializeField] private float _messageDelay = 1.2f;
@@ -12,9 +12,9 @@ public class TraitManager : MonoBehaviour
     public event Action<string> OnMessageGenerated;
     public event Action OnPhaseFinished;
 
-    public bool TryStartTraitPhase()
+    public bool TryStartSocialPhase()
     {
-        var context = new TraitContext
+        var context = new SocialContext
         {
             AllPassengers = new List<PassengerController>(_train.GetPassengers())
         };
@@ -26,11 +26,11 @@ public class TraitManager : MonoBehaviour
             return false;
         }
 
-        StartCoroutine(TraitPhaseCoroutine(context, message));
+        StartCoroutine(SocialPhaseCoroutine(context, message));
         return true;
     }
 
-    private IEnumerator TraitPhaseCoroutine(TraitContext context, string firstMessage)
+    private IEnumerator SocialPhaseCoroutine(SocialContext context, string firstMessage)
     {
         yield return null;
 
@@ -84,7 +84,7 @@ public class TraitManager : MonoBehaviour
         OnPhaseFinished?.Invoke();
     }
 
-    private string ExecutePhase(TraitContext context, TraitPhase phase)
+    private string ExecutePhase(SocialContext context, TraitPhase phase)
     {
         var passengers = context.AllPassengers
             .Where(p => p.TraitBehavior.Phase == phase)
@@ -92,7 +92,7 @@ public class TraitManager : MonoBehaviour
         return ExecutePhaseForPassengers(context, passengers);
     }
 
-    private string ExecutePhaseForPassengers(TraitContext context, List<PassengerController> passengers)
+    private string ExecutePhaseForPassengers(SocialContext context, List<PassengerController> passengers)
     {
         foreach (var passenger in passengers)
         {
