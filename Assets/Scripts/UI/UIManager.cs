@@ -5,10 +5,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameManager _gameManager;
 
     [SerializeField] private TrainController _train;
-    [SerializeField] private SocialManager _socialManager;
+    [SerializeField] private TraitManager _socialManager;
 
     private MainOverlayManager _mainOverlayManager;
-    private SocialOverlayManager _socialOverlaymanager;
+    private TraitEventOverlayManager _socialOverlaymanager;
 
     private void OnEnable()
     {
@@ -23,7 +23,7 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         _mainOverlayManager = GetComponent<MainOverlayManager>().Initialize(_train);
-        _socialOverlaymanager = GetComponent<SocialOverlayManager>().Initialize(_gameManager, _socialManager);
+        _socialOverlaymanager = GetComponent<TraitEventOverlayManager>().Initialize(_gameManager, _socialManager);
     }
 
     private void HandleStateChanged(GameState state)

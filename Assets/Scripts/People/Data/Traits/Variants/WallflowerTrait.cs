@@ -2,12 +2,12 @@
 {
     public TraitPhase Phase => TraitPhase.Initiate;
 
-    public bool CheckCondition(SocialContext context, PassengerController owner)
+    public bool CheckCondition(TraitContext context, PassengerController owner)
     {
         return false;
     }
 
-    public string Do(SocialContext context, PassengerController owner)
+    public string Do(TraitContext context, PassengerController owner)
     {
         return "";
     }

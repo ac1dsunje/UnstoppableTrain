@@ -1,13 +1,4 @@
-﻿
-using System;
-
-public enum Role
-{
-    Driver,
-    Mechanic,
-    Doctor,
-    NoSkill
-}
+﻿using System;
 
 [Serializable]
 public class ManData
