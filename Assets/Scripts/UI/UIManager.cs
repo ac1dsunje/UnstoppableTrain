@@ -1,29 +1,38 @@
 ﻿using UnityEngine;
 
-public class UIManager : MonoBehaviour 
+public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameManager _gameManager;
-
     [SerializeField] private TrainController _train;
-    [SerializeField] private TraitManager _socialManager;
+    [SerializeField] private GameEventsManager _eventsManager;
 
     private MainOverlayManager _mainOverlayManager;
-    private TraitEventOverlayManager _socialOverlaymanager;
+    private EventOverlayManager _eventOverlayManager;
+    private EndOverlayManager _endOverlayManager;
 
     private void OnEnable()
     {
         _gameManager.OnStateChanged += HandleStateChanged;
+        _train.OnAllDriversLeft += HandleNoDrivers;
     }
-
     private void OnDisable()
     {
         _gameManager.OnStateChanged -= HandleStateChanged;
+        _train.OnAllDriversLeft -= HandleNoDrivers;
     }
 
     private void Awake()
     {
         _mainOverlayManager = GetComponent<MainOverlayManager>().Initialize(_train);
-        _socialOverlaymanager = GetComponent<TraitEventOverlayManager>().Initialize(_gameManager, _socialManager);
+        _eventOverlayManager = GetComponent<EventOverlayManager>().Initialize(_gameManager, _eventsManager);
+        _endOverlayManager = GetComponent<EndOverlayManager>();
+    }
+
+    private void HandleNoDrivers()
+    {
+        _mainOverlayManager.HideScreen();
+        _eventOverlayManager.HideScreen();
+        _endOverlayManager.ShowScreen();
     }
 
     private void HandleStateChanged(GameState state)
@@ -31,18 +40,17 @@ public class UIManager : MonoBehaviour
         switch (state)
         {
             case GameState.moving:
-                _mainOverlayManager.ShowScreen();
-                _socialOverlaymanager.HideScreen();
-                break;
-
             case GameState.choosing:
+            case GameState.station:
                 _mainOverlayManager.ShowScreen();
-                _socialOverlaymanager.HideScreen();
+                _eventOverlayManager.HideScreen();
+                _endOverlayManager.HideScreen();
                 break;
 
-            case GameState.social:
+            case GameState.@event:
                 _mainOverlayManager.HideScreen();
-                _socialOverlaymanager.ShowScreen();
+                _eventOverlayManager.ShowScreen();
+                _endOverlayManager.HideScreen();
                 break;
         }
     }

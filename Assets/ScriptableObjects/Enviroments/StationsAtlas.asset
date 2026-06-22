@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 475bdf47dc4af7b4588581d474d3134a, type: 3}
-  m_Name: Normal
-  m_EditorClassIdentifier: Assembly-CSharp::StationsPreset
-  <Range>k__BackingField:
-    MinAmount: 1
-    MaxAmount: 4
+  m_Script: {fileID: 11500000, guid: 4c5cea4a630f82f4188fa34a78424615, type: 3}
+  m_Name: StationsAtlas
+  m_EditorClassIdentifier: Assembly-CSharp::TreeSO
+  EnvironmentObjects:
+  - {fileID: 7920926727020237154, guid: 1c91bf621fe1b0147a7585cbb832010b, type: 3}

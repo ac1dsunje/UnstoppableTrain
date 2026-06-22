@@ -4,7 +4,7 @@ public class PsychopathTrait : ITrait
 {
     public TraitPhase Phase => TraitPhase.Initiate;
 
-    public bool CheckCondition(TraitContext context, PassengerController owner)
+    public bool CheckCondition(SocialContext context, PassengerController owner)
     {
         if (context.ConflictStarted) return false;
 
@@ -13,7 +13,7 @@ public class PsychopathTrait : ITrait
         return Random.value < chance;
     }
 
-    public string Do(TraitContext context, PassengerController owner)
+    public string Do(SocialContext context, PassengerController owner)
     {
         context.ConflictStarted = true;
         return "A Psychopath started a conflict!";

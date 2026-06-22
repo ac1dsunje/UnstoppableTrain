@@ -5,7 +5,7 @@ public class LayingManUI : ScreenManager
     [SerializeField] private LayingManSlotUI _slot;
     [SerializeField] private LayingManController _controller;
 
-    public void OnMouseEnter()
+    private void OnMouseEnter()
     {
         if (_controller.isActive)
         {
@@ -14,7 +14,7 @@ public class LayingManUI : ScreenManager
         }
     }
 
-    public void OnMouseExit()
+    private void OnMouseExit()
     {
         if (_controller.isActive)
         {

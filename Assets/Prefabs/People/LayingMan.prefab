@@ -48,14 +48,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 466e80473a6b4a444b5cadb8e5df4b63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PassengerController
-  _minStationsNeeded: 1
-  _maxStationsNeeded: 30
-  Data:
-    Name: 
-    role: 0
-    trait: 0
-    StationsNeeded: 0
-    StationsLeft: 0
 --- !u!65 &2055043596465502827
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -177,7 +169,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: 1.25}
   m_SizeDelta: {x: 150, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &7430930420488840881

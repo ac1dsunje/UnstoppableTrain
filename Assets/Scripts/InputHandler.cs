@@ -5,6 +5,7 @@ public class InputHandler : MonoBehaviour
 {
     public Action OnLeft;
     public Action OnRight;
+    public Action OnRestart;
 
     private void Update()
     {
@@ -16,6 +17,11 @@ public class InputHandler : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.D))
         {
             OnRight?.Invoke();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            OnRestart?.Invoke();
         }
     }
 }

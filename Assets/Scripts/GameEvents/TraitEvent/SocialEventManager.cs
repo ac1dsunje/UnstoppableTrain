@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class TraitManager : MonoBehaviour
+public class SocialEventManager : EventManagerBase
 {
-    [SerializeField] private TrainController _train;
-    [SerializeField] private float _messageDelay = 1.2f;
-
-    public event Action<string> OnMessageGenerated;
-    public event Action OnPhaseFinished;
-
-    public bool TryStartTraitPhase()
+    public bool TryStartSocialPhase(List<PassengerController> passengers)
     {
-        var context = new TraitContext
+        var context = new SocialContext
         {
-            AllPassengers = new List<PassengerController>(_train.GetPassengers())
+            AllPassengers = passengers
         };
 
         string message = ExecutePhase(context, TraitPhase.Initiate);
@@ -26,15 +19,15 @@ public class TraitManager : MonoBehaviour
             return false;
         }
 
-        StartCoroutine(TraitPhaseCoroutine(context, message));
+        StartCoroutine(SocialPhaseCoroutine(context, message));
         return true;
     }
 
-    private IEnumerator TraitPhaseCoroutine(TraitContext context, string firstMessage)
+    private IEnumerator SocialPhaseCoroutine(SocialContext context, string firstMessage)
     {
         yield return null;
 
-        OnMessageGenerated?.Invoke(firstMessage);
+        SendPhaseMessage(firstMessage);
         yield return new WaitForSeconds(_messageDelay);
 
         var resolvePassengers = context.AllPassengers
@@ -45,14 +38,14 @@ public class TraitManager : MonoBehaviour
 
         if (!string.IsNullOrEmpty(message))
         {
-            OnMessageGenerated?.Invoke(message);
+            SendPhaseMessage(message);
             yield return new WaitForSeconds(_messageDelay);
-            OnPhaseFinished?.Invoke();
+            FinishPhase();
             yield break;
         }
         else
         {
-            OnMessageGenerated?.Invoke("Leaders couldn't stop the conflict!");
+            SendPhaseMessage("Leaders couldn't stop the conflict!");
             yield return new WaitForSeconds(_messageDelay);
         }
 
@@ -60,7 +53,7 @@ public class TraitManager : MonoBehaviour
 
         if (!string.IsNullOrEmpty(message))
         {
-            OnMessageGenerated?.Invoke(message);
+            SendMessage(message);
             yield return new WaitForSeconds(_messageDelay);
         }
         else
@@ -71,7 +64,7 @@ public class TraitManager : MonoBehaviour
             {
                 var victim = validVictims[UnityEngine.Random.Range(0, validVictims.Count)];
                 context.Victim = victim;
-                OnMessageGenerated?.Invoke($"{victim.GetData.Name} died!");
+                SendPhaseMessage($"{victim.GetData.Name} died!");
                 yield return new WaitForSeconds(_messageDelay);
             }
         }
@@ -81,10 +74,10 @@ public class TraitManager : MonoBehaviour
             context.Victim.Kill();
         }
 
-        OnPhaseFinished?.Invoke();
+        FinishPhase();
     }
 
-    private string ExecutePhase(TraitContext context, TraitPhase phase)
+    private string ExecutePhase(SocialContext context, TraitPhase phase)
     {
         var passengers = context.AllPassengers
             .Where(p => p.TraitBehavior.Phase == phase)
@@ -92,7 +85,7 @@ public class TraitManager : MonoBehaviour
         return ExecutePhaseForPassengers(context, passengers);
     }
 
-    private string ExecutePhaseForPassengers(TraitContext context, List<PassengerController> passengers)
+    private string ExecutePhaseForPassengers(SocialContext context, List<PassengerController> passengers)
     {
         foreach (var passenger in passengers)
         {

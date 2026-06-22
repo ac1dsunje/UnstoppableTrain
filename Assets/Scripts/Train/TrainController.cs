@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TrainController : MonoBehaviour, Imovement
@@ -13,8 +14,8 @@ public class TrainController : MonoBehaviour, Imovement
     private RoadController _currentRoad;
 
     public Action<TrainStats> OnStatsUpdated;
-
     public Action OnStationPassed;
+    public Action OnAllDriversLeft;
 
     private float _speedScale = 1f;
 
@@ -26,11 +27,12 @@ public class TrainController : MonoBehaviour, Imovement
     public void SetCurrentRoad(RoadController currentRoad)
     {
         _currentRoad = currentRoad;
-
-        _stats.chunksPassed++;
-
-        OnStationPassed.Invoke();
-        OnStatsUpdated.Invoke(_stats);
+        if (currentRoad.GetRoadType == RoadType.Station)
+        {
+            _stats.stationsPassed++;
+            OnStationPassed.Invoke();
+            OnStatsUpdated.Invoke(_stats);
+        }
     }
 
     public RoadController GetCurrentRoad() => _currentRoad;
@@ -47,7 +49,7 @@ public class TrainController : MonoBehaviour, Imovement
     {
         ManData data = ManFactory.Create(
             role: Role.Driver,
-            stationsNeeded: 10
+            stationsNeeded: 3
         );
 
         SpawnPassenger(data);
@@ -72,6 +74,13 @@ public class TrainController : MonoBehaviour, Imovement
     public void GetPassengerOut(PassengerController passenger)
     {
         _stats.Passengers.Remove(passenger);
+
+        if (passenger.GetData.role == Role.Driver &&
+            !_stats.Passengers.Any(p => p.GetData.role == Role.Driver))
+        {
+            OnAllDriversLeft?.Invoke();
+        }
+
         OnStatsUpdated?.Invoke(_stats);
     }
 }

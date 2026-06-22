@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1211257696267041544}
-  - component: {fileID: 6030350089991932492}
+  - component: {fileID: 315847358153786298}
   m_Layer: 0
-  m_Name: ChoosingRoad
+  m_Name: StationRoad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6030350089991932492
+--- !u!114 &315847358153786298
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,10 +41,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7180160364947763013}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17dc221a023518b45b7b1c0b83756625, type: 3}
+  m_Script: {fileID: 11500000, guid: 69224f52384e5054793a5b2f72c662fe, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ChoosingRoadController
+  m_EditorClassIdentifier: Assembly-CSharp::StationRoadController
   roadLength: 10
-  RailPrefab: {fileID: 7920926727020237154, guid: 06d98aa38d293fb4885a7ca1b56506f6, type: 3}
+  RailPrefab: {fileID: 7920926727020237154, guid: 0343b538b9884e84d9469225e4a45e1c, type: 3}
   _maxMenOnTheRail: 3
-  _environmentAtlas: {fileID: 11400000, guid: 1a54b416ac81dfb42876517c7f20aee2, type: 2}
+  _environmentAtlas: {fileID: 11400000, guid: 338dc669f5cb83248a1d834cc6704fed, type: 2}
