@@ -93,7 +93,6 @@ public class RoadController : MonoBehaviour
     {
         if (_roadType == RoadType.Choosing)
         {
-
             int randLeft = Random.Range(1, _maxMenOnTheRail+1);
             _leftRail.SpawnManyLayingMen(randLeft);
 

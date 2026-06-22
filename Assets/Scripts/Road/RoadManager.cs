@@ -15,8 +15,9 @@ public class RoadManager : MonoBehaviour
     [SerializeField] private TrainController _train;
 
     private List<RoadController> roads = new();
-    private int currentPatternIndex = 0;
     private Vector3 nextSpawnPosition = Vector3.zero;
+
+    private static WaitForSeconds _waitFor1Seconds = new WaitForSeconds(1f);
 
     private void Awake()
     {
@@ -39,8 +40,6 @@ public class RoadManager : MonoBehaviour
 
         newRoad.OnRoadStateChanged += OnRoadStateChanged;
         nextSpawnPosition = newRoad.transform.position + new Vector3(0, 0, newRoad.RoadLength);
-
-        currentPatternIndex++;
     }
 
     private void OnRoadStateChanged(RoadController road, bool isActive)
@@ -70,7 +69,7 @@ public class RoadManager : MonoBehaviour
 
     private IEnumerator DestroyOldAndSetNewRoad(RoadController road)
     {
-        yield return new WaitForSeconds(2);
+        yield return _waitFor1Seconds;
 
         roads.Remove(road);
         Destroy(road.gameObject);
