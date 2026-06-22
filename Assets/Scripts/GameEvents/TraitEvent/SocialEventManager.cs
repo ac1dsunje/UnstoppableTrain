@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class SocialEventManager : MonoBehaviour
+public class SocialEventManager : EventManagerBase
 {
-    [SerializeField] private float _messageDelay = 1.2f;
-
-    public event Action<string> OnMessageGenerated;
-    public event Action OnPhaseFinished;
-
     public bool TryStartSocialPhase(List<PassengerController> passengers)
     {
         var context = new SocialContext
@@ -33,7 +27,7 @@ public class SocialEventManager : MonoBehaviour
     {
         yield return null;
 
-        OnMessageGenerated?.Invoke(firstMessage);
+        SendPhaseMessage(firstMessage);
         yield return new WaitForSeconds(_messageDelay);
 
         var resolvePassengers = context.AllPassengers
@@ -44,14 +38,14 @@ public class SocialEventManager : MonoBehaviour
 
         if (!string.IsNullOrEmpty(message))
         {
-            OnMessageGenerated?.Invoke(message);
+            SendPhaseMessage(message);
             yield return new WaitForSeconds(_messageDelay);
-            OnPhaseFinished?.Invoke();
+            FinishPhase();
             yield break;
         }
         else
         {
-            OnMessageGenerated?.Invoke("Leaders couldn't stop the conflict!");
+            SendPhaseMessage("Leaders couldn't stop the conflict!");
             yield return new WaitForSeconds(_messageDelay);
         }
 
@@ -59,7 +53,7 @@ public class SocialEventManager : MonoBehaviour
 
         if (!string.IsNullOrEmpty(message))
         {
-            OnMessageGenerated?.Invoke(message);
+            SendMessage(message);
             yield return new WaitForSeconds(_messageDelay);
         }
         else
@@ -70,7 +64,7 @@ public class SocialEventManager : MonoBehaviour
             {
                 var victim = validVictims[UnityEngine.Random.Range(0, validVictims.Count)];
                 context.Victim = victim;
-                OnMessageGenerated?.Invoke($"{victim.GetData.Name} died!");
+                SendPhaseMessage($"{victim.GetData.Name} died!");
                 yield return new WaitForSeconds(_messageDelay);
             }
         }
@@ -80,7 +74,7 @@ public class SocialEventManager : MonoBehaviour
             context.Victim.Kill();
         }
 
-        OnPhaseFinished?.Invoke();
+        FinishPhase();
     }
 
     private string ExecutePhase(SocialContext context, TraitPhase phase)

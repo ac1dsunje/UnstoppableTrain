@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class EpidemicEventManager : MonoBehaviour
+public class EpidemicEventManager : EventManagerBase
 {
-    [SerializeField] private float _messageDelay = 1.2f;
-
-    public event Action<string> OnMessageGenerated;
-    public event Action OnPhaseFinished;
-
     public void StartEpidemicPhase(List<PassengerController> passengers)
     {
         StartCoroutine(EpidemicCoroutine(passengers));
@@ -20,7 +14,7 @@ public class EpidemicEventManager : MonoBehaviour
     {
         yield return null;
 
-        OnMessageGenerated?.Invoke("An epidemic has broken out in the cabin!");
+        SendPhaseMessage("An epidemic has broken out in the cabin!");
         yield return new WaitForSeconds(_messageDelay);
 
         int infectedCount = UnityEngine.Random.Range(1, passengers.Count + 1);
@@ -41,12 +35,12 @@ public class EpidemicEventManager : MonoBehaviour
             {
                 availableDoctors.RemoveAt(0);
                 context.Healed.Add(patient);
-                OnMessageGenerated?.Invoke($"{patient.GetData.Name} was healed by a doctor.");
+                SendPhaseMessage($"{patient.GetData.Name} was healed by a doctor.");
             }
             else
             {
                 context.Victims.Add(patient);
-                OnMessageGenerated?.Invoke($"{patient.GetData.Name} died from the disease.");
+                SendPhaseMessage($"{patient.GetData.Name} died from the disease.");
             }
 
             yield return new WaitForSeconds(_messageDelay);
@@ -57,6 +51,6 @@ public class EpidemicEventManager : MonoBehaviour
             victim.Kill();
         }
 
-        OnPhaseFinished?.Invoke();
+        FinishPhase();
     }
 }
