@@ -7,10 +7,12 @@ public class RoadManager : MonoBehaviour
     [SerializeField] private GameManager _gameManager;
 
     [SerializeField] private int _choosingRoadChance;
+    [SerializeField] private int _stationRoadChance;
     [SerializeField] private int _maxRoads;
 
     [SerializeField] private GameObject movingRoadPrefab;
     [SerializeField] private GameObject choosingRoadPrefab;
+    [SerializeField] private GameObject stationRoadPrefab;
 
     [SerializeField] private TrainController _train;
 
@@ -31,7 +33,20 @@ public class RoadManager : MonoBehaviour
     {
         int rand = Random.Range(0, 100);
 
-        GameObject prefabToSpawn = rand < _choosingRoadChance ? choosingRoadPrefab : movingRoadPrefab;
+        GameObject prefabToSpawn;
+
+        if (rand < _choosingRoadChance)
+        {
+            prefabToSpawn = choosingRoadPrefab;
+        }
+        else if (rand < _choosingRoadChance + _stationRoadChance)
+        {
+            prefabToSpawn = stationRoadPrefab;
+        }
+        else
+        {
+            prefabToSpawn = movingRoadPrefab;
+        }
 
         RoadController newRoad = Instantiate(prefabToSpawn, nextSpawnPosition, Quaternion.identity, transform).GetComponent<RoadController>();
         roads.Add(newRoad);
@@ -61,6 +76,10 @@ public class RoadManager : MonoBehaviour
 
                 case RoadType.Moving:
                     _gameManager.SetSocialState();
+                    break;
+
+                case RoadType.Station:
+                    _gameManager.SetStationState();
                     break;
             }
         }

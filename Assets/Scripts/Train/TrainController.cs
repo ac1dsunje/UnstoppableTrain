@@ -26,11 +26,12 @@ public class TrainController : MonoBehaviour, Imovement
     public void SetCurrentRoad(RoadController currentRoad)
     {
         _currentRoad = currentRoad;
-
-        _stats.chunksPassed++;
-
-        OnStationPassed.Invoke();
-        OnStatsUpdated.Invoke(_stats);
+        if (currentRoad.GetRoadType == RoadType.Station)
+        {
+            _stats.stationsPassed++;
+            OnStationPassed.Invoke();
+            OnStatsUpdated.Invoke(_stats);
+        }
     }
 
     public RoadController GetCurrentRoad() => _currentRoad;

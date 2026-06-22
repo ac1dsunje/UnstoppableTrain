@@ -5,7 +5,8 @@ using Random = UnityEngine.Random;
 public enum RoadType
 {
     Moving,
-    Choosing
+    Choosing,
+    Station
 }
 
 public class RoadController : MonoBehaviour
@@ -15,8 +16,7 @@ public class RoadController : MonoBehaviour
     [SerializeField] private RoadType _roadType;
     [SerializeField] private int _maxMenOnTheRail = 3;
     [SerializeField] private EnvironmentAtlas _environmentAtlas;
-
-    [SerializeField] private float xOffset = 1.5f;
+    private float xOffset = 1.5f;
 
     public Action<RoadController, bool> OnRoadStateChanged;
     public RoadType GetRoadType => _roadType;

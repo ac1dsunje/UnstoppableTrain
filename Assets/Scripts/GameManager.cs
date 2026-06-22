@@ -1,10 +1,12 @@
 using System;
+using System.Collections;
 using UnityEngine;
 public enum GameState
 {
     moving,
     social,
-    choosing
+    choosing,
+    station
 }
 
 public class GameManager : MonoBehaviour
@@ -76,6 +78,23 @@ public class GameManager : MonoBehaviour
         _cam.SetMovingPos();
 
         OnStateChanged?.Invoke(state);
+    }
+
+    public void SetStationState()
+    {
+        ChangeState(GameState.station);
+        _train.SetSpeedScale(0f);
+        _cam.SetChoosingPos();
+
+        StartCoroutine(WaitAtStation());
+        OnStateChanged?.Invoke(state);
+    }
+
+    private IEnumerator WaitAtStation()
+    {
+        Debug.Log("passengers getting out.. please wait");
+        yield return new WaitForSeconds(2f);
+        SetMovingState();
     }
 
     public void SetSocialState()

@@ -44,6 +44,11 @@ public class UIManager : MonoBehaviour
                 _mainOverlayManager.HideScreen();
                 _socialOverlaymanager.ShowScreen();
                 break;
+
+            case GameState.station:
+                _mainOverlayManager.ShowScreen();
+                _socialOverlaymanager.HideScreen();
+                break;
         }
     }
 }

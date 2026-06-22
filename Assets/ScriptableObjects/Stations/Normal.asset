@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Normal
   m_EditorClassIdentifier: Assembly-CSharp::StationsPreset
   <Range>k__BackingField:
-    MinAmount: 10
-    MaxAmount: 20
+    MinAmount: 1
+    MaxAmount: 4

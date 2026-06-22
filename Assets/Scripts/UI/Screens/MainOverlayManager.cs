@@ -84,7 +84,7 @@ public class MainOverlayManager : ScreenManager
 
     private void UpdateStats(TrainStats stats)
     {
-        _chunksPassedText.text = $"Stations passed: {stats.chunksPassed}";
+        _chunksPassedText.text = $"Stations passed: {stats.stationsPassed}";
         UpdatePassengers(stats.Passengers);
     }
 }
