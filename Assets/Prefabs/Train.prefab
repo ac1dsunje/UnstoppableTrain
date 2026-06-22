@@ -83,9 +83,6 @@ MonoBehaviour:
   _data: {fileID: 11400000, guid: 50fbbd64f1990544887d2287be5c80ab, type: 2}
   _passengerPrefab: {fileID: 564454119608622762, guid: 82c31e912af5e5346a17599f7ab38838, type: 3}
   _passengersContainer: {fileID: 388346275500345251}
-  _stats:
-    chunksPassed: -1
-    Passengers: []
 --- !u!114 &5384228613855419829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,6 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrainMovement
   _gameManager: {fileID: 0}
+  _switchRailsSpeed: 5
 --- !u!65 &397420497538933905
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -1,24 +1,20 @@
-﻿using System.Collections;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
-public class Bootstrap : MonoBehaviour
+public class GamePlayEntryPoint: MonoBehaviour
 {
-    [Scene]
-    [SerializeField] private string GamePlay;
-
     [SerializeField] private RolePreset rolePreset;
     [SerializeField] private TraitPreset traitPreset;
     [SerializeField] private StationsPreset stationtPreset;
 
-    private IEnumerator Start()
+    private void Start()
+    {
+        InitializeManFactories();
+    }   
+
+    private void InitializeManFactories()
     {
         RoleSelector.SetWeights(rolePreset.Weights);
         TraitSelector.SetWeights(traitPreset.Weights);
         StationsSelector.SetRange(stationtPreset.Range);
-
-        yield return new WaitForSeconds(1f);
-
-        SceneManager.LoadScene(GamePlay);
     }
 }

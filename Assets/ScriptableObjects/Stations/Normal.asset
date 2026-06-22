@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 475bdf47dc4af7b4588581d474d3134a, type: 3}
-  m_Name: NormalStationsSO
+  m_Name: Normal
   m_EditorClassIdentifier: Assembly-CSharp::StationsPreset
   <Range>k__BackingField:
     MinAmount: 10
