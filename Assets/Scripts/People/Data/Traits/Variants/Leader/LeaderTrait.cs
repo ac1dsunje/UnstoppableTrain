@@ -23,6 +23,6 @@ public class LeaderTrait : ITrait
     public string Do(SocialContext context, PassengerController owner)
     {
         context.ConflictResolved = true;
-        return "Leaders managed to stop the conflict!";
+        return $"{owner.GetData.Name} managed to stop the conflict!";
     }
 }

@@ -23,6 +23,6 @@ public class PsychopathTrait : ITrait
     public string Do(SocialContext context, PassengerController owner)
     {
         context.ConflictStarted = true;
-        return "A Psychopath started a conflict!";
+        return $"{owner.GetData.Name} started a conflict!";
     }
 }

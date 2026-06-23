@@ -46,7 +46,7 @@ public class GameEventsManager
 
     public bool TryStartEvent()
     {
-        int roll = UnityEngine.Random.Range(0, 6);
+        int roll = UnityEngine.Random.Range(0, 4);
 
         List<PassengerController> passengers = new();
 
