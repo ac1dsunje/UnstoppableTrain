@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class EpidemicEventManager : PhaseManagerBase
 {
+    public EpidemicEventManager(MonoBehaviour coroutineRunner, float messageDelay) : base(coroutineRunner, messageDelay) { }
+
     public void StartEpidemicPhase(List<PassengerController> passengers)
     {
         StartCoroutine(EpidemicCoroutine(passengers));

@@ -1,12 +1,20 @@
 ﻿using System;
 using UnityEngine;
+using System.Collections;
 
-public abstract class PhaseManagerBase : MonoBehaviour
+public abstract class PhaseManagerBase
 {
-    [SerializeField] protected float _messageDelay = 1.2f;
+    protected readonly MonoBehaviour _coroutineRunner;
+    protected readonly float _messageDelay;
 
     public event Action<string> OnMessageGenerated;
     public event Action OnPhaseFinished;
+
+    protected PhaseManagerBase(MonoBehaviour coroutineRunner, float messageDelay)
+    {
+        _coroutineRunner = coroutineRunner;
+        _messageDelay = messageDelay;
+    }
 
     protected void SendPhaseMessage(string message)
     {
@@ -16,5 +24,10 @@ public abstract class PhaseManagerBase : MonoBehaviour
     protected void FinishPhase()
     {
         OnPhaseFinished?.Invoke();
+    }
+
+    protected Coroutine StartCoroutine(IEnumerator routine)
+    {
+        return _coroutineRunner.StartCoroutine(routine);
     }
 }

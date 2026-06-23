@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class SocialEventManager : PhaseManagerBase
 {
+    public SocialEventManager(MonoBehaviour coroutineRunner, float messageDelay) : base(coroutineRunner, messageDelay) { }
+
     public bool TryStartSocialPhase(List<PassengerController> passengers)
     {
         var context = new SocialContext
@@ -62,9 +64,9 @@ public class SocialEventManager : PhaseManagerBase
 
             if (validVictims.Count > 0)
             {
-                var victim = validVictims[UnityEngine.Random.Range(0, validVictims.Count)];
+                var victim = validVictims[Random.Range(0, validVictims.Count)];
                 context.Victim = victim;
-                SendPhaseMessage($"{victim.GetData.Name} died!");
+                SendPhaseMessage($"{victim.GetData.Name} was killed!");
                 yield return new WaitForSeconds(_messageDelay);
             }
         }

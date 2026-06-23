@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BreakdownEventManager : PhaseManagerBase
 {
+    public BreakdownEventManager(MonoBehaviour coroutineRunner, float messageDelay) : base(coroutineRunner, messageDelay) { }
+
     public void StartBreakdownPhase(List<PassengerController> passengers)
     {
         StartCoroutine(BreakdownCoroutine(passengers));

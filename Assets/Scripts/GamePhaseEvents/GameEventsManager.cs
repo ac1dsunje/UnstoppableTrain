@@ -4,19 +4,25 @@ using UnityEngine;
 
 public class GameEventsManager : MonoBehaviour
 {
-    [SerializeField] private SocialEventManager _socialManager;
-    [SerializeField] private EpidemicEventManager _epidemicManager;
-    [SerializeField] private BreakdownEventManager _breakdownManager;
-    [SerializeField] private StationManager _stationManager;
+    [SerializeField] private float _messageDelay = 1.2f;
 
     public event Action<string> OnMessageGenerated;
     public event Action OnPhaseFinished;
 
     private TrainController _train;
+    private SocialEventManager _socialManager;
+    private EpidemicEventManager _epidemicManager;
+    private BreakdownEventManager _breakdownManager;
+    private StationManager _stationManager;
 
     public GameEventsManager Initialize(TrainController train)
     {
         _train = train;
+
+        _socialManager = new SocialEventManager(this, _messageDelay);
+        _epidemicManager = new EpidemicEventManager(this, _messageDelay);
+        _breakdownManager = new BreakdownEventManager(this, _messageDelay);
+        _stationManager = new StationManager(this, _messageDelay);
 
         SubscribeOnEventManager(_socialManager);
         SubscribeOnEventManager(_epidemicManager);

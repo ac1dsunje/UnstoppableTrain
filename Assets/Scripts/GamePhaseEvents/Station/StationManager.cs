@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class StationManager : PhaseManagerBase
 {
+    public StationManager(MonoBehaviour coroutineRunner, float messageDelay) : base(coroutineRunner, messageDelay) { }
+
     public bool TryStartStationPhase(List<PassengerController> passengers)
     {
         if (passengers == null || passengers.Count == 0) return false;
