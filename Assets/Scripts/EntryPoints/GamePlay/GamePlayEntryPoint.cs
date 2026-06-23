@@ -101,5 +101,6 @@ public class GamePlayEntryPoint : MonoBehaviour
         RoleSelector.SetWeights(difficulty.roleLevel.Weights);
         TraitSelector.SetWeights(difficulty.traitLevel.Weights);
         StationsSelector.SetRange(difficulty.stationsLevel.Range);
+        TraitFactory.SetConfig(difficulty.traitsConfig);
     }
 }

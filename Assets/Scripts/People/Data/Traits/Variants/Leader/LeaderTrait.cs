@@ -2,6 +2,13 @@
 
 public class LeaderTrait : ITrait
 {
+    private readonly LeaderConfig _config;
+
+    public LeaderTrait(LeaderConfig config)
+    {
+        _config = config;
+    }
+
     public TraitPhase Phase => TraitPhase.Resolve;
 
     public bool CheckCondition(SocialContext context, PassengerController owner)
@@ -9,7 +16,7 @@ public class LeaderTrait : ITrait
         if (!context.ConflictStarted || context.ConflictResolved) return false;
 
         int empaths = context.GetCount(Trait.Empath);
-        float chance = empaths * 0.10f;
+        float chance = empaths * _config.ScaleChance;
         return Random.value < chance;
     }
 

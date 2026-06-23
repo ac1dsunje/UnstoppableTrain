@@ -2,14 +2,20 @@
 
 public class EmpathTrait : ITrait
 {
+    private readonly EmpathConfig _config;
+
+    public EmpathTrait(EmpathConfig config)
+    {
+        _config = config;
+    }
+
     public TraitPhase Phase => TraitPhase.ModifyOutcome;
 
     public bool CheckCondition(SocialContext context, PassengerController owner)
     {
         if (!context.ConflictStarted || context.ConflictResolved || context.Victim != null) return false;
 
-        float sacrificeChance = 0.30f;
-        return Random.value < sacrificeChance;
+        return Random.value < _config.SacrificeChance;
     }
 
     public string Do(SocialContext context, PassengerController owner)

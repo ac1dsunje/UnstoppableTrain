@@ -10,4 +10,6 @@ public class DifficultySO : ScriptableObject
     [field: SerializeField] public RolePreset roleLevel { get; private set; }
 
     [field: SerializeField] public StationsPreset stationsLevel { get; private set; }
+
+    [field: SerializeField] public TraitsConfigSO traitsConfig { get; private set; }
 }
