@@ -5,7 +5,7 @@ public class TrainMovement : MonoBehaviour
     [SerializeField] private float _switchRailsSpeed = 5f;
 
     private GameStateManager _gameStateManager;
-    private Imovement _controller;
+    private ITrainMovement _controller;
     private Rigidbody _rigidBody;
     private RoadController _currentRoad;
 
@@ -23,7 +23,7 @@ public class TrainMovement : MonoBehaviour
     private void Awake()
     {
         _rigidBody = GetComponent<Rigidbody>();
-        _controller = GetComponent<Imovement>();
+        _controller = GetComponent<ITrainMovement>();
     }
 
     private void OnDestroy()

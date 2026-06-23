@@ -20,8 +20,11 @@ public static class SceneLoader
 
     public static IEnumerator RestartGameAsync()
     {
-        yield return SceneManager.UnloadSceneAsync(_gamePlayScene);
-        yield return LoadSceneAsync(_gamePlayScene);
+        AsyncOperation operation = SceneManager.LoadSceneAsync(_gamePlayScene);
+        while (!operation.isDone)
+        {
+            yield return null;
+        }
     }
 
     private static IEnumerator LoadSceneAsync(string targetScene)
@@ -41,10 +44,8 @@ public static class SceneLoader
         while (targetOperation.progress < 0.9f)
         {
             float targetProgress = targetOperation.progress / 0.9f;
-
             currentProgress = Mathf.MoveTowards(currentProgress, targetProgress, Time.deltaTime * 0.5f);
             LoadingUI.SetProgress(currentProgress);
-
             yield return null;
         }
 

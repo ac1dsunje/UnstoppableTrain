@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BreakdownEventManager : EventManagerBase
+public class BreakdownEventManager : PhaseManagerBase
 {
     public void StartBreakdownPhase(List<PassengerController> passengers)
     {

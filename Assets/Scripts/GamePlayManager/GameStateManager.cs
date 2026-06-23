@@ -5,6 +5,7 @@ public class GameStateManager
 {
     private readonly Dictionary<Type, IGameState> _states = new();
     private readonly GameEventsManager _eventsManager;
+    private readonly TrainController _train;
     private IGameState _currentState;
     private bool _isEnd;
 
@@ -12,9 +13,10 @@ public class GameStateManager
     public Action OnMoveRight;
     public Action<Type> OnStateChanged;
 
-    public GameStateManager(GameEventsManager eventsManager)
+    public GameStateManager(GameEventsManager eventsManager, TrainController train)
     {
         _eventsManager = eventsManager;
+        _train = train;
     }
 
     public void RegisterState<T>(T state) where T : IGameState
@@ -43,6 +45,24 @@ public class GameStateManager
         else
         {
             EnterIn<MovingState>();
+        }
+    }
+
+    public void TryEnterStationState()
+    {
+        bool shouldEnterStation = false;
+
+        foreach (var passenger in _train.GetPassengers())
+        {
+            if (passenger.CheckLeave())
+            {
+                shouldEnterStation = true;
+            }
+        }
+
+        if (shouldEnterStation)
+        {
+            EnterIn<StationState>();
         }
     }
 

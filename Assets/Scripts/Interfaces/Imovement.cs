@@ -1,7 +1,4 @@
-using UnityEngine;
-
-public interface Imovement
+﻿public interface Imovement
 {
-    float GetSpeed();
-    RoadController GetCurrentRoad();
+    public float GetSpeed();
 }

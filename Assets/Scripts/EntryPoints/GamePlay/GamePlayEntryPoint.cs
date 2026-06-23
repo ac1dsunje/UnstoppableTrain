@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GamePlayEntryPoint : MonoBehaviour
 {
@@ -14,6 +13,9 @@ public class GamePlayEntryPoint : MonoBehaviour
     [Header("Train")]
     [SerializeField] private GameObject _trainPrefab;
     [SerializeField] private Vector3 TrainSpawnPosition = new(1.5f, 1.3f, -20f);
+
+    [Header("Phases")]
+    [SerializeField] private StationManager _stationManager;
 
     [Header("UI")]
     [SerializeField] private UIManager _uiManager;
@@ -44,7 +46,7 @@ public class GamePlayEntryPoint : MonoBehaviour
 
         _train.GetComponent<TrainMovement>().Initialize(_gameStateManager);
         _roadManager.Initialize(_gameStateManager, _train);
-        _uiManager.Initialize(_gameStateManager, _train, _eventsManager,
+        _uiManager.Initialize(_gameStateManager, _train, _eventsManager, _stationManager,
                               _mainOverlay, _eventOverlay, _endOverlay);
     }
 
@@ -84,11 +86,11 @@ public class GamePlayEntryPoint : MonoBehaviour
 
     private GameStateManager BuildGameStateManager(TrainController train)
     {
-        var gsm = new GameStateManager(_eventsManager);
+        var gsm = new GameStateManager(_eventsManager, _train);
 
         gsm.RegisterState(new MovingState(train, _cam));
         gsm.RegisterState(new ChoosingState(train, _cam));
-        gsm.RegisterState(new StationState(train, _cam, gsm, _coroutineRunner));
+        gsm.RegisterState(new StationState(train, _cam, _stationManager));
         gsm.RegisterState(new EventState(train, _cam));
         gsm.RegisterState(new EndState(train));
 

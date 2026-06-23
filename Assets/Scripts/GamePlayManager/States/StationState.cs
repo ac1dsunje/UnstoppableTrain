@@ -1,34 +1,28 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 
 public class StationState : IGameState
 {
     private readonly TrainController _train;
     private readonly CameraController _cam;
-    private readonly GameStateManager _manager;
-    private readonly CoroutineRunner _runner;
+    private readonly StationManager _stationManager;
 
-    public StationState(TrainController train, CameraController cam,
-                        GameStateManager manager, CoroutineRunner runner)
+    public StationState(TrainController train, CameraController cam, StationManager stationManager)
     {
         _train = train;
         _cam = cam;
-        _manager = manager;
-        _runner = runner;
+        _stationManager = stationManager;
     }
 
     public void Enter()
     {
         _train.Stop();
         _cam.SetBirdView();
-        _runner.Run(WaitAtStation());
+
+        List<PassengerController> passengers = new(_train.GetPassengers());
+        _stationManager.StartStationPhase(passengers);
     }
 
-    public void Exit() { }
-
-    private IEnumerator WaitAtStation()
+    public void Exit()
     {
-        // ToDo: add passengers getting out animation
-        yield return new UnityEngine.WaitForSeconds(2f);
-        _manager.EnterIn<MovingState>();
     }
 }

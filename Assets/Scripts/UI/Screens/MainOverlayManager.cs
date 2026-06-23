@@ -15,7 +15,6 @@ public class MainOverlayManager : ScreenManager
 
     private void OnDisable()
     {
-        if (_train == null) return;
         _train.OnStatsUpdated -= UpdateStats;
     }
 

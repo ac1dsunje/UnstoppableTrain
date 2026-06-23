@@ -2,16 +2,15 @@
 
 public class PassengerController : MonoBehaviour
 {
-    [SerializeField] private TrainController _train;
-    [SerializeField] private ManData _data = new();
+    private TrainController _train;
+    private ManData _data = new();
     
     public ManData GetData => _data;
     public ITrait TraitBehavior { get; private set; }
 
     private void OnDisable()
     {
-        if (_train != null)
-            _train.OnStationPassed -= CheckStationIndex;
+        _train.OnStationPassed -= CheckStationIndex;
     }
 
     public PassengerController Initialize(TrainController train, ManData data)
@@ -23,17 +22,31 @@ public class PassengerController : MonoBehaviour
         TraitBehavior = TraitFactory.Create(data.trait);
 
         _train.OnStationPassed += CheckStationIndex;
-
         return this;
     }
 
-    private void CheckStationIndex()
+    public void CheckStationIndex()
     {
         _data.StationsLeft--;
+    }
+
+    public bool CheckLeave()
+    {
+        if (_data.StationsLeft <= 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool TryLeave()
+    {
         if (_data.StationsLeft <= 0)
         {
             Leave();
+            return true;
         }
+        return false;
     }
 
     private void Leave()

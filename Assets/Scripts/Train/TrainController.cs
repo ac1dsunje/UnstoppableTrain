@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class TrainController : MonoBehaviour, Imovement
+public class TrainController : MonoBehaviour, ITrainMovement
 {
     [SerializeField] private TrainSO _data;
     [SerializeField] private GameObject _passengerPrefab;

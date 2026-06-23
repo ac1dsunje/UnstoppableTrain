@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public abstract class EventManagerBase : MonoBehaviour
+public abstract class PhaseManagerBase : MonoBehaviour
 {
     [SerializeField] protected float _messageDelay = 1.2f;
 

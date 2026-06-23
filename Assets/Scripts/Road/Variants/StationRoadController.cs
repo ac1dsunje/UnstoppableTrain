@@ -4,6 +4,6 @@
 
     protected override void OnRoadActivated()
     {
-        _gameStateManager.EnterIn<StationState>();
+        _gameStateManager.TryEnterStationState();
     }
 }

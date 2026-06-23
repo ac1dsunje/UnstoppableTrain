@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class SocialEventManager : EventManagerBase
+public class SocialEventManager : PhaseManagerBase
 {
     public bool TryStartSocialPhase(List<PassengerController> passengers)
     {
