@@ -7,7 +7,7 @@ public class LayingManController : MonoBehaviour, ISkin
     [SerializeField] private MeshRenderer _shape;
 
     public ManData Data { get; private set; }
-    public Action<LayingManController> OnDeath;
+    public event Action<LayingManController> OnDeath;
     public event Action<ManData> OnManDataInitialized;
 
     public bool isActive { get; private set; }

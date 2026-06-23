@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class InputHandler : MonoBehaviour
 {
-    public Action OnLeft;
-    public Action OnRight;
-    public Action OnRestart;
+    public event Action OnLeft;
+    public event Action OnRight;
+    public event Action OnRestart;
 
     private void Update()
     {

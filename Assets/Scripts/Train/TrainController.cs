@@ -15,9 +15,9 @@ public class TrainController : MonoBehaviour, ITrainMovement
     private RoadController _currentRoad;
     private float _speedScale = 1f;
 
-    public Action<TrainStats> OnStatsUpdated;
-    public Action OnStationPassed;
-    public Action OnAllDriversLeft;
+    public event Action<TrainStats> OnStatsUpdated;
+    public event Action OnStationPassed;
+    public event Action OnAllDriversLeft;
 
     public TrainController Initialize()
     {

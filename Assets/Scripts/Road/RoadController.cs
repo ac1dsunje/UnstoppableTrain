@@ -14,7 +14,7 @@ public abstract class RoadController : MonoBehaviour
 
     private float xOffset = 1.5f;
 
-    public Action<RoadController, bool> OnRoadStateChanged;
+    public event Action<RoadController, bool> OnRoadStateChanged;
 
     public abstract RoadType GetRoadType { get; }
 

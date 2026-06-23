@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq; // Добавлен для .Any()
+using System.Linq;
 
 public class GameStateManager
 {
@@ -10,9 +10,9 @@ public class GameStateManager
     private IGameState _currentState;
     private bool _isEnd;
 
-    public Action OnMoveLeft;
-    public Action OnMoveRight;
-    public Action<Type> OnStateChanged;
+    public event Action OnMoveLeft;
+    public event Action OnMoveRight;
+    public event Action<Type> OnStateChanged;
 
     public GameStateManager(GameEventsManager eventsManager, TrainController train)
     {

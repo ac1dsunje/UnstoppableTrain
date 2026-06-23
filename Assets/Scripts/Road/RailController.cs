@@ -9,8 +9,8 @@ public class RailController : MonoBehaviour
     public List<LayingManController> LayingMen => _layingMen;
 
 
-    public Action<bool> OnThisActive;
-    public Action OnAllLayingMenDied;
+    public event Action<bool> OnThisActive;
+    public event Action OnAllLayingMenDied;
 
     public void SpawnManyLayingMen(int count)
     {
