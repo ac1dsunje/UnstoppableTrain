@@ -16,9 +16,7 @@ public class GamePlayEntryPoint : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private UIManager _uiManager;
-    [SerializeField] private MainOverlayManager _mainOverlay;
-    [SerializeField] private EventOverlayManager _eventOverlay;
-    [SerializeField] private EndOverlayManager _endOverlay;
+    [SerializeField] private Canvas _canvas;
 
     [Header("Preset")]
     [SerializeField] private DifficultySO difficulty;
@@ -48,8 +46,7 @@ public class GamePlayEntryPoint : MonoBehaviour
         _roadManager = new RoadManager(_roadConfig, _coroutineRunner, roadsParent);
         _roadManager.Initialize(_gameStateManager, _train);
 
-        _uiManager.Initialize(_gameStateManager, _train, _eventsManager,
-                              _mainOverlay, _eventOverlay, _endOverlay);
+        _uiManager.Initialize(_gameStateManager, _train, _eventsManager, _canvas);
     }
 
     private void Start()
