@@ -29,12 +29,12 @@ public abstract class RoadController : MonoBehaviour
     public RailController RightRail => _rightRail;
 
     protected TrainController _train;
-    protected GameManager _gameManager;
+    protected GameStateManager _gameStateManager;
 
-    public RoadController Initialize(TrainController train, GameManager gameManager)
+    public RoadController Initialize(TrainController train, GameStateManager gameStateManager)
     {
         _train = train;
-        _gameManager = gameManager;
+        _gameStateManager = gameStateManager;
         return this;
     }
 

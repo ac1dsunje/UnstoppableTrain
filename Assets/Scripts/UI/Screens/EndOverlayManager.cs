@@ -10,11 +10,8 @@ public class EndOverlayManager : ScreenManager
     {
         _endText.text = "No drivers left in the train...";
         _hintText.text = "Press R to respawn";
-        base.Show();
+        Show();
     }
 
-    public override void HideScreen()
-    {
-        base.Hide();
-    }
+    public override void HideScreen() => Hide();
 }

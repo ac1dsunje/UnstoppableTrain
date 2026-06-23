@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class RoadManager : MonoBehaviour
 {
-    [SerializeField] private GameManager _gameManager;
-    [SerializeField] private TrainController _train;
-
     [SerializeField] private int _choosingRoadChance;
     [SerializeField] private int _stationRoadChance;
     [SerializeField] private int _maxRoads;
@@ -15,16 +12,24 @@ public class RoadManager : MonoBehaviour
     [SerializeField] private GameObject choosingRoadPrefab;
     [SerializeField] private GameObject stationRoadPrefab;
 
+    private GameStateManager _gameStateManager;
+    private TrainController _train;
+
     private List<RoadController> roads = new();
     private Vector3 nextSpawnPosition = Vector3.zero;
     private static WaitForSeconds _waitFor1Seconds = new WaitForSeconds(1f);
 
-    private void Awake()
+    public RoadManager Initialize(GameStateManager gameStateManager, TrainController train)
     {
+        _gameStateManager = gameStateManager;
+        _train = train;
+
         for (int i = 0; i < _maxRoads; i++)
         {
             SpawnNextRoad();
         }
+
+        return this;
     }
 
     private void SpawnNextRoad()
@@ -38,7 +43,7 @@ public class RoadManager : MonoBehaviour
 
         RoadController newRoad = Instantiate(prefabToSpawn, nextSpawnPosition, Quaternion.identity, transform)
             .GetComponent<RoadController>()
-            .Initialize(_train, _gameManager);
+            .Initialize(_train, _gameStateManager);
 
         roads.Add(newRoad);
         newRoad.OnRoadStateChanged += OnRoadStateChanged;

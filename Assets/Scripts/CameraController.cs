@@ -2,42 +2,34 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private Transform _target;
     [SerializeField] private Vector3 _followingOffset = new Vector3(0, 5, -10);
     [SerializeField] private Vector3 _birdOffset = new Vector3(0, 15, 0);
     [SerializeField] private float _time = 0.5f;
 
+    private Transform _target;
     private bool _isFollowingPlayer;
     private Quaternion _defaultRotation;
 
-    private void Awake()
+    public CameraController Initialize(Transform target)
     {
+        _target = target;
         _defaultRotation = transform.rotation;
         SetMovingPos();
+        return this;
     }
 
     private void LateUpdate()
     {
-        SetCameraMode();
-    }
+        if (_target == null) return;
 
-    private void SetCameraMode()
-    {
-        if (_isFollowingPlayer)
-        {
-            FollowPlayer();
-        }
-        else
-        {
-            BirdView();
-        }
+        if (_isFollowingPlayer) FollowPlayer();
+        else BirdView();
     }
 
     private void FollowPlayer()
     {
         Vector3 targetPosition = _target.position + _followingOffset;
         transform.position = Vector3.Lerp(transform.position, targetPosition, _time);
-
         transform.rotation = Quaternion.Slerp(transform.rotation, _defaultRotation, _time);
     }
 
@@ -50,13 +42,6 @@ public class CameraController : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, birdViewRotation, _time);
     }
 
-    public void SetChoosingPos()
-    {
-        _isFollowingPlayer = false;
-    }
-
-    public void SetMovingPos()
-    {
-        _isFollowingPlayer = true;
-    }
+    public void SetChoosingPos() => _isFollowingPlayer = false;
+    public void SetMovingPos() => _isFollowingPlayer = true;
 }

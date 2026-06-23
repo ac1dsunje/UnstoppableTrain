@@ -95,7 +95,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd8b740cfd609564bb984e7ea2c3d4d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrainMovement
-  _gameManager: {fileID: 0}
   _switchRailsSpeed: 5
 --- !u!65 &397420497538933905
 BoxCollider:

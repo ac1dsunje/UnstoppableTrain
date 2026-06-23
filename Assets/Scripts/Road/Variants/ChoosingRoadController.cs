@@ -20,7 +20,7 @@ public class ChoosingRoadController : RoadController
 
     protected override void OnRoadActivated()
     {
-        _gameManager.SetChoosingState();
+        _gameStateManager.EnterIn<ChoosingState>();
     }
 
     protected override void OnRailCleared(RailController clearedRail, RailController remainingRail)

@@ -10,18 +10,17 @@ public class TrainController : MonoBehaviour, Imovement
     [SerializeField] private Transform _passengersContainer;
 
     private TrainStats _stats = new();
-
     private RoadController _currentRoad;
+    private float _speedScale = 1f;
 
     public Action<TrainStats> OnStatsUpdated;
     public Action OnStationPassed;
     public Action OnAllDriversLeft;
 
-    private float _speedScale = 1f;
-
-    private void Start()
+    public TrainController Initialize()
     {
         SpawnInitialTeam();
+        return this;
     }
 
     public void SetCurrentRoad(RoadController currentRoad)
@@ -30,59 +29,22 @@ public class TrainController : MonoBehaviour, Imovement
         if (currentRoad.GetRoadType == RoadType.Station)
         {
             _stats.stationsPassed++;
-            OnStationPassed.Invoke();
-            OnStatsUpdated.Invoke(_stats);
+            OnStationPassed?.Invoke();
+            OnStatsUpdated?.Invoke(_stats);
         }
     }
 
     public RoadController GetCurrentRoad() => _currentRoad;
-
     public float GetSpeed() => _data.MoveSpeed * _speedScale;
-
     public void SetSpeedScale(float speed) => _speedScale = speed;
-
-    private int GetMaxCapacity() => _data.MaxAmount;
-
     public List<PassengerController> GetPassengers() => _stats.Passengers;
 
-    private void SpawnInitialTeam()
-    {
-        ManData data = ManFactory.Create(
-            role: Role.Driver,
-            stationsNeeded: 3
-        );
-
-        SpawnPassenger(data);
-
-        data = ManFactory.Create(
-            role: Role.Mechanic,
-            stationsNeeded: 2
-        );
-
-        SpawnPassenger(data);
-
-        data = ManFactory.Create(
-            role: Role.Doctor,
-            stationsNeeded: 2
-        );
-
-        SpawnPassenger(data);
-    }
+    private int GetMaxCapacity() => _data.MaxAmount;
 
     public void TakeLayingMan(ManData data)
     {
         if (_stats.Passengers.Count >= GetMaxCapacity()) return;
         SpawnPassenger(data);
-    }
-
-    private void SpawnPassenger(ManData data)
-    {
-        var passenger = Instantiate(_passengerPrefab, transform.position, Quaternion.identity, _passengersContainer)
-            .GetComponent<PassengerController>()
-            .Initialize(this, data);
-
-        _stats.Passengers.Add(passenger);
-        OnStatsUpdated?.Invoke(_stats);
     }
 
     public void GetPassengerOut(PassengerController passenger)
@@ -96,6 +58,23 @@ public class TrainController : MonoBehaviour, Imovement
             return;
         }
 
+        OnStatsUpdated?.Invoke(_stats);
+    }
+
+    private void SpawnInitialTeam()
+    {
+        SpawnPassenger(ManFactory.Create(role: Role.Driver, stationsNeeded: 3));
+        SpawnPassenger(ManFactory.Create(role: Role.Mechanic, stationsNeeded: 2));
+        SpawnPassenger(ManFactory.Create(role: Role.Doctor, stationsNeeded: 2));
+    }
+
+    private void SpawnPassenger(ManData data)
+    {
+        var passenger = Instantiate(_passengerPrefab, transform.position, Quaternion.identity, _passengersContainer)
+            .GetComponent<PassengerController>()
+            .Initialize(this, data);
+
+        _stats.Passengers.Add(passenger);
         OnStatsUpdated?.Invoke(_stats);
     }
 }

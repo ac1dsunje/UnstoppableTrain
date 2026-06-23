@@ -7,14 +7,14 @@ public class EventOverlayManager : ScreenManager
     [SerializeField] private Button _acceptButton;
     [SerializeField] private TextMeshProUGUI _infoText;
 
-    private GameManager _gameManager;
+    private GameStateManager _gameStateManager;
     private GameEventsManager _eventsManager;
 
-    public EventOverlayManager Initialize(GameManager gm, GameEventsManager em)
+    public EventOverlayManager Initialize(GameStateManager gameStateManager, GameEventsManager eventsManager)
     {
         HideScreen();
-        _gameManager = gm;
-        _eventsManager = em;
+        _gameStateManager = gameStateManager;
+        _eventsManager = eventsManager;
 
         _eventsManager.OnMessageGenerated += AddMessage;
         _eventsManager.OnPhaseFinished += OnPhaseFinished;
@@ -47,7 +47,7 @@ public class EventOverlayManager : ScreenManager
     {
         _infoText.text = "";
         _acceptButton.gameObject.SetActive(false);
-        _gameManager.SetMovingState();
+        _gameStateManager.EnterIn<MovingState>();
     }
 
     public override void HideScreen() => Hide();

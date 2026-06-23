@@ -6,7 +6,6 @@ public class MainOverlayManager : ScreenManager
 {
     [SerializeField] private TextMeshProUGUI _chunksPassedText;
     [SerializeField] private Transform _passengersInfoContainer;
-
     [SerializeField] private PassengerInfoSlotUI _passengerInfoSlotPrefab;
 
     private TrainController _train;
@@ -16,6 +15,7 @@ public class MainOverlayManager : ScreenManager
 
     private void OnDisable()
     {
+        if (_train == null) return;
         _train.OnStatsUpdated -= UpdateStats;
     }
 
@@ -26,12 +26,20 @@ public class MainOverlayManager : ScreenManager
         return this;
     }
 
+    public override void ShowScreen() => Show();
+    public override void HideScreen() => Hide();
+
+    private void UpdateStats(TrainStats stats)
+    {
+        _chunksPassedText.text = $"Stations passed: {stats.stationsPassed}";
+        UpdatePassengers(stats.Passengers);
+    }
+
     private void UpdatePassengers(List<PassengerController> passengers)
     {
         if (passengers == null) return;
 
         DeletePassengers(passengers);
-
         AddOrRefreshPassengers(passengers);
     }
 
@@ -59,13 +67,9 @@ public class MainOverlayManager : ScreenManager
 
             int index = _passengersControllers.IndexOf(passenger);
             if (index == -1)
-            {
                 SpawnPassenger(passenger);
-            }
             else
-            {
                 _passengersSlots[index].Refresh();
-            }
         }
     }
 
@@ -75,15 +79,5 @@ public class MainOverlayManager : ScreenManager
         var slotUI = item.GetComponent<PassengerInfoSlotUI>().Initialize(passenger.GetData);
         _passengersControllers.Add(passenger);
         _passengersSlots.Add(slotUI);
-    }
-
-    public override void ShowScreen() => Show();
-
-    public override void HideScreen() => Hide();
-
-    private void UpdateStats(TrainStats stats)
-    {
-        _chunksPassedText.text = $"Stations passed: {stats.stationsPassed}";
-        UpdatePassengers(stats.Passengers);
     }
 }
