@@ -18,6 +18,8 @@ public class GameStateManager
     {
         _eventsManager = eventsManager;
         _train = train;
+
+        _train.OnAllDriversLeft += OnAllDriversLeft;
     }
 
     public void RegisterState<T>(T state) where T : IGameState
@@ -64,6 +66,11 @@ public class GameStateManager
         }
     }
 
+    private void OnAllDriversLeft()
+    {
+        EnterIn<EndState>();
+    }
+
     public bool IsInState<T>() where T : IGameState
         => _currentState is T;
 
@@ -79,5 +86,11 @@ public class GameStateManager
         if (!IsInState<ChoosingState>()) return;
         OnMoveRight?.Invoke();
         EnterIn<MovingState>();
+    }
+
+    public void Dispose()
+    {
+        _train.OnAllDriversLeft -= OnAllDriversLeft;
+        _states.Clear();
     }
 }

@@ -25,7 +25,6 @@ public class GamePlayEntryPoint : MonoBehaviour
     private TrainController _train;
     private GameEventsManager _eventsManager;
     private RoadManager _roadManager;
-    private Action _onAllDriversLeft;
 
     private void Awake()
     {
@@ -38,7 +37,6 @@ public class GamePlayEntryPoint : MonoBehaviour
         _eventsManager = new GameEventsManager(_coroutineRunner, _train, _messageDelay);
 
         _gameStateManager = BuildGameStateManager(_train);
-        _onAllDriversLeft = () => _gameStateManager.EnterIn<EndState>();
 
         _train.GetComponent<TrainMovement>().Initialize(_gameStateManager);
 
@@ -59,7 +57,6 @@ public class GamePlayEntryPoint : MonoBehaviour
         _input.OnLeft += _gameStateManager.TryMoveLeft;
         _input.OnRight += _gameStateManager.TryMoveRight;
         _input.OnRestart += TryRestart;
-        _train.OnAllDriversLeft += _onAllDriversLeft;
     }
 
     private void OnDisable()
@@ -67,7 +64,6 @@ public class GamePlayEntryPoint : MonoBehaviour
         _input.OnLeft -= _gameStateManager.TryMoveLeft;
         _input.OnRight -= _gameStateManager.TryMoveRight;
         _input.OnRestart -= TryRestart;
-        _train.OnAllDriversLeft -= _onAllDriversLeft;
     }
 
     private void TryRestart()
@@ -75,6 +71,7 @@ public class GamePlayEntryPoint : MonoBehaviour
         if (!_gameStateManager.IsInState<EndState>()) return;
 
         _roadManager.Dispose();
+        _gameStateManager.Dispose();
         StartCoroutine(SceneLoader.RestartGameAsync());
     }
 
