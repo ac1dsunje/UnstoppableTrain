@@ -170,7 +170,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 1.25}
-  m_SizeDelta: {x: 150, y: 60}
+  m_SizeDelta: {x: 100, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &7430930420488840881
 Canvas:
@@ -345,6 +345,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2754471098121969522, guid: 0ac0857b8e522bb42b3ed3fb7484e7bc, type: 3}
+      propertyPath: m_fontSize
+      value: 13.4
+      objectReference: {fileID: 0}
     - target: {fileID: 2966759603098629223, guid: 0ac0857b8e522bb42b3ed3fb7484e7bc, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -393,6 +397,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5626795777234876440, guid: 0ac0857b8e522bb42b3ed3fb7484e7bc, type: 3}
+      propertyPath: m_fontSize
+      value: 13.4
+      objectReference: {fileID: 0}
     - target: {fileID: 5944874782405341894, guid: 0ac0857b8e522bb42b3ed3fb7484e7bc, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -416,6 +424,10 @@ PrefabInstance:
     - target: {fileID: 5944874782405341894, guid: 0ac0857b8e522bb42b3ed3fb7484e7bc, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6339532911035463118, guid: 0ac0857b8e522bb42b3ed3fb7484e7bc, type: 3}
+      propertyPath: m_CellSize.x
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7740796003282091367, guid: 0ac0857b8e522bb42b3ed3fb7484e7bc, type: 3}
       propertyPath: m_Pivot.x
@@ -497,9 +509,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8326165787114603422, guid: 0ac0857b8e522bb42b3ed3fb7484e7bc, type: 3}
+      propertyPath: m_fontSize
+      value: 13.4
+      objectReference: {fileID: 0}
     - target: {fileID: 8457680438900454513, guid: 0ac0857b8e522bb42b3ed3fb7484e7bc, type: 3}
       propertyPath: m_Name
       value: LayingManSlotPrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 9208944195984993951, guid: 0ac0857b8e522bb42b3ed3fb7484e7bc, type: 3}
+      propertyPath: m_fontSize
+      value: 13.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
