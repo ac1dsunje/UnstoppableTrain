@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public class GameStateManager
+public class GameStateManager: IDisposable
 {
     private readonly Dictionary<Type, IGameState> _states = new();
     private readonly GameEventsManager _eventsManager;

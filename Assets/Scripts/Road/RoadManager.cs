@@ -1,8 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoadManager
+using Random = UnityEngine.Random;
+using Object = UnityEngine.Object;
+
+public class RoadManager: IDisposable
 {
     private readonly RoadConfigSO _config;
     private readonly MonoBehaviour _coroutineRunner;
