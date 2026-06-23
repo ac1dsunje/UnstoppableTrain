@@ -10,6 +10,7 @@ public abstract class RoadController : MonoBehaviour
     [SerializeField] private GameObject RailPrefab;
     [SerializeField] protected int _maxMenOnTheRail = 3;
     [SerializeField] private EnvironmentAtlas _environmentAtlas;
+    [SerializeField] private SoundData _onEnterSound;
 
     private float xOffset = 1.5f;
 
@@ -98,6 +99,7 @@ public abstract class RoadController : MonoBehaviour
 
             if (_isRoadActive)
             {
+                MediaEvents.TriggerEvent(transform.position, _onEnterSound);
                 ActivateMenOnRails();
                 OnRoadActivated();
             }
