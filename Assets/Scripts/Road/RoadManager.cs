@@ -4,14 +4,7 @@ using UnityEngine;
 
 public class RoadManager : MonoBehaviour
 {
-    [SerializeField] private int _choosingRoadChance;
-    [SerializeField] private int _stationRoadChance;
-    [SerializeField] private int _maxRoads;
-
-    [SerializeField] private GameObject movingRoadPrefab;
-    [SerializeField] private GameObject choosingRoadPrefab;
-    [SerializeField] private GameObject stationRoadPrefab;
-
+    [SerializeField] private RoadConfigSO _config;
     private GameStateManager _gameStateManager;
     private TrainController _train;
 
@@ -24,7 +17,7 @@ public class RoadManager : MonoBehaviour
         _gameStateManager = gameStateManager;
         _train = train;
 
-        for (int i = 0; i < _maxRoads; i++)
+        for (int i = 0; i < _config._maxRoads; i++)
         {
             SpawnNextRoad();
         }
@@ -37,9 +30,9 @@ public class RoadManager : MonoBehaviour
         int rand = Random.Range(0, 100);
         GameObject prefabToSpawn;
 
-        if (rand < _choosingRoadChance) prefabToSpawn = choosingRoadPrefab;
-        else if (rand < _choosingRoadChance + _stationRoadChance) prefabToSpawn = stationRoadPrefab;
-        else prefabToSpawn = movingRoadPrefab;
+        if (rand < _config._choosingRoadChance) prefabToSpawn = _config.choosingRoadPrefab;
+        else if (rand < _config._choosingRoadChance + _config._stationRoadChance) prefabToSpawn = _config.stationRoadPrefab;
+        else prefabToSpawn = _config.movingRoadPrefab;
 
         RoadController newRoad = Instantiate(prefabToSpawn, nextSpawnPosition, Quaternion.identity, transform)
             .GetComponent<RoadController>()

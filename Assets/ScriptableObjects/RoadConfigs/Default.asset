@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9405f4fed67c570418806343c554b22c, type: 3}
+  m_Name: Default
+  m_EditorClassIdentifier: Assembly-CSharp::RoadConfigSO
+  <_choosingRoadChance>k__BackingField: 35
+  <_stationRoadChance>k__BackingField: 15
+  <_maxRoads>k__BackingField: 10
+  <movingRoadPrefab>k__BackingField: {fileID: 3058819273101387152, guid: fd9b1700837b19a45964cef707393612, type: 3}
+  <choosingRoadPrefab>k__BackingField: {fileID: 7180160364947763013, guid: a0f0f5b926970ad4f8721fddfdd8f9c4, type: 3}
+  <stationRoadPrefab>k__BackingField: {fileID: 7180160364947763013, guid: 2a3e7ad53118bf54d9fc8c31a35e7961, type: 3}
