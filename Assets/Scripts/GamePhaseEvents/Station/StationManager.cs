@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class StationManager : PhaseManagerBase
 {
-    public void StartStationPhase(List<PassengerController> passengers)
+    public bool TryStartStationPhase(List<PassengerController> passengers)
     {
+        if (passengers == null || passengers.Count == 0) return false;
+
         StartCoroutine(StationCoroutine(passengers));
+        return true;
     }
 
     private IEnumerator StationCoroutine(List<PassengerController> passengers)

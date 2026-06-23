@@ -11,13 +11,12 @@ public class UIManager : MonoBehaviour
         GameStateManager gameStateManager,
         TrainController train,
         GameEventsManager eventsManager,
-        StationManager stationManager,
         MainOverlayManager mainOverlay,
         EventOverlayManager eventOverlay,
         EndOverlayManager endOverlay)
     {
         _mainOverlayManager = mainOverlay.Initialize(train);
-        _eventOverlayManager = eventOverlay.Initialize(gameStateManager, eventsManager, stationManager);
+        _eventOverlayManager = eventOverlay.Initialize(gameStateManager, eventsManager);
         _endOverlayManager = endOverlay;
 
         gameStateManager.OnStateChanged += HandleStateChanged;
@@ -34,8 +33,7 @@ public class UIManager : MonoBehaviour
             _eventOverlayManager.HideScreen();
             _endOverlayManager.HideScreen();
         }
-        else if (stateType == typeof(EventState) ||
-                 stateType == typeof(StationState))
+        else if (stateType == typeof(EventState))
         {
             _mainOverlayManager.HideScreen();
             _eventOverlayManager.ShowScreen();

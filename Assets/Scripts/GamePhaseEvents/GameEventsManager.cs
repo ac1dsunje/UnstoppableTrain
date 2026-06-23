@@ -7,6 +7,7 @@ public class GameEventsManager : MonoBehaviour
     [SerializeField] private SocialEventManager _socialManager;
     [SerializeField] private EpidemicEventManager _epidemicManager;
     [SerializeField] private BreakdownEventManager _breakdownManager;
+    [SerializeField] private StationManager _stationManager;
 
     public event Action<string> OnMessageGenerated;
     public event Action OnPhaseFinished;
@@ -25,6 +26,9 @@ public class GameEventsManager : MonoBehaviour
 
         _breakdownManager.OnMessageGenerated += msg => OnMessageGenerated?.Invoke(msg);
         _breakdownManager.OnPhaseFinished += () => OnPhaseFinished?.Invoke();
+
+        _stationManager.OnMessageGenerated += msg => OnMessageGenerated?.Invoke(msg);
+        _stationManager.OnPhaseFinished += () => OnPhaseFinished?.Invoke();
 
         return this;
     }
@@ -45,5 +49,10 @@ public class GameEventsManager : MonoBehaviour
             case 2: _breakdownManager.StartBreakdownPhase(passengers); return true;
             default: return false;
         }
+    }
+
+    public bool TryEnterStationEvent(List<PassengerController> passengers)
+    {
+        return _stationManager.TryStartStationPhase(passengers);
     }
 }

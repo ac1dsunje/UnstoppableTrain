@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq; // Добавлен для .Any()
 
 public class GameStateManager
 {
@@ -48,21 +49,18 @@ public class GameStateManager
         }
     }
 
-    public void TryEnterStationState()
+    public void TryEnterStationEvent()
     {
-        bool shouldEnterStation = false;
+        List<PassengerController> passengers = new(_train.GetPassengers());
 
-        foreach (var passenger in _train.GetPassengers())
-        {
-            if (passenger.CheckLeave())
-            {
-                shouldEnterStation = true;
-            }
-        }
+        bool shouldEnterStation = passengers.Any(p => p.CheckLeave());
 
         if (shouldEnterStation)
         {
-            EnterIn<StationState>();
+            if (_eventsManager.TryEnterStationEvent(passengers))
+            {
+                EnterIn<EventState>();
+            }
         }
     }
 

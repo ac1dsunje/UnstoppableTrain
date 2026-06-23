@@ -14,9 +14,6 @@ public class GamePlayEntryPoint : MonoBehaviour
     [SerializeField] private GameObject _trainPrefab;
     [SerializeField] private Vector3 TrainSpawnPosition = new(1.5f, 1.3f, -20f);
 
-    [Header("Phases")]
-    [SerializeField] private StationManager _stationManager;
-
     [Header("UI")]
     [SerializeField] private UIManager _uiManager;
     [SerializeField] private MainOverlayManager _mainOverlay;
@@ -46,7 +43,7 @@ public class GamePlayEntryPoint : MonoBehaviour
 
         _train.GetComponent<TrainMovement>().Initialize(_gameStateManager);
         _roadManager.Initialize(_gameStateManager, _train);
-        _uiManager.Initialize(_gameStateManager, _train, _eventsManager, _stationManager,
+        _uiManager.Initialize(_gameStateManager, _train, _eventsManager,
                               _mainOverlay, _eventOverlay, _endOverlay);
     }
 
@@ -90,7 +87,6 @@ public class GamePlayEntryPoint : MonoBehaviour
 
         gsm.RegisterState(new MovingState(train, _cam));
         gsm.RegisterState(new ChoosingState(train, _cam));
-        gsm.RegisterState(new StationState(train, _cam, _stationManager));
         gsm.RegisterState(new EventState(train, _cam));
         gsm.RegisterState(new EndState(train));
 

@@ -9,23 +9,17 @@ public class EventOverlayManager : ScreenManager
 
     private GameStateManager _gameStateManager;
     private GameEventsManager _eventsManager;
-    private StationManager _stationManager;
 
     public EventOverlayManager Initialize(
         GameStateManager gameStateManager,
-        GameEventsManager eventsManager,
-        StationManager stationManager)
+        GameEventsManager eventsManager)
     {
         HideScreen();
         _gameStateManager = gameStateManager;
         _eventsManager = eventsManager;
-        _stationManager = stationManager;
 
         _eventsManager.OnMessageGenerated += AddMessage;
         _eventsManager.OnPhaseFinished += OnPhaseFinished;
-
-        _stationManager.OnMessageGenerated += AddMessage;
-        _stationManager.OnPhaseFinished += OnPhaseFinished;
 
         return this;
     }
@@ -38,9 +32,6 @@ public class EventOverlayManager : ScreenManager
 
         _eventsManager.OnMessageGenerated -= AddMessage;
         _eventsManager.OnPhaseFinished -= OnPhaseFinished;
-
-        _stationManager.OnMessageGenerated -= AddMessage;
-        _stationManager.OnPhaseFinished -= OnPhaseFinished;
     }
 
     private void AddMessage(string message)
