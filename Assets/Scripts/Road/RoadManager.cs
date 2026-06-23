@@ -27,7 +27,7 @@ public class RoadManager
         _gameStateManager = gameStateManager;
         _train = train;
 
-        for (int i = 0; i < _config._maxRoads; i++)
+        for (int i = 0; i < _config.MaxRoads; i++)
         {
             SpawnNextRoad();
         }
@@ -38,9 +38,9 @@ public class RoadManager
         int rand = Random.Range(0, 100);
         GameObject prefabToSpawn;
 
-        if (rand < _config._choosingRoadChance) prefabToSpawn = _config.choosingRoadPrefab;
-        else if (rand < _config._choosingRoadChance + _config._stationRoadChance) prefabToSpawn = _config.stationRoadPrefab;
-        else prefabToSpawn = _config.movingRoadPrefab;
+        if (rand < _config.ChoosingRoadChance) prefabToSpawn = _config.ChoosingRoadPrefab;
+        else if (rand < _config.ChoosingRoadChance + _config.StationRoadChance) prefabToSpawn = _config.StationRoadPrefab;
+        else prefabToSpawn = _config.MovingRoadPrefab;
 
         RoadController newRoad = Object.Instantiate(prefabToSpawn, _nextSpawnPosition, Quaternion.identity, _parent)
             .GetComponent<RoadController>()

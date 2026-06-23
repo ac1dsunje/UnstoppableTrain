@@ -9,7 +9,7 @@
 
     public void Enter()
     {
-        _train.Stop();
+        //_train.Stop();
     }
 
     public void Exit() { }
