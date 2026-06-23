@@ -938,18 +938,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GamePlayEntryPoint
   _input: {fileID: 1579466959}
   _cam: {fileID: 330585548}
-  _eventsManager: {fileID: 902484052}
   _coroutineRunner: {fileID: 562004070}
   _roadManager: {fileID: 1652282652}
+  _messageDelay: 1.2
   _trainPrefab: {fileID: 8869947801639233936, guid: 6e5dfcc0e967fb54a82e89a57ec0a78f, type: 3}
   TrainSpawnPosition: {x: 1.5, y: 1.3, z: -20}
   _uiManager: {fileID: 473642107}
   _mainOverlay: {fileID: 473642106}
   _eventOverlay: {fileID: 473642108}
   _endOverlay: {fileID: 473642109}
-  rolePreset: {fileID: 11400000, guid: e13fd680284ae02429ac7501bc5994bd, type: 2}
-  traitPreset: {fileID: 11400000, guid: 3d80d7d674c9ea4478be04bc9ed187b8, type: 2}
-  stationtPreset: {fileID: 11400000, guid: a152c847c1c80224894db6854fc2e510, type: 2}
+  difficulty: {fileID: 11400000, guid: 40c9d19b76b501645844106ae1ad4e7c, type: 2}
 --- !u!4 &562004069
 Transform:
   m_ObjectHideFlags: 0
@@ -1219,51 +1217,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &902484047
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 902484048}
-  - component: {fileID: 902484052}
-  m_Layer: 0
-  m_Name: EventsManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &902484048
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 902484047}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1094652989}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &902484052
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 902484047}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4345d02b5c8c780488be7bbb24f9af05, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameEventsManager
-  _messageDelay: 1.2
 --- !u!1 &1080433576
 GameObject:
   m_ObjectHideFlags: 0
@@ -1373,7 +1326,6 @@ Transform:
   - {fileID: 1579466958}
   - {fileID: 1652282651}
   - {fileID: 473642104}
-  - {fileID: 902484048}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1102016220

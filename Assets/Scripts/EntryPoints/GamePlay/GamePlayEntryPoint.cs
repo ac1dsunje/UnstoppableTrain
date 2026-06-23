@@ -6,9 +6,9 @@ public class GamePlayEntryPoint : MonoBehaviour
     [Header("Game")]
     [SerializeField] private InputHandler _input;
     [SerializeField] private CameraController _cam;
-    [SerializeField] private GameEventsManager _eventsManager;
     [SerializeField] private CoroutineRunner _coroutineRunner;
-    [SerializeField] private RoadManager _roadManager;
+    [SerializeField] private RoadManager _roadManager; 
+    [SerializeField] private float _messageDelay = 1.2f;
 
     [Header("Train")]
     [SerializeField] private GameObject _trainPrefab;
@@ -20,13 +20,12 @@ public class GamePlayEntryPoint : MonoBehaviour
     [SerializeField] private EventOverlayManager _eventOverlay;
     [SerializeField] private EndOverlayManager _endOverlay;
 
-    [Header("Presets")]
-    [SerializeField] private RolePreset rolePreset;
-    [SerializeField] private TraitPreset traitPreset;
-    [SerializeField] private StationsPreset stationtPreset;
+    [Header("Preset")]
+    [SerializeField] private DifficultySO difficulty;
 
     private GameStateManager _gameStateManager;
     private TrainController _train;
+    private GameEventsManager _eventsManager;
     private Action _onAllDriversLeft;
 
     private void Awake()
@@ -36,7 +35,8 @@ public class GamePlayEntryPoint : MonoBehaviour
         _train = SpawnTrain();
         _train.Initialize();
         _cam.Initialize(_train.transform);
-        _eventsManager.Initialize(_train);
+
+        _eventsManager = new GameEventsManager(_coroutineRunner, _train, _messageDelay);
 
         _gameStateManager = BuildGameStateManager(_train);
         _onAllDriversLeft = () => _gameStateManager.EnterIn<EndState>();
@@ -95,8 +95,8 @@ public class GamePlayEntryPoint : MonoBehaviour
 
     private void InitializeFactories()
     {
-        RoleSelector.SetWeights(rolePreset.Weights);
-        TraitSelector.SetWeights(traitPreset.Weights);
-        StationsSelector.SetRange(stationtPreset.Range);
+        RoleSelector.SetWeights(difficulty.roleLevel.Weights);
+        TraitSelector.SetWeights(difficulty.traitLevel.Weights);
+        StationsSelector.SetRange(difficulty.stationsLevel.Range);
     }
 }

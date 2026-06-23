@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameEventsManager : MonoBehaviour
+public class GameEventsManager
 {
-    [SerializeField] private float _messageDelay = 1.2f;
+    private readonly MonoBehaviour _coroutineRunner;
+    private readonly float _messageDelay;
 
     public event Action<string> OnMessageGenerated;
     public event Action OnPhaseFinished;
@@ -15,21 +16,26 @@ public class GameEventsManager : MonoBehaviour
     private BreakdownEventManager _breakdownManager;
     private StationManager _stationManager;
 
-    public GameEventsManager Initialize(TrainController train)
+    public GameEventsManager(MonoBehaviour coroutineRunner, TrainController train, float messageDelay = 1.2f)
     {
+        _coroutineRunner = coroutineRunner;
         _train = train;
+        _messageDelay = messageDelay;
 
-        _socialManager = new SocialEventManager(this, _messageDelay);
-        _epidemicManager = new EpidemicEventManager(this, _messageDelay);
-        _breakdownManager = new BreakdownEventManager(this, _messageDelay);
-        _stationManager = new StationManager(this, _messageDelay);
+        InitializeManagers();
+    }
+
+    private void InitializeManagers()
+    {
+        _socialManager = new SocialEventManager(_coroutineRunner, _messageDelay);
+        _epidemicManager = new EpidemicEventManager(_coroutineRunner, _messageDelay);
+        _breakdownManager = new BreakdownEventManager(_coroutineRunner, _messageDelay);
+        _stationManager = new StationManager(_coroutineRunner, _messageDelay);
 
         SubscribeOnEventManager(_socialManager);
         SubscribeOnEventManager(_epidemicManager);
         SubscribeOnEventManager(_breakdownManager);
         SubscribeOnEventManager(_stationManager);
-
-        return this;
     }
 
     private void SubscribeOnEventManager(PhaseManagerBase manager)

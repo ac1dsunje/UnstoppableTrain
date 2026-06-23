@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 077e958e61d46cf489cbd767e56c0d0a, type: 3}
+  m_Name: Normal
+  m_EditorClassIdentifier: Assembly-CSharp::LevelHardnessSO
+  <traitLevel>k__BackingField: {fileID: 11400000, guid: 3d80d7d674c9ea4478be04bc9ed187b8, type: 2}
+  <roleLevel>k__BackingField: {fileID: 11400000, guid: e13fd680284ae02429ac7501bc5994bd, type: 2}
+  <stationsLevel>k__BackingField: {fileID: 11400000, guid: a152c847c1c80224894db6854fc2e510, type: 2}
