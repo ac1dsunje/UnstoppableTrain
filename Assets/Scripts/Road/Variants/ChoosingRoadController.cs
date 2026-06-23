@@ -21,6 +21,8 @@ public class ChoosingRoadController : RoadController
     protected override void OnRoadActivated()
     {
         _gameStateManager.EnterIn<ChoosingState>();
+
+        MediaEvents.TriggerEvent(transform.position, _onEnterSound);
     }
 
     protected override void OnRailCleared(RailController clearedRail, RailController remainingRail)

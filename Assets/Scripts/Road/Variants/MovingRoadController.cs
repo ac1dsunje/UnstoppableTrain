@@ -4,6 +4,9 @@
 
     protected override void OnRoadActivated()
     {
-        _gameStateManager.TryEnterEventState();
+        if (_gameStateManager.TryEnterEventState())
+        {
+            MediaEvents.TriggerEvent(transform.position, _onEnterSound);
+        }
     }
 }

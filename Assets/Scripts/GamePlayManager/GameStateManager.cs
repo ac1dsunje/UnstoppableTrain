@@ -39,19 +39,17 @@ public class GameStateManager: IDisposable
         OnStateChanged?.Invoke(typeof(T));
     }
 
-    public void TryEnterEventState()
+    public bool TryEnterEventState()
     {
         if (_eventsManager.TryStartEvent())
         {
             EnterIn<EventState>();
+            return true;
         }
-        else
-        {
-            EnterIn<MovingState>();
-        }
+        return false;
     }
 
-    public void TryEnterStationEvent()
+    public bool TryEnterStationEvent()
     {
         List<PassengerController> passengers = new(_train.GetPassengers());
 
@@ -62,8 +60,10 @@ public class GameStateManager: IDisposable
             if (_eventsManager.TryEnterStationEvent(passengers))
             {
                 EnterIn<EventState>();
+                return true;
             }
         }
+        return false;
     }
 
     private void OnAllDriversLeft()

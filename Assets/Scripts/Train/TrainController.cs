@@ -9,6 +9,9 @@ public class TrainController : MonoBehaviour, ITrainMovement
     [SerializeField] private GameObject _passengerPrefab;
     [SerializeField] private Transform _passengersContainer;
 
+    [SerializeField] private SoundData _onResumeMovingSound;
+    [SerializeField] private SoundData _onStopMovingSound;
+
     private TrainStats _stats = new();
     public TrainStats GetStats => _stats;
 
@@ -41,11 +44,13 @@ public class TrainController : MonoBehaviour, ITrainMovement
 
     public void Stop()
     {
+        MediaEvents.TriggerEvent(transform.position, _onStopMovingSound);
         _speedScale = 0f;
     }
 
     public void Resume()
     {
+        MediaEvents.TriggerEvent(transform.position, _onResumeMovingSound);
         _speedScale = 1f;
     }
 

@@ -7,7 +7,7 @@ public class LayingManUI : ScreenManager
 
     private void OnMouseEnter()
     {
-        if (_controller.isActive)
+        if (_controller.IsActive)
         {
             _slot.Set(_controller.Data);
             ShowScreen();
@@ -16,7 +16,7 @@ public class LayingManUI : ScreenManager
 
     private void OnMouseExit()
     {
-        if (_controller.isActive)
+        if (_controller.IsActive)
         {
             HideScreen();
         }

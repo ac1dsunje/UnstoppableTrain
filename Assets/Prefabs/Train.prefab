@@ -83,6 +83,17 @@ MonoBehaviour:
   _data: {fileID: 11400000, guid: 50fbbd64f1990544887d2287be5c80ab, type: 2}
   _passengerPrefab: {fileID: 564454119608622762, guid: 82c31e912af5e5346a17599f7ab38838, type: 3}
   _passengersContainer: {fileID: 388346275500345251}
+  _onResumeMovingSound:
+    <Clips>k__BackingField: []
+    <Volume>k__BackingField: 1
+    <MinPitch>k__BackingField: 0.9
+    <MaxPitch>k__BackingField: 1.1
+  _onStopMovingSound:
+    <Clips>k__BackingField:
+    - {fileID: 8300000, guid: 1e2161a3e58cf47009e8df0896584ae3, type: 3}
+    <Volume>k__BackingField: 1
+    <MinPitch>k__BackingField: 0.9
+    <MaxPitch>k__BackingField: 1.1
 --- !u!114 &5384228613855419829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,8 +126,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 8.038843, z: 6.5}
-  m_Center: {x: 0, y: -3.0694156, z: 0.1500001}
+  m_Size: {x: 1, y: 8.038843, z: 5.2679253}
+  m_Center: {x: 0, y: -3.0694156, z: 0.1329875}
 --- !u!54 &3246017481244349592
 Rigidbody:
   m_ObjectHideFlags: 0

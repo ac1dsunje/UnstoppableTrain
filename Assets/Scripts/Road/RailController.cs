@@ -54,12 +54,12 @@ public class RailController : MonoBehaviour
 
     private void SetRailActive()
     {
-        OnThisActive.Invoke(true);
+        OnThisActive?.Invoke(true);
     }
 
     private void SetRailUnActive()
     {
-        OnThisActive.Invoke(false);
+        OnThisActive?.Invoke(false);
     }
 
     private void OnLayingManDeath(LayingManController layingMan)
@@ -68,7 +68,7 @@ public class RailController : MonoBehaviour
 
         if (_layingMen.Count == 0)
         {
-            OnAllLayingMenDied.Invoke();
+            OnAllLayingMenDied?.Invoke();
         }
     }
 }
