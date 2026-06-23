@@ -11,8 +11,8 @@
 
     public void Enter()
     {
-        _train.SetSpeedScale(1f);
-        _cam.SetMovingPos();
+        _train.Resume();
+        _cam.SetFollowView();
     }
 
     public void Exit() { }

@@ -27,7 +27,7 @@ public class ChoosingRoadController : RoadController
     {
         foreach (var passenger in remainingRail.LayingMen)
         {
-            _train.TakeLayingMan(passenger.Data);
+            _train.TryTakeNewPassenger(passenger.Data);
             Destroy(passenger.gameObject);
         }
     }

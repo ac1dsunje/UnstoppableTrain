@@ -11,8 +11,8 @@
 
     public void Enter()
     {
-        _train.SetSpeedScale(0f);
-        _cam.SetChoosingPos();
+        _train.Stop();
+        _cam.SetBirdView();
     }
 
     public void Exit() { }

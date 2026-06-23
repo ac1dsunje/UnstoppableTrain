@@ -10,6 +10,8 @@ public class TrainController : MonoBehaviour, Imovement
     [SerializeField] private Transform _passengersContainer;
 
     private TrainStats _stats = new();
+    public TrainStats GetStats => _stats;
+
     private RoadController _currentRoad;
     private float _speedScale = 1f;
 
@@ -36,12 +38,22 @@ public class TrainController : MonoBehaviour, Imovement
 
     public RoadController GetCurrentRoad() => _currentRoad;
     public float GetSpeed() => _data.MoveSpeed * _speedScale;
-    public void SetSpeedScale(float speed) => _speedScale = speed;
+
+    public void Stop()
+    {
+        _speedScale = 0f;
+    }
+
+    public void Resume()
+    {
+        _speedScale = 1f;
+    }
+
     public List<PassengerController> GetPassengers() => _stats.Passengers;
 
     private int GetMaxCapacity() => _data.MaxAmount;
 
-    public void TakeLayingMan(ManData data)
+    public void TryTakeNewPassenger(ManData data)
     {
         if (_stats.Passengers.Count >= GetMaxCapacity()) return;
         SpawnPassenger(data);

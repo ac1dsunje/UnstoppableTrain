@@ -9,8 +9,8 @@
 
     public void Enter()
     {
-        _train.SetSpeedScale(0f);
+        _train.Stop();
     }
 
-    public void Exit() { } // из EndState не выходим
+    public void Exit() { }
 }

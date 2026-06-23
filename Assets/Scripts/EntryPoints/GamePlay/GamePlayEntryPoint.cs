@@ -72,7 +72,8 @@ public class GamePlayEntryPoint : MonoBehaviour
     private void TryRestart()
     {
         if (!_gameStateManager.IsInState<EndState>()) return;
-        SceneManager.LoadScene("GamePlay");
+
+        StartCoroutine(SceneLoader.RestartGameAsync());
     }
 
     private TrainController SpawnTrain()

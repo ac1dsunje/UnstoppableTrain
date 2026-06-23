@@ -18,8 +18,8 @@ public class StationState : IGameState
 
     public void Enter()
     {
-        _train.SetSpeedScale(0f);
-        _cam.SetChoosingPos();
+        _train.Stop();
+        _cam.SetBirdView();
         _runner.Run(WaitAtStation());
     }
 

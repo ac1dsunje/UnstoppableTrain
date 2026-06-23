@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Bootstrap : MonoBehaviour
 {
@@ -9,13 +8,15 @@ public class Bootstrap : MonoBehaviour
     [Scene]
     [SerializeField] private string LoadingScene;
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     private IEnumerator Start()
     {
+        SceneLoader.Initialize(LoadingScene, GamePlay);
 
-        SceneManager.LoadScene(LoadingScene, LoadSceneMode.Additive);
-
-        yield return new WaitForSeconds(1f);
-
-        SceneManager.LoadScene(GamePlay);
+        yield return SceneLoader.SetGamePlaySceneAsync();
     }
 }

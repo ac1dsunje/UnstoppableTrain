@@ -23,6 +23,8 @@ public class MainOverlayManager : ScreenManager
     {
         _train = train;
         _train.OnStatsUpdated += UpdateStats;
+
+        UpdateStats(_train.GetStats);
         return this;
     }
 

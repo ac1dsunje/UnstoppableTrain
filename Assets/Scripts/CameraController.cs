@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour
     {
         _target = target;
         _defaultRotation = transform.rotation;
-        SetMovingPos();
+        SetFollowView();
         return this;
     }
 
@@ -42,6 +42,6 @@ public class CameraController : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, birdViewRotation, _time);
     }
 
-    public void SetChoosingPos() => _isFollowingPlayer = false;
-    public void SetMovingPos() => _isFollowingPlayer = true;
+    public void SetBirdView() => _isFollowingPlayer = false;
+    public void SetFollowView() => _isFollowingPlayer = true;
 }
