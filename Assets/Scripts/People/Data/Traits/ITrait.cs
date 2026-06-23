@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public enum TraitPhase
+﻿public enum TraitPhase
 {
     Initiate,
     Resolve,
