@@ -18,19 +18,18 @@ public class GameEventsManager : MonoBehaviour
     {
         _train = train;
 
-        _socialManager.OnMessageGenerated += msg => OnMessageGenerated?.Invoke(msg);
-        _socialManager.OnPhaseFinished += () => OnPhaseFinished?.Invoke();
-
-        _epidemicManager.OnMessageGenerated += msg => OnMessageGenerated?.Invoke(msg);
-        _epidemicManager.OnPhaseFinished += () => OnPhaseFinished?.Invoke();
-
-        _breakdownManager.OnMessageGenerated += msg => OnMessageGenerated?.Invoke(msg);
-        _breakdownManager.OnPhaseFinished += () => OnPhaseFinished?.Invoke();
-
-        _stationManager.OnMessageGenerated += msg => OnMessageGenerated?.Invoke(msg);
-        _stationManager.OnPhaseFinished += () => OnPhaseFinished?.Invoke();
+        SubscribeOnEventManager(_socialManager);
+        SubscribeOnEventManager(_epidemicManager);
+        SubscribeOnEventManager(_breakdownManager);
+        SubscribeOnEventManager(_stationManager);
 
         return this;
+    }
+
+    private void SubscribeOnEventManager(PhaseManagerBase manager)
+    {
+        manager.OnMessageGenerated += msg => OnMessageGenerated?.Invoke(msg);
+        manager.OnPhaseFinished += () => OnPhaseFinished?.Invoke();
     }
 
     public bool TryStartEvent()
