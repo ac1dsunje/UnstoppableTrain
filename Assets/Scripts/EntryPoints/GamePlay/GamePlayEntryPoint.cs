@@ -7,7 +7,7 @@ public class GamePlayEntryPoint : MonoBehaviour
     [SerializeField] private InputHandler _input;
     [SerializeField] private CameraController _cam;
     [SerializeField] private CoroutineRunner _coroutineRunner;
-    [SerializeField] private RoadManager _roadManager; 
+    [SerializeField] private RoadConfigSO _roadConfig;
     [SerializeField] private float _messageDelay = 1.2f;
 
     [Header("Train")]
@@ -26,6 +26,7 @@ public class GamePlayEntryPoint : MonoBehaviour
     private GameStateManager _gameStateManager;
     private TrainController _train;
     private GameEventsManager _eventsManager;
+    private RoadManager _roadManager;
     private Action _onAllDriversLeft;
 
     private void Awake()
@@ -42,7 +43,11 @@ public class GamePlayEntryPoint : MonoBehaviour
         _onAllDriversLeft = () => _gameStateManager.EnterIn<EndState>();
 
         _train.GetComponent<TrainMovement>().Initialize(_gameStateManager);
+
+        var roadsParent = new GameObject("Roads").transform;
+        _roadManager = new RoadManager(_roadConfig, _coroutineRunner, roadsParent);
         _roadManager.Initialize(_gameStateManager, _train);
+
         _uiManager.Initialize(_gameStateManager, _train, _eventsManager,
                               _mainOverlay, _eventOverlay, _endOverlay);
     }
@@ -72,6 +77,7 @@ public class GamePlayEntryPoint : MonoBehaviour
     {
         if (!_gameStateManager.IsInState<EndState>()) return;
 
+        _roadManager.Dispose();
         StartCoroutine(SceneLoader.RestartGameAsync());
     }
 
