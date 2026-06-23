@@ -15,7 +15,7 @@ public abstract class ObjectPoolManager<T> : MonoBehaviour where T : Component
             createFunc: Create,
             actionOnGet: OnGet,
             actionOnRelease: OnRelease,
-            actionOnDestroy: OnDestroy,
+            actionOnDestroy: OnDestroyItem,
             collectionCheck: true,
             defaultCapacity: defaultCapacity,
             maxSize: maxSize
@@ -25,7 +25,7 @@ public abstract class ObjectPoolManager<T> : MonoBehaviour where T : Component
     protected abstract T Create();
     protected virtual void OnGet(T item) => item.gameObject.SetActive(true);
     protected virtual void OnRelease(T item) => item.gameObject.SetActive(false);
-    protected virtual void OnDestroy(T item) => Destroy(item.gameObject);
+    protected virtual void OnDestroyItem(T item) => Destroy(item.gameObject);
 
     public T Get() => Pool.Get();
     public void Release(T item) => Pool.Release(item);
