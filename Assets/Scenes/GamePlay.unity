@@ -634,6 +634,8 @@ MonoBehaviour:
   _uiManager: {fileID: 473642107}
   _canvas: {fileID: 511945416}
   difficulty: {fileID: 11400000, guid: 40c9d19b76b501645844106ae1ad4e7c, type: 2}
+  _manConfig: {fileID: 11400000, guid: 684bc56918d409649a8e1adfcfbee89d, type: 2}
+  _manVisualConfig: {fileID: 11400000, guid: 42555b2dc3b46244081b1ffd638bd06a, type: 2}
 --- !u!4 &562004069
 Transform:
   m_ObjectHideFlags: 0

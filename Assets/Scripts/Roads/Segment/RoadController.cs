@@ -27,11 +27,22 @@ public abstract class RoadController : MonoBehaviour
 
     protected TrainController _train;
     protected GameStateManager _gameStateManager;
+    protected ManGeneralConfigSO _manConfig;
+    protected ManVisualConfigSO _manVisualConfig;
 
-    public RoadController Initialize(TrainController train, GameStateManager gameStateManager)
+    public RoadController Initialize(
+        TrainController train,
+        GameStateManager gameStateManager,
+        ManGeneralConfigSO manConfig,
+        ManVisualConfigSO manVisualConfig)
     {
         _train = train;
         _gameStateManager = gameStateManager;
+        _manConfig = manConfig;
+        _manVisualConfig = manVisualConfig;
+
+        InitializeRails();
+
         return this;
     }
 
@@ -68,19 +79,36 @@ public abstract class RoadController : MonoBehaviour
         _leftRail = CreateRail(-xOffset, true);
         _rightRail = CreateRail(xOffset, false);
     }
+    private void InitializeRails()
+    {
+        _leftRail.Initialize(_manConfig, _manVisualConfig);
+        _rightRail.Initialize(_manConfig, _manVisualConfig);
+    }
 
     private RailController CreateRail(float xOff, bool xFlip)
     {
-        var rail = Instantiate(_config.RailPrefab, new Vector3(transform.position.x + xOff, transform.position.y, transform.position.z), Quaternion.identity, transform).GetComponent<RailController>();
+        var rail = Instantiate(
+            _config.RailPrefab,
+            new Vector3(transform.position.x + xOff, transform.position.y, transform.position.z),
+            Quaternion.identity,
+            transform
+        ).GetComponent<RailController>();
+
         int rand = Random.Range(0, _config._environmentAtlas.EnvironmentObjects.Count);
         Transform railTransform = rail.transform;
-        GameObject env = _config._environmentAtlas.EnvironmentObjects[rand];
-        Transform envTransform = Instantiate(env, new Vector3(railTransform.position.x + 2 * xOff, railTransform.position.y, railTransform.position.z), Quaternion.identity, railTransform).GetComponent<Transform>();
+
+        Transform envTransform = Instantiate(
+            _config._environmentAtlas.EnvironmentObjects[rand],
+            new Vector3(railTransform.position.x + 2 * xOff, railTransform.position.y, railTransform.position.z),
+            Quaternion.identity,
+            railTransform
+        ).transform;
 
         if (xFlip) envTransform.localScale = new Vector3(-1, 1, 1);
 
         return rail;
     }
+
     private void OnLeftRailStateChanged(bool state) { IsLeftActive = state; UpdateRoadState(); }
     private void OnRightRailStateChanged(bool state) { IsRightActive = state; UpdateRoadState(); }
 
@@ -106,13 +134,11 @@ public abstract class RoadController : MonoBehaviour
         foreach (var man in _leftRail.LayingMen) man.SetActiveState();
         foreach (var man in _rightRail.LayingMen) man.SetActiveState();
     }
+
     protected virtual void InitializeRoad() { }
-
     protected virtual void OnRoadActivated() { }
-
     protected virtual void OnRailCleared(RailController clearedRail, RailController remainingRail) { }
 
     private void OnLeftRailCleared() => OnRailCleared(_leftRail, _rightRail);
     private void OnRightRailCleared() => OnRailCleared(_rightRail, _leftRail);
-
 }

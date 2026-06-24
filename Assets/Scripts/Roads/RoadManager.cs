@@ -6,11 +6,13 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using Object = UnityEngine.Object;
 
-public class RoadManager: IDisposable
+public class RoadManager : IDisposable
 {
     private readonly RoadsConfigSO _config;
     private readonly MonoBehaviour _coroutineRunner;
     private readonly Transform _parent;
+    private readonly ManGeneralConfigSO _manConfig;
+    private readonly ManVisualConfigSO _manVisualConfig;
 
     private GameStateManager _gameStateManager;
     private TrainController _train;
@@ -19,11 +21,18 @@ public class RoadManager: IDisposable
     private Vector3 _nextSpawnPosition = Vector3.zero;
     private static readonly WaitForSeconds _waitFor1Seconds = new WaitForSeconds(1f);
 
-    public RoadManager(RoadsConfigSO config, MonoBehaviour coroutineRunner, Transform parent)
+    public RoadManager(
+        RoadsConfigSO config,
+        MonoBehaviour coroutineRunner,
+        Transform parent,
+        ManGeneralConfigSO manConfig,
+        ManVisualConfigSO manVisualConfig)
     {
         _config = config;
         _coroutineRunner = coroutineRunner;
         _parent = parent;
+        _manConfig = manConfig;
+        _manVisualConfig = manVisualConfig;
     }
 
     public void Initialize(GameStateManager gameStateManager, TrainController train)
@@ -48,7 +57,7 @@ public class RoadManager: IDisposable
 
         RoadController newRoad = Object.Instantiate(prefabToSpawn, _nextSpawnPosition, Quaternion.identity, _parent)
             .GetComponent<RoadController>()
-            .Initialize(_train, _gameStateManager);
+            .Initialize(_train, _gameStateManager, _manConfig, _manVisualConfig);
 
         _roads.Add(newRoad);
         newRoad.OnRoadStateChanged += OnRoadStateChanged;

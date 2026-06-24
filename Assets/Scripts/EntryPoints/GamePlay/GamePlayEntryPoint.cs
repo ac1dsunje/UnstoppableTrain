@@ -18,8 +18,12 @@ public class GamePlayEntryPoint : MonoBehaviour
     [SerializeField] private UIManager _uiManager;
     [SerializeField] private Canvas _canvas;
 
-    [Header("Preset")]
+    [Header("Difficulty")]
     [SerializeField] private DifficultySO difficulty;
+
+    [Header("People")]
+    [SerializeField] private ManGeneralConfigSO _manConfig;
+    [SerializeField] private ManVisualConfigSO _manVisualConfig;
 
     private GameStateManager _gameStateManager;
     private TrainController _train;
@@ -41,7 +45,7 @@ public class GamePlayEntryPoint : MonoBehaviour
         _train.GetComponent<TrainMovement>().Initialize(_gameStateManager);
 
         var roadsParent = new GameObject("Roads").transform;
-        _roadManager = new RoadManager(_roadConfig, _coroutineRunner, roadsParent);
+        _roadManager = new RoadManager(_roadConfig, _coroutineRunner, roadsParent, _manConfig, _manVisualConfig);
         _roadManager.Initialize(_gameStateManager, _train);
 
         _uiManager.Initialize(_gameStateManager, _train, _eventsManager, _canvas);

@@ -4,14 +4,21 @@ using UnityEngine;
 
 public class RailController : MonoBehaviour
 {
-    [SerializeField] private GameObject _layingManPrefab;
-    [SerializeField] private ManGeneralConfigSO _manGeneralConfig;
+    private ManGeneralConfigSO _manConfig;
+    private ManVisualConfigSO _manVisualConfig;
 
     private List<LayingManController> _layingMen = new();
     public List<LayingManController> LayingMen => _layingMen;
 
     public event Action<bool> OnThisActive;
     public event Action OnAllLayingMenDied;
+
+    public RailController Initialize(ManGeneralConfigSO manConfig, ManVisualConfigSO manVisualConfig)
+    {
+        _manConfig = manConfig;
+        _manVisualConfig = manVisualConfig;
+        return this;
+    }
 
     public void SpawnManyLayingMen(int count)
     {
@@ -23,11 +30,20 @@ public class RailController : MonoBehaviour
 
     private void SpawnLayingMan(int step)
     {
-        Vector3 pos = new Vector3(transform.position.x, transform.position.y, transform.position.z + step * 2);
-        LayingManController layingMan = Instantiate(_layingManPrefab, pos, Quaternion.identity, transform)
-            .GetComponent<LayingManController>();
+        Vector3 pos = new Vector3(
+            transform.position.x,
+            transform.position.y,
+            transform.position.z + step * 2
+        );
 
-        layingMan.Initialize(_manGeneralConfig);
+        LayingManController layingMan = Instantiate(
+            _manVisualConfig.LayingManPrefab,
+            pos,
+            Quaternion.identity,
+            transform
+        ).GetComponent<LayingManController>();
+
+        layingMan.Initialize(_manConfig);
 
         _layingMen.Add(layingMan);
         layingMan.OnDeath += OnLayingManDeath;
@@ -57,15 +73,8 @@ public class RailController : MonoBehaviour
         }
     }
 
-    private void SetRailActive()
-    {
-        OnThisActive?.Invoke(true);
-    }
-
-    private void SetRailUnActive()
-    {
-        OnThisActive?.Invoke(false);
-    }
+    private void SetRailActive() => OnThisActive?.Invoke(true);
+    private void SetRailUnActive() => OnThisActive?.Invoke(false);
 
     private void OnLayingManDeath(LayingManController layingMan)
     {
