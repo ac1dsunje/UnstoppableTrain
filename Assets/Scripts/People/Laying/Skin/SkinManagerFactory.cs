@@ -1,15 +1,32 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public static class SkinManagerFactory
 {
-    public static ISkinApplier Create(ManSkinConfigSO config, MeshRenderer shape)
+    public static ISkinComponent Create(ManSkinConfigSO config, MeshRenderer shape)
     {
-        switch (config.SkinManagerType)
+        var components = new List<ISkinComponent>();
+
+        if (config.SkinComponents.HasFlag(SkinComponentType.Material))
         {
-            case SkinManagerType.Default:
-                return new SkinManager(shape, config);
-            default:
-                throw new System.ArgumentOutOfRangeException();
+            components.Add(new SkinMaterialManager(shape, config));
         }
+
+        if (config.SkinComponents.HasFlag(SkinComponentType.Hat))
+        {
+            components.Add(new SkinHatManager(shape, config));
+        }
+
+        if (components.Count == 0)
+        {
+            return new EmptySkinComponent();
+        }
+
+        if (components.Count == 1)
+        {
+            return components[0];
+        }
+
+        return new CompositeSkinManager(components);
     }
 }

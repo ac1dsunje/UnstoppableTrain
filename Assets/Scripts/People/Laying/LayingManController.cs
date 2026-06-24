@@ -7,7 +7,7 @@ public class LayingManController : MonoBehaviour
     [SerializeField] private LayingManUI _ui;
 
     private ManGeneralConfigSO _config;
-    private ISkinApplier _skinManager;
+    private ISkinComponent _skinManager;
 
     public ManData Data { get; private set; }
     public event Action<LayingManController> OnDeath;
@@ -17,7 +17,9 @@ public class LayingManController : MonoBehaviour
     public void Initialize(ManGeneralConfigSO config)
     {
         _config = config;
+
         _skinManager = SkinManagerFactory.Create(_config.SkinConfig, _shape);
+
         _ui.Initialize(this);
     }
 
@@ -29,7 +31,7 @@ public class LayingManController : MonoBehaviour
     private void Start()
     {
         Data = ManFactory.Create();
-        _skinManager.ApplySkin(Data);
+        _skinManager.Apply(Data);
     }
 
     private void OnTriggerEnter(Collider other)
