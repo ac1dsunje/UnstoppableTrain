@@ -15,20 +15,20 @@ public class TraitFactory
         _config = config;
     }
 
-    public ITrait Create(Trait trait)
+    public ITraitBehaviour Create(Trait trait)
     {
         switch (trait)
         {
             case Trait.Empath:
-                return new EmpathTrait(_config.EmpathConfig);
+                return new EmpathTraitBehaviour(_config.EmpathConfig);
             case Trait.Leader:
-                return new LeaderTrait(_config.LeaderConfig);
+                return new LeaderTraitBehaviour(_config.LeaderConfig);
             case Trait.Psychopath:
-                return new PsychopathTrait(_config.PsychopathConfig);
+                return new PsychopathTraitBehaviour(_config.PsychopathConfig);
             case Trait.Wallflower:
-                return new WallflowerTrait(_config.WallflowerConfig);
+                return new WallflowerTraitBehaviour(_config.WallflowerConfig);
             default:
-                return new WallflowerTrait(_config.WallflowerConfig);
+                return new WallflowerTraitBehaviour(_config.WallflowerConfig);
         }
     }
 }

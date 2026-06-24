@@ -7,7 +7,7 @@ public class PassengerController : MonoBehaviour
     private TraitFactory _traitFactory;
 
     public ManData GetData => _data;
-    public ITrait TraitBehavior { get; private set; }
+    public ITraitBehaviour TraitBehavior { get; private set; }
 
     private void OnDisable()
     {

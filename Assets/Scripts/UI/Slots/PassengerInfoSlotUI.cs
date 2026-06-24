@@ -27,8 +27,8 @@ public class PassengerInfoSlotUI : MonoBehaviour
     {
         if (_data == null) return;
         _nameText.text = $"{_data.Name}";
-        _roleText.text = $"Role: {_data.role}";
-        _traitText.text = $"Trait: {_data.trait}";
+        _roleText.text = $"{_data.role}";
+        _traitText.text = $"{_data.trait}";
         _stationsLeftText.text = $"Stations left: {_data.StationsLeft}";
     }
 }

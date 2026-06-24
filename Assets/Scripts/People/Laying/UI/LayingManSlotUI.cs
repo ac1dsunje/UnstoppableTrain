@@ -16,8 +16,8 @@ public class LayingManSlotUI : MonoBehaviour
     private void SetTexts(ManData data)
     {
         _nameText.text = $"{data.Name}";
-        _roleText.text = $"Role: {data.role.ToString()}";
-        _traitText.text = $"Trait: {data.trait.ToString()}";
+        _roleText.text = $"{data.role.ToString()}";
+        _traitText.text = $"{data.trait.ToString()}";
         _stationsText.text = $"Stations: {data.StationsNeeded.ToString()}";
     }
 }
