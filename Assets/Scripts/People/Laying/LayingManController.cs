@@ -7,7 +7,7 @@ public class LayingManController : MonoBehaviour
     [SerializeField] private LayingManUI _ui;
 
     private ManGeneralConfigSO _config;
-    private SkinManager _skinManager;
+    private ISkinApplier _skinManager;
 
     public ManData Data { get; private set; }
     public event Action<LayingManController> OnDeath;
@@ -17,9 +17,7 @@ public class LayingManController : MonoBehaviour
     public void Initialize(ManGeneralConfigSO config)
     {
         _config = config;
-
-        _skinManager = new SkinManager(_shape, _config.SkinConfig);
-
+        _skinManager = SkinManagerFactory.Create(_config.SkinConfig, _shape);
         _ui.Initialize(this);
     }
 

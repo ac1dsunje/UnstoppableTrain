@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class SkinManager
+public class SkinManager: ISkinApplier
 {
     private readonly MeshRenderer _shape;
     private readonly ManSkinConfigSO _config;
