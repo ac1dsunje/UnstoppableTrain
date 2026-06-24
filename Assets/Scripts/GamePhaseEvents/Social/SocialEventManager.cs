@@ -28,9 +28,7 @@ public class SocialEventManager : PhaseManagerBase
     private IEnumerator SocialPhaseCoroutine(SocialContext context, string firstMessage)
     {
         yield return null;
-
-        SendPhaseMessage(firstMessage);
-        yield return new WaitForSeconds(_messageDelay);
+        yield return TryExecuteAndShowMessage(firstMessage);
 
         var resolvePassengers = context.AllPassengers
             .Where(p => p.TraitBehavior.Phase == TraitPhase.Resolve)
@@ -40,28 +38,31 @@ public class SocialEventManager : PhaseManagerBase
 
         if (!string.IsNullOrEmpty(message))
         {
-            SendPhaseMessage(message);
-            yield return new WaitForSeconds(_messageDelay);
+            yield return TryExecuteAndShowMessage(message);
             FinishPhase();
             yield break;
         }
         else
         {
-            SendPhaseMessage("Leaders couldn't stop the conflict!");
-            yield return new WaitForSeconds(_messageDelay);
+            bool hasLeaders = resolvePassengers.Count > 0;
+            if (hasLeaders)
+            {
+                SendPhaseMessage("Leaders couldn't stop the conflict!");
+                yield return new WaitForSeconds(_messageDelay);
+            }
+            else
+            {
+                SendPhaseMessage("No one could stop the conflict..");
+                yield return new WaitForSeconds(_messageDelay);
+            }
         }
 
         message = ExecutePhase(context, TraitPhase.ModifyOutcome);
+        yield return TryExecuteAndShowMessage(message);
 
-        if (!string.IsNullOrEmpty(message))
-        {
-            SendPhaseMessage(message);
-            yield return new WaitForSeconds(_messageDelay);
-        }
-        else
+        if (context.Victim == null)
         {
             var validVictims = context.AllPassengers;
-
             if (validVictims.Count > 0)
             {
                 var victim = validVictims[Random.Range(0, validVictims.Count)];
@@ -97,5 +98,14 @@ public class SocialEventManager : PhaseManagerBase
             }
         }
         return null;
+    }
+
+    private IEnumerator TryExecuteAndShowMessage(string message)
+    {
+        if (!string.IsNullOrEmpty(message))
+        {
+            SendPhaseMessage(message);
+            yield return new WaitForSeconds(_messageDelay);
+        }
     }
 }

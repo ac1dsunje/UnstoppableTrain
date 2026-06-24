@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BreakdownEventManager : PhaseManagerBase
 {
+    private float _timeScaler = 5f;
     public BreakdownEventManager(MonoBehaviour coroutineRunner, float messageDelay) : base(coroutineRunner, messageDelay) { }
 
     public void StartBreakdownPhase(List<PassengerController> passengers)
@@ -18,18 +19,17 @@ public class BreakdownEventManager : PhaseManagerBase
         SendPhaseMessage("The engine has broken down!");
         yield return new WaitForSeconds(_messageDelay);
 
-        var mechanic = RoleFactory.FindFirst(passengers, Role.Mechanic);
+        int mechanicCount = RoleFactory.CountRole(passengers, Role.Mechanic);
+        float repairDelay = (_messageDelay * _timeScaler) / (mechanicCount > 0 ? mechanicCount + 1 : 1);
 
-        if (mechanic != null)
-        {
-            SendPhaseMessage($"{mechanic.GetData.Name} successfully repaired the engine!");
-            yield return new WaitForSeconds(_messageDelay);
-        }
-        else
-        {
-            SendPhaseMessage("No mechanic on board! The train is stuck...\nPassengers need more time to fix the train...");
-            yield return new WaitForSeconds(_messageDelay * 3);
-        }
+        string mechanicsWord = mechanicCount == 1 ? "mechanic" : "mechanics";
+        string repairTimeText = repairDelay.ToString("0.0");
+        SendPhaseMessage($"We have {mechanicCount} {mechanicsWord} on board.\nRepair will take {repairTimeText} seconds.");
+
+        yield return new WaitForSeconds(repairDelay);
+
+        SendPhaseMessage("The engine was succesfully repaired");
+        yield return new WaitForSeconds(_messageDelay);
 
         FinishPhase();
     }

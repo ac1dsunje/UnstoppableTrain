@@ -30,9 +30,6 @@ public class StationManager : PhaseManagerBase
             }
         }
 
-        SendPhaseMessage("Leaving station..");
-        yield return new WaitForSeconds(_messageDelay);
-
         FinishPhase();
     }
 }
