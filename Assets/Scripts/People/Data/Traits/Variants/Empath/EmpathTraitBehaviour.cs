@@ -2,9 +2,9 @@
 
 public class EmpathTraitBehaviour : ITraitBehaviour
 {
-    private readonly EmpathConfig _config;
+    private readonly TraitConfig _config;
 
-    public EmpathTraitBehaviour(EmpathConfig config)
+    public EmpathTraitBehaviour(TraitConfig config)
     {
         _config = config;
     }
@@ -15,7 +15,7 @@ public class EmpathTraitBehaviour : ITraitBehaviour
     {
         if (!context.ConflictStarted || context.ConflictResolved || context.Victim != null) return false;
 
-        return Random.value < _config.SacrificeChance;
+        return Random.value < _config.BaseChance;
     }
 
     public string Do(SocialContext context, PassengerController owner)

@@ -1,8 +1,8 @@
 ﻿public class WallflowerTraitBehaviour : ITraitBehaviour
 {
-    private readonly WallflowerConfig _config;
+    private readonly TraitConfig _config;
 
-    public WallflowerTraitBehaviour(WallflowerConfig config)
+    public WallflowerTraitBehaviour(TraitConfig config)
     {
         _config = config;
     }

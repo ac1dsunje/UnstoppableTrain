@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 public class LeaderTraitBehaviour : ITraitBehaviour
 {
-    private readonly LeaderConfig _config;
+    private readonly TraitConfig _config;
 
-    public LeaderTraitBehaviour(LeaderConfig config)
+    public LeaderTraitBehaviour(TraitConfig config)
     {
         _config = config;
     }

@@ -2,9 +2,9 @@
 
 public class PsychopathTraitBehaviour : ITraitBehaviour
 {
-    private readonly PsychopathConfig _config;
+    private readonly TraitConfig _config;
 
-    public PsychopathTraitBehaviour(PsychopathConfig config)
+    public PsychopathTraitBehaviour(TraitConfig config)
     {
         _config = config;
     }

@@ -1,8 +1,9 @@
-﻿using System;
+﻿
+using System;
 using UnityEngine;
 
 [Serializable]
-public class PsychopathConfig
+public class TraitConfig
 {
     [Range(0f, 1f)]
     public float BaseChance = 0.10f;

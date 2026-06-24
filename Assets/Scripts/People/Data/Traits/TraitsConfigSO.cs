@@ -3,8 +3,8 @@
 [CreateAssetMenu(fileName = "TraitsConfig", menuName = "Game/Traits/Traits Config")]
 public class TraitsConfigSO : ScriptableObject
 {
-    public EmpathConfig EmpathConfig;
-    public LeaderConfig LeaderConfig;
-    public PsychopathConfig PsychopathConfig;
-    public WallflowerConfig WallflowerConfig;
+    public TraitConfig EmpathConfig;
+    public TraitConfig LeaderConfig;
+    public TraitConfig PsychopathConfig;
+    public TraitConfig WallflowerConfig;
 }

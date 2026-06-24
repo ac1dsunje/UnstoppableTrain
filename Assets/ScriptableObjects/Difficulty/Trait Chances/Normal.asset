@@ -13,9 +13,14 @@ MonoBehaviour:
   m_Name: Normal
   m_EditorClassIdentifier: Assembly-CSharp::TraitsConfigSO
   EmpathConfig:
-    SacrificeChance: 0.3
+    BaseChance: 0.1
+    ScaleChance: 0.1
   LeaderConfig:
+    BaseChance: 0.1
     ScaleChance: 0.2
   PsychopathConfig:
     BaseChance: 0.15
+    ScaleChance: 0.15
+  WallflowerConfig:
+    BaseChance: 0.1
     ScaleChance: 0.1
