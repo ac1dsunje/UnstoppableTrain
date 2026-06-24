@@ -6,6 +6,7 @@ public class LayingManController : MonoBehaviour
     [SerializeField] private MeshRenderer _shape;
 
     private ManGeneralConfigSO _config;
+    private ManDataFactory _manDataFactory;
     private ISkinComponent _skinManager;
 
     public ManData Data { get; private set; }
@@ -13,9 +14,10 @@ public class LayingManController : MonoBehaviour
 
     public bool IsActive { get; private set; }
 
-    public void Initialize(ManGeneralConfigSO config)
+    public void Initialize(ManGeneralConfigSO config, ManDataFactory manDataFactory)
     {
         _config = config;
+        _manDataFactory = manDataFactory;
         _skinManager = SkinManagerFactory.Create(_config.SkinConfig, _shape);
     }
 
@@ -26,7 +28,7 @@ public class LayingManController : MonoBehaviour
 
     private void Start()
     {
-        Data = ManFactory.Create();
+        Data = _manDataFactory.Create();
         _skinManager?.Apply(Data);
     }
 

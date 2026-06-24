@@ -75,9 +75,9 @@ public class TrainController : MonoBehaviour, ITrainMovement
 
     private void SpawnInitialTeam()
     {
-        SpawnPassenger(ManFactory.Create(role: Role.Driver, stationsNeeded: 3));
-        SpawnPassenger(ManFactory.Create(role: Role.Mechanic, stationsNeeded: 2));
-        SpawnPassenger(ManFactory.Create(role: Role.Doctor, stationsNeeded: 2));
+        SpawnPassenger(ManDataFactory.Create(role: Role.Driver, stationsNeeded: 3));
+        SpawnPassenger(ManDataFactory.Create(role: Role.Mechanic, stationsNeeded: 2));
+        SpawnPassenger(ManDataFactory.Create(role: Role.Doctor, stationsNeeded: 2));
     }
 
     private void SpawnPassenger(ManData data)

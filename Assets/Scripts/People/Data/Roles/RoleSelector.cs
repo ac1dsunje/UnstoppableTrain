@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Random = UnityEngine.Random;
 
-
 [Serializable]
 public struct RoleWeight
 {
@@ -17,14 +16,18 @@ public struct RoleWeight
     }
 }
 
-public static class RoleSelector
+public class RoleSelector
 {
-    private static List<RoleWeight> _weights = new();
+    private List<RoleWeight> _weights;
 
-    public static Role GetRandom()
+    public RoleSelector(IEnumerable<RoleWeight> weights)
+    {
+        _weights = weights.ToList();
+    }
+
+    public Role GetRandom()
     {
         float total = _weights.Sum(w => w.Weight);
-
         float roll = Random.Range(0f, total);
 
         foreach (var tw in _weights)
@@ -35,23 +38,5 @@ public static class RoleSelector
         }
 
         return _weights[_weights.Count - 1].Role;
-    }
-
-    public static void SetWeights(IEnumerable<RoleWeight> newWeights)
-    {
-        _weights = newWeights.ToList();
-    }
-
-    public static void SetWeight(Role role, float weight)
-    {
-        for (int i = 0; i < _weights.Count; i++)
-        {
-            if (_weights[i].Role == role)
-            {
-                _weights[i] = new RoleWeight(role, weight);
-                return;
-            }
-        }
-        _weights.Add(new RoleWeight(role, weight));
     }
 }

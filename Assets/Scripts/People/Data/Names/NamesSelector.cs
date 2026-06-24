@@ -1,8 +1,8 @@
-﻿using Random = UnityEngine.Random;
+﻿using UnityEngine;
 
-public static class NameSelector
+public class NameSelector
 {
-    private static readonly string[] _maleNames = new string[]
+    private readonly string[] _maleNames = new string[]
     {
         "Alex", "Jordan", "Casey", "Riley", "Quinn", "Morgan",
         "Cameron", "Dakota", "Finley", "Jamie", "Jesse",
@@ -10,7 +10,7 @@ public static class NameSelector
         "Sawyer", "Drew", "Ellis", "Hayden", "Tatum"
     };
 
-    private static readonly string[] _femaleNames = new string[]
+    private readonly string[] _femaleNames = new string[]
     {
         "Taylor", "Avery", "Emerson", "Harper", "Kendall",
         "Peyton", "Sage", "Sydney", "Lennox", "Casey",
@@ -18,7 +18,7 @@ public static class NameSelector
         "Jamie", "Robin", "Rowan", "Sydney", "Hayden"
     };
 
-    public static string GetRandom()
+    public string GetRandom()
     {
         string[] selectedNames = Random.value < 0.5f ? _maleNames : _femaleNames;
         return selectedNames[Random.Range(0, selectedNames.Length)];

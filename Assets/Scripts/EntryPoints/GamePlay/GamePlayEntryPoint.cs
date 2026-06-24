@@ -32,9 +32,19 @@ public class GamePlayEntryPoint : MonoBehaviour
 
     private void Awake()
     {
-        InitializeFactories();
+        NameSelector nameSelector = new NameSelector();
+        RoleSelector roleSelector = new RoleSelector(difficulty.roleLevel.Weights);
+        TraitSelector traitSelector = new TraitSelector(difficulty.traitLevel.Weights);
+        StationsSelector stationsSelector = new StationsSelector(difficulty.stationsLevel.Range);
 
-        LayingManFactory layingManFactory = new LayingManFactory(_manConfig, _manVisualConfig);
+        ManDataFactory manDataFactory = new ManDataFactory(
+            nameSelector,
+            roleSelector,
+            traitSelector,
+            stationsSelector
+        );
+
+        LayingManFactory layingManFactory = new LayingManFactory(_manConfig, _manVisualConfig, manDataFactory);
         RailFactory railFactory = new RailFactory(layingManFactory);
         RoadFactory roadFactory = new RoadFactory(railFactory);
 
@@ -53,6 +63,8 @@ public class GamePlayEntryPoint : MonoBehaviour
         _roadManager.Initialize(_gameStateManager, _train);
 
         _uiManager.Initialize(_gameStateManager, _train, _eventsManager, _canvas);
+
+        TraitFactory.SetConfig(difficulty.traitsConfig);
     }
 
     private void Start()
@@ -99,13 +111,5 @@ public class GamePlayEntryPoint : MonoBehaviour
         gsm.RegisterState(new EndState(train));
 
         return gsm;
-    }
-
-    private void InitializeFactories()
-    {
-        RoleSelector.SetWeights(difficulty.roleLevel.Weights);
-        TraitSelector.SetWeights(difficulty.traitLevel.Weights);
-        StationsSelector.SetRange(difficulty.stationsLevel.Range);
-        TraitFactory.SetConfig(difficulty.traitsConfig);
     }
 }

@@ -14,17 +14,17 @@ public class StationsRange
     }
 }
 
-public static class StationsSelector
+public class StationsSelector
 {
-    private static StationsRange _currentRange;
+    private StationsRange _currentRange;
 
-    public static int GetRandom()
-    {
-        return Random.Range(_currentRange.MinAmount, _currentRange.MaxAmount + 1);
-    }
-
-    public static void SetRange(StationsRange range)
+    public StationsSelector(StationsRange range)
     {
         _currentRange = range;
+    }
+
+    public int GetRandom()
+    {
+        return Random.Range(_currentRange.MinAmount, _currentRange.MaxAmount + 1);
     }
 }
