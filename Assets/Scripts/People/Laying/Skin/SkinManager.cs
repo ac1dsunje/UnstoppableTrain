@@ -1,30 +1,17 @@
 ﻿using UnityEngine;
 
-public class SkinManager : MonoBehaviour
+public class SkinManager
 {
-    [SerializeField] private Material _wallflowerMat;
-    [SerializeField] private Material _psychopathMat;
-    [SerializeField] private Material _leaderMat;
-    [SerializeField] private Material _empathMat;
+    private readonly MeshRenderer _shape;
+    private readonly ManSkinConfigSO _config;
 
-    private ISkin _skinHolder;
-
-    private void Awake()
+    public SkinManager (MeshRenderer shape, ManSkinConfigSO config)
     {
-        _skinHolder = GetComponent<ISkin>();
+        _shape = shape;
+        _config = config;
     }
 
-    private void OnEnable()
-    {
-        _skinHolder.OnManDataInitialized += ApplySkin;
-    }
-
-    private void OnDisable()
-    {
-        _skinHolder.OnManDataInitialized -= ApplySkin;
-    }
-
-    private void ApplySkin(ManData data)
+    public void ApplySkin(ManData data)
     {
         ApplyMaterial(data.trait);
         ApplyHat(data.role);
@@ -33,26 +20,25 @@ public class SkinManager : MonoBehaviour
     private void ApplyMaterial(Trait trait)
     {
         Material mat = null;
-        Material current = _skinHolder.GetShape().material;
+        Material current = _shape.material;
+
         switch (trait)
         {
             case Trait.Wallflower:
-                mat = _wallflowerMat;
+                mat = _config.WallflowerMat;
                 break;
-
             case Trait.Psychopath:
-                mat = _psychopathMat;
+                mat = _config.PsychopathMat;
                 break;
-
             case Trait.Leader:
-                mat = _leaderMat;
+                mat = _config.LeaderMat;
                 break;
-
             case Trait.Empath:
-                mat = _empathMat;
+                mat = _config.EmpathMat;
                 break;
         }
-        _skinHolder.GetShape().material = mat?? current;
+
+        _shape.material = mat ?? current;
     }
 
     private void ApplyHat(Role role)
@@ -62,15 +48,12 @@ public class SkinManager : MonoBehaviour
             case Role.NoSkill:
                 Debug.Log("Apply NoSkill hat");
                 break;
-
             case Role.Doctor:
                 Debug.Log("Apply Doctor hat");
                 break;
-
             case Role.Driver:
                 Debug.Log("Apply Driver hat");
                 break;
-
             case Role.Mechanic:
                 Debug.Log("Apply Mechanic hat");
                 break;

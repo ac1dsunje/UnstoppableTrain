@@ -5,16 +5,17 @@ using UnityEngine;
 public class RailController : MonoBehaviour
 {
     [SerializeField] private GameObject _layingManPrefab;
+    [SerializeField] private ManGeneralConfigSO _manGeneralConfig;
+
     private List<LayingManController> _layingMen = new();
     public List<LayingManController> LayingMen => _layingMen;
-
 
     public event Action<bool> OnThisActive;
     public event Action OnAllLayingMenDied;
 
     public void SpawnManyLayingMen(int count)
     {
-        for (int i = 0; i < count; i++) 
+        for (int i = 0; i < count; i++)
         {
             SpawnLayingMan(i);
         }
@@ -23,9 +24,13 @@ public class RailController : MonoBehaviour
     private void SpawnLayingMan(int step)
     {
         Vector3 pos = new Vector3(transform.position.x, transform.position.y, transform.position.z + step * 2);
-        LayingManController _layingMan = Instantiate(_layingManPrefab, pos, Quaternion.identity, transform).GetComponent<LayingManController>();
-        _layingMen.Add(_layingMan);
-        _layingMan.OnDeath += OnLayingManDeath;
+        LayingManController layingMan = Instantiate(_layingManPrefab, pos, Quaternion.identity, transform)
+            .GetComponent<LayingManController>();
+
+        layingMan.Initialize(_manGeneralConfig);
+
+        _layingMen.Add(layingMan);
+        layingMan.OnDeath += OnLayingManDeath;
     }
 
     private void OnDestroy()

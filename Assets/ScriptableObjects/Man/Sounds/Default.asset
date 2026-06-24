@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f33fed4a5db65e4fa628a783ed1c55c, type: 3}
+  m_Name: Default
+  m_EditorClassIdentifier: Assembly-CSharp::ManConfigSO
+  <OnDeathSound>k__BackingField:
+    <Clips>k__BackingField:
+    - {fileID: 8300000, guid: b2fb5786513f8413a81b165949ed28a5, type: 3}
+    <Volume>k__BackingField: 1
+    <MinPitch>k__BackingField: 0.9
+    <MaxPitch>k__BackingField: 1.1

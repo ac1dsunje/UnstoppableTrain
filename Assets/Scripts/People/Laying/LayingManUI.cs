@@ -3,11 +3,16 @@
 public class LayingManUI : ScreenManager
 {
     [SerializeField] private LayingManSlotUI _slot;
-    [SerializeField] private LayingManController _controller;
+
+    private LayingManController _controller;
+    public void Initialize(LayingManController controller)
+    {
+        _controller = controller;
+    }
 
     private void OnMouseEnter()
     {
-        if (_controller.IsActive)
+        if (_controller != null && _controller.IsActive)
         {
             _slot.Set(_controller.Data);
             ShowScreen();
@@ -16,7 +21,7 @@ public class LayingManUI : ScreenManager
 
     private void OnMouseExit()
     {
-        if (_controller.IsActive)
+        if (_controller != null && _controller.IsActive)
         {
             HideScreen();
         }

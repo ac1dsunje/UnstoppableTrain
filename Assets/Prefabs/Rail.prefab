@@ -137,6 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RailController
   _layingManPrefab: {fileID: 564454119608622762, guid: cf995d632dcb2fd40be2e4dbfbb159da, type: 3}
+  _manGeneralConfig: {fileID: 11400000, guid: 684bc56918d409649a8e1adfcfbee89d, type: 2}
 --- !u!65 &2936355715868470884
 BoxCollider:
   m_ObjectHideFlags: 0

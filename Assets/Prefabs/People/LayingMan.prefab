@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8234509541660038866}
   - component: {fileID: 2055043596465502827}
   - component: {fileID: 987436057621131130}
-  - component: {fileID: 677240693230424649}
   m_Layer: 0
   m_Name: LayingMan
   m_TagString: Untagged
@@ -49,13 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 466e80473a6b4a444b5cadb8e5df4b63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PassengerController
-  _onDeathSound:
-    <Clips>k__BackingField:
-    - {fileID: 8300000, guid: b2fb5786513f8413a81b165949ed28a5, type: 3}
-    <Volume>k__BackingField: 1
-    <MinPitch>k__BackingField: 0.9
-    <MaxPitch>k__BackingField: 1.1
   _shape: {fileID: 2194767699455893239}
+  _ui: {fileID: 987436057621131130}
 --- !u!65 &2055043596465502827
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -91,23 +85,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LayingManUI
   _screenCanvasGroup: {fileID: 584877510135312141}
   _slot: {fileID: 7881355763812200628}
-  _controller: {fileID: 8234509541660038866}
---- !u!114 &677240693230424649
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 564454119608622762}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c3492a173856ed40ace70c6cef2ade7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SkinManager
-  _wallflowerMat: {fileID: 2100000, guid: 133680aeea8bad54f9a5fe1818b513eb, type: 2}
-  _psychopathMat: {fileID: 2100000, guid: 700471b62e0f20b448a83f0ea00af33a, type: 2}
-  _leaderMat: {fileID: 0}
-  _empathMat: {fileID: 0}
 --- !u!1 &5830453838341689851
 GameObject:
   m_ObjectHideFlags: 0
