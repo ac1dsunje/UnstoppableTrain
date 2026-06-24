@@ -4,7 +4,8 @@ public class PassengerController : MonoBehaviour
 {
     private TrainController _train;
     private ManData _data = new();
-    
+    private TraitFactory _traitFactory;
+
     public ManData GetData => _data;
     public ITrait TraitBehavior { get; private set; }
 
@@ -13,13 +14,14 @@ public class PassengerController : MonoBehaviour
         _train.OnStationPassed -= CheckStationIndex;
     }
 
-    public PassengerController Initialize(TrainController train, ManData data)
+    public PassengerController Initialize(TrainController train, ManData data, TraitFactory traitFactory)
     {
         _train = train;
         _data = data;
         _data.StationsLeft = _data.StationsNeeded;
+        _traitFactory = traitFactory;
 
-        TraitBehavior = TraitFactory.Create(data.trait);
+        TraitBehavior = _traitFactory.Create(data.trait);
 
         _train.OnStationPassed += CheckStationIndex;
         return this;

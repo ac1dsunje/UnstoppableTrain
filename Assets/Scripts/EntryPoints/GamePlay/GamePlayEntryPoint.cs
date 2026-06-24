@@ -13,6 +13,7 @@ public class GamePlayEntryPoint : MonoBehaviour
     [Header("Train")]
     [SerializeField] private GameObject _trainPrefab;
     [SerializeField] private Vector3 TrainSpawnPosition = new(1.5f, 1.3f, -20f);
+    [SerializeField] private TrainSO _trainData;
 
     [Header("UI")]
     [SerializeField] private UIManager _uiManager;
@@ -25,6 +26,9 @@ public class GamePlayEntryPoint : MonoBehaviour
     [SerializeField] private ManGeneralConfigSO _manConfig;
     [SerializeField] private ManVisualConfigSO _manVisualConfig;
 
+    [Header("Passenger")]
+    [SerializeField] private GameObject _passengerPrefab;
+
     private GameStateManager _gameStateManager;
     private TrainController _train;
     private GameEventsManager _eventsManager;
@@ -32,39 +36,45 @@ public class GamePlayEntryPoint : MonoBehaviour
 
     private void Awake()
     {
-        NameSelector nameSelector = new NameSelector();
-        RoleSelector roleSelector = new RoleSelector(difficulty.roleLevel.Weights);
-        TraitSelector traitSelector = new TraitSelector(difficulty.traitLevel.Weights);
-        StationsSelector stationsSelector = new StationsSelector(difficulty.stationsLevel.Range);
+        NameSelector nameSelector = new();
+        RoleSelector roleSelector = new(difficulty.roleLevel.Weights);
+        TraitSelector traitSelector = new(difficulty.traitLevel.Weights);
+        StationsSelector stationsSelector = new(difficulty.stationsLevel.Range);
 
-        ManDataFactory manDataFactory = new ManDataFactory(
+        ManDataFactory manDataFactory = new(
             nameSelector,
             roleSelector,
             traitSelector,
             stationsSelector
         );
 
-        LayingManFactory layingManFactory = new LayingManFactory(_manConfig, _manVisualConfig, manDataFactory);
-        RailFactory railFactory = new RailFactory(layingManFactory);
-        RoadFactory roadFactory = new RoadFactory(railFactory);
+        TraitFactory traitFactory = new(difficulty.traitsConfig);
+
+        PassengerFactory passengerFactory = new(
+            _passengerPrefab,
+            manDataFactory,
+            traitFactory
+        );
+
+        LayingManFactory layingManFactory = new(_manConfig, _manVisualConfig, manDataFactory);
+        RailFactory railFactory = new(layingManFactory);
+        RoadFactory roadFactory = new(railFactory);
 
         _train = SpawnTrain();
-        _train.Initialize();
+        _train.Initialize(passengerFactory, _trainData);
         _cam.Initialize(_train.transform);
 
-        _eventsManager = new GameEventsManager(_coroutineRunner, _train, _messageDelay);
+        _eventsManager = new(_coroutineRunner, _train, _messageDelay);
 
         _gameStateManager = BuildGameStateManager(_train);
 
         _train.GetComponent<TrainMovement>().Initialize(_gameStateManager);
 
         var roadsParent = new GameObject("Roads").transform;
-        _roadManager = new RoadManager(_roadConfig, _coroutineRunner, roadsParent, roadFactory);
+        _roadManager = new(_roadConfig, _coroutineRunner, roadsParent, roadFactory);
         _roadManager.Initialize(_gameStateManager, _train);
 
         _uiManager.Initialize(_gameStateManager, _train, _eventsManager, _canvas);
-
-        TraitFactory.SetConfig(difficulty.traitsConfig);
     }
 
     private void Start()

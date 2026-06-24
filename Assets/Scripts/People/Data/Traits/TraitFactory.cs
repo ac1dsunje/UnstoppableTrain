@@ -6,16 +6,16 @@
     Empath
 }
 
-public static class TraitFactory
+public class TraitFactory
 {
-    private static TraitsConfigSO _config;
+    private TraitsConfigSO _config;
 
-    public static void SetConfig(TraitsConfigSO config)
+    public TraitFactory(TraitsConfigSO config)
     {
         _config = config;
     }
 
-    public static ITrait Create(Trait trait)
+    public ITrait Create(Trait trait)
     {
         switch (trait)
         {
