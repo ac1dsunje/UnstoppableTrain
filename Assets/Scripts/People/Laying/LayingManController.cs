@@ -4,7 +4,6 @@ using UnityEngine;
 public class LayingManController : MonoBehaviour
 {
     [SerializeField] private MeshRenderer _shape;
-    [SerializeField] private LayingManUI _ui;
 
     private ManGeneralConfigSO _config;
     private ISkinComponent _skinManager;
@@ -17,10 +16,7 @@ public class LayingManController : MonoBehaviour
     public void Initialize(ManGeneralConfigSO config)
     {
         _config = config;
-
         _skinManager = SkinManagerFactory.Create(_config.SkinConfig, _shape);
-
-        _ui.Initialize(this);
     }
 
     public void SetActiveState()
@@ -31,7 +27,7 @@ public class LayingManController : MonoBehaviour
     private void Start()
     {
         Data = ManFactory.Create();
-        _skinManager.Apply(Data);
+        _skinManager?.Apply(Data);
     }
 
     private void OnTriggerEnter(Collider other)

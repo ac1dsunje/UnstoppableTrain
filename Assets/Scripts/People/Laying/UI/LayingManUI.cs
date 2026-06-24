@@ -5,9 +5,11 @@ public class LayingManUI : ScreenManager
     [SerializeField] private LayingManSlotUI _slot;
 
     private LayingManController _controller;
-    public void Initialize(LayingManController controller)
+
+    private void Awake()
     {
-        _controller = controller;
+        _controller = GetComponentInParent<LayingManController>();
+        HideScreen();
     }
 
     private void OnMouseEnter()
@@ -27,18 +29,6 @@ public class LayingManUI : ScreenManager
         }
     }
 
-    private void Awake()
-    {
-        HideScreen();
-    }
-
-    public override void HideScreen()
-    {
-        Hide();
-    }
-
-    public override void ShowScreen()
-    {
-        Show();
-    }
+    public override void HideScreen() => Hide();
+    public override void ShowScreen() => Show();
 }
