@@ -61,7 +61,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.5, y: 0.42, z: 0.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 1, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 841693164916273443}
@@ -80,20 +80,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1352eb1c888e9e84f89cb23465aa72de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrainMovement
-  _data: {fileID: 11400000, guid: 50fbbd64f1990544887d2287be5c80ab, type: 2}
-  _passengerPrefab: {fileID: 564454119608622762, guid: 82c31e912af5e5346a17599f7ab38838, type: 3}
   _passengersContainer: {fileID: 388346275500345251}
-  _onResumeMovingSound:
-    <Clips>k__BackingField: []
-    <Volume>k__BackingField: 1
-    <MinPitch>k__BackingField: 0.9
-    <MaxPitch>k__BackingField: 1.1
-  _onStopMovingSound:
-    <Clips>k__BackingField:
-    - {fileID: 8300000, guid: 1e2161a3e58cf47009e8df0896584ae3, type: 3}
-    <Volume>k__BackingField: 1
-    <MinPitch>k__BackingField: 0.9
-    <MaxPitch>k__BackingField: 1.1
 --- !u!114 &5384228613855419829
 MonoBehaviour:
   m_ObjectHideFlags: 0
