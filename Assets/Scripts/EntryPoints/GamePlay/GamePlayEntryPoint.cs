@@ -48,12 +48,12 @@ public class GamePlayEntryPoint : MonoBehaviour
             stationsSelector
         );
 
-        TraitFactory traitFactory = new(difficulty.traitsConfig);
+        TraitBehaviourFactory traitBehaviourFactory = new(difficulty.traitsConfig);
 
         PassengerFactory passengerFactory = new(
             _passengerPrefab,
             manDataFactory,
-            traitFactory
+            traitBehaviourFactory
         );
 
         LayingManFactory layingManFactory = new(_manConfig, _manVisualConfig, manDataFactory);

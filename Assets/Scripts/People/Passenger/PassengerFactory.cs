@@ -4,12 +4,12 @@ public class PassengerFactory
 {
     private readonly GameObject _passengerPrefab;
     private readonly ManDataFactory _manDataFactory;
-    private readonly TraitFactory _traitFactory;
+    private readonly TraitBehaviourFactory _traitFactory;
 
     public PassengerFactory(
         GameObject passengerPrefab,
         ManDataFactory manDataFactory,
-        TraitFactory traitFactory)
+        TraitBehaviourFactory traitFactory)
     {
         _passengerPrefab = passengerPrefab;
         _manDataFactory = manDataFactory;

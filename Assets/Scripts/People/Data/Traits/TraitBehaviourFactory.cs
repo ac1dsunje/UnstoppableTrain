@@ -6,11 +6,11 @@
     Empath
 }
 
-public class TraitFactory
+public class TraitBehaviourFactory
 {
     private TraitsConfigSO _config;
 
-    public TraitFactory(TraitsConfigSO config)
+    public TraitBehaviourFactory(TraitsConfigSO config)
     {
         _config = config;
     }
