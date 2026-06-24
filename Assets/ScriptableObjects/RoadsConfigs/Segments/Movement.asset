@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d23dc9f638b45f549928787f5150f89b, type: 3}
+  m_Name: Movement
+  m_EditorClassIdentifier: Assembly-CSharp::RoadSegmentConfigSO
+  <roadLength>k__BackingField: 10
+  <RailPrefab>k__BackingField: {fileID: 7920926727020237154, guid: 06d98aa38d293fb4885a7ca1b56506f6, type: 3}
+  _environmentAtlas: {fileID: 11400000, guid: 1a54b416ac81dfb42876517c7f20aee2, type: 2}
+  <_maxMenOnTheRail>k__BackingField: 3
+  <_onEnterSound>k__BackingField:
+    <Clips>k__BackingField: []
+    <Volume>k__BackingField: 1
+    <MinPitch>k__BackingField: 0.9
+    <MaxPitch>k__BackingField: 1.1

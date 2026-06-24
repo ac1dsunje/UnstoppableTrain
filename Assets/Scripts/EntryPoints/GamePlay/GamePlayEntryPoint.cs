@@ -7,7 +7,7 @@ public class GamePlayEntryPoint : MonoBehaviour
     [SerializeField] private InputHandler _input;
     [SerializeField] private CameraController _cam;
     [SerializeField] private CoroutineRunner _coroutineRunner;
-    [SerializeField] private RoadConfigSO _roadConfig;
+    [SerializeField] private RoadsConfigSO _roadConfig;
     [SerializeField] private float _messageDelay = 1.2f;
 
     [Header("Train")]

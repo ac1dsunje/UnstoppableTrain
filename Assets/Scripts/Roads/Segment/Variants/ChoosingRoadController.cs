@@ -11,10 +11,10 @@ public class ChoosingRoadController : RoadController
 
     private void SpawnLayingMen()
     {
-        int randLeft = Random.Range(1, _maxMenOnTheRail + 1);
+        int randLeft = Random.Range(1, _config._maxMenOnTheRail + 1);
         LeftRail.SpawnManyLayingMen(randLeft);
 
-        int randRight = Random.Range(1, _maxMenOnTheRail + 1);
+        int randRight = Random.Range(1, _config._maxMenOnTheRail + 1);
         RightRail.SpawnManyLayingMen(randRight);
     }
 
@@ -22,7 +22,7 @@ public class ChoosingRoadController : RoadController
     {
         _gameStateManager.EnterIn<ChoosingState>();
 
-        MediaEvents.TriggerEvent(transform.position, _onEnterSound);
+        MediaEvents.TriggerEvent(transform.position, _config._onEnterSound);
     }
 
     protected override void OnRailCleared(RailController clearedRail, RailController remainingRail)

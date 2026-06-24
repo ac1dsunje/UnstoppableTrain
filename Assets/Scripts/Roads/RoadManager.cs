@@ -8,7 +8,7 @@ using Object = UnityEngine.Object;
 
 public class RoadManager: IDisposable
 {
-    private readonly RoadConfigSO _config;
+    private readonly RoadsConfigSO _config;
     private readonly MonoBehaviour _coroutineRunner;
     private readonly Transform _parent;
 
@@ -19,7 +19,7 @@ public class RoadManager: IDisposable
     private Vector3 _nextSpawnPosition = Vector3.zero;
     private static readonly WaitForSeconds _waitFor1Seconds = new WaitForSeconds(1f);
 
-    public RoadManager(RoadConfigSO config, MonoBehaviour coroutineRunner, Transform parent)
+    public RoadManager(RoadsConfigSO config, MonoBehaviour coroutineRunner, Transform parent)
     {
         _config = config;
         _coroutineRunner = coroutineRunner;

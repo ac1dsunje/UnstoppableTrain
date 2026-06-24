@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "RoadConfig", menuName = "Game/Road Config")]
-public class RoadConfigSO : ScriptableObject
+[CreateAssetMenu(fileName = "RoadsConfig", menuName = "Game/Roads/General Config")]
+public class RoadsConfigSO : ScriptableObject
 {
     [field: SerializeField] public int ChoosingRoadChance { get; private set; }
     [field: SerializeField] public int StationRoadChance { get; private set; }

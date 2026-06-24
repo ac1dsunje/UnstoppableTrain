@@ -6,7 +6,7 @@
     {
         if(_gameStateManager.TryEnterStationEvent())
         {
-            MediaEvents.TriggerEvent(transform.position, _onEnterSound);
+            MediaEvents.TriggerEvent(transform.position, _config._onEnterSound);
         }
     }
 }

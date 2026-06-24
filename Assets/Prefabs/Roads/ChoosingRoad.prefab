@@ -46,5 +46,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChoosingRoadController
   roadLength: 10
   RailPrefab: {fileID: 7920926727020237154, guid: 06d98aa38d293fb4885a7ca1b56506f6, type: 3}
-  _maxMenOnTheRail: 3
   _environmentAtlas: {fileID: 11400000, guid: 1a54b416ac81dfb42876517c7f20aee2, type: 2}
+  _maxMenOnTheRail: 3
+  _onEnterSound:
+    <Clips>k__BackingField: []
+    <Volume>k__BackingField: 1
+    <MinPitch>k__BackingField: 0.9
+    <MaxPitch>k__BackingField: 1.1
+  _config: {fileID: 11400000, guid: 13907809f5d6a3f42810d6f1d5f69902, type: 2}

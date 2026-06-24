@@ -6,11 +6,7 @@ public enum RoadType { Moving, Choosing, Station }
 
 public abstract class RoadController : MonoBehaviour
 {
-    [SerializeField] private float roadLength = 10f;
-    [SerializeField] private GameObject RailPrefab;
-    [SerializeField] private EnvironmentAtlas _environmentAtlas;
-    [SerializeField] protected int _maxMenOnTheRail = 3;
-    [SerializeField] protected SoundData _onEnterSound;
+    [SerializeField] protected RoadSegmentConfigSO _config;
 
     private float xOffset = 1.5f;
 
@@ -18,7 +14,7 @@ public abstract class RoadController : MonoBehaviour
 
     public abstract RoadType GetRoadType { get; }
 
-    public float RoadLength => roadLength;
+    public float RoadLength => _config.roadLength;
     public bool IsLeftActive { get; private set; }
     public bool IsRightActive { get; private set; }
 
@@ -75,10 +71,10 @@ public abstract class RoadController : MonoBehaviour
 
     private RailController CreateRail(float xOff, bool xFlip)
     {
-        var rail = Instantiate(RailPrefab, new Vector3(transform.position.x + xOff, transform.position.y, transform.position.z), Quaternion.identity, transform).GetComponent<RailController>();
-        int rand = Random.Range(0, _environmentAtlas.EnvironmentObjects.Count);
+        var rail = Instantiate(_config.RailPrefab, new Vector3(transform.position.x + xOff, transform.position.y, transform.position.z), Quaternion.identity, transform).GetComponent<RailController>();
+        int rand = Random.Range(0, _config._environmentAtlas.EnvironmentObjects.Count);
         Transform railTransform = rail.transform;
-        GameObject env = _environmentAtlas.EnvironmentObjects[rand];
+        GameObject env = _config._environmentAtlas.EnvironmentObjects[rand];
         Transform envTransform = Instantiate(env, new Vector3(railTransform.position.x + 2 * xOff, railTransform.position.y, railTransform.position.z), Quaternion.identity, railTransform).GetComponent<Transform>();
 
         if (xFlip) envTransform.localScale = new Vector3(-1, 1, 1);

@@ -54,3 +54,4 @@ MonoBehaviour:
     <Volume>k__BackingField: 1
     <MinPitch>k__BackingField: 0.9
     <MaxPitch>k__BackingField: 1.1
+  _config: {fileID: 11400000, guid: 87f30bcba177ae3419da3c8b42011d38, type: 2}
