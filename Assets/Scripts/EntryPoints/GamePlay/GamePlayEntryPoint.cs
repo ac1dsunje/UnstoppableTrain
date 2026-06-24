@@ -34,6 +34,10 @@ public class GamePlayEntryPoint : MonoBehaviour
     {
         InitializeFactories();
 
+        LayingManFactory layingManFactory = new LayingManFactory(_manConfig, _manVisualConfig);
+        RailFactory railFactory = new RailFactory(layingManFactory);
+        RoadFactory roadFactory = new RoadFactory(railFactory);
+
         _train = SpawnTrain();
         _train.Initialize();
         _cam.Initialize(_train.transform);
@@ -45,7 +49,7 @@ public class GamePlayEntryPoint : MonoBehaviour
         _train.GetComponent<TrainMovement>().Initialize(_gameStateManager);
 
         var roadsParent = new GameObject("Roads").transform;
-        _roadManager = new RoadManager(_roadConfig, _coroutineRunner, roadsParent, _manConfig, _manVisualConfig);
+        _roadManager = new RoadManager(_roadConfig, _coroutineRunner, roadsParent, roadFactory);
         _roadManager.Initialize(_gameStateManager, _train);
 
         _uiManager.Initialize(_gameStateManager, _train, _eventsManager, _canvas);

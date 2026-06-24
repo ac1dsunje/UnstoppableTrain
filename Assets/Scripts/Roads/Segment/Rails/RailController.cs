@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class RailController : MonoBehaviour
 {
-    private ManGeneralConfigSO _manConfig;
-    private ManVisualConfigSO _manVisualConfig;
+    private LayingManFactory _layingManFactory;
 
     private List<LayingManController> _layingMen = new();
     public List<LayingManController> LayingMen => _layingMen;
@@ -13,10 +12,9 @@ public class RailController : MonoBehaviour
     public event Action<bool> OnThisActive;
     public event Action OnAllLayingMenDied;
 
-    public RailController Initialize(ManGeneralConfigSO manConfig, ManVisualConfigSO manVisualConfig)
+    public RailController Initialize(LayingManFactory layingManFactory)
     {
-        _manConfig = manConfig;
-        _manVisualConfig = manVisualConfig;
+        _layingManFactory = layingManFactory;
         return this;
     }
 
@@ -36,14 +34,7 @@ public class RailController : MonoBehaviour
             transform.position.z + step * 2
         );
 
-        LayingManController layingMan = Instantiate(
-            _manVisualConfig.LayingManPrefab,
-            pos,
-            Quaternion.identity,
-            transform
-        ).GetComponent<LayingManController>();
-
-        layingMan.Initialize(_manConfig);
+        LayingManController layingMan = _layingManFactory.Create(pos, transform);
 
         _layingMen.Add(layingMan);
         layingMan.OnDeath += OnLayingManDeath;

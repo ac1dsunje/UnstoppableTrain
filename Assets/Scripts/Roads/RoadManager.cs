@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using Object = UnityEngine.Object;
 
 public class RoadManager : IDisposable
@@ -10,8 +9,7 @@ public class RoadManager : IDisposable
     private readonly RoadsConfigSO _config;
     private readonly MonoBehaviour _coroutineRunner;
     private readonly Transform _parent;
-    private readonly ManGeneralConfigSO _manConfig;
-    private readonly ManVisualConfigSO _manVisualConfig;
+    private readonly RoadFactory _roadFactory;
 
     private GameStateManager _gameStateManager;
     private TrainController _train;
@@ -24,14 +22,12 @@ public class RoadManager : IDisposable
         RoadsConfigSO config,
         MonoBehaviour coroutineRunner,
         Transform parent,
-        ManGeneralConfigSO manConfig,
-        ManVisualConfigSO manVisualConfig)
+        RoadFactory roadFactory)
     {
         _config = config;
         _coroutineRunner = coroutineRunner;
         _parent = parent;
-        _manConfig = manConfig;
-        _manVisualConfig = manVisualConfig;
+        _roadFactory = roadFactory;
     }
 
     public void Initialize(GameStateManager gameStateManager, TrainController train)
@@ -51,14 +47,8 @@ public class RoadManager : IDisposable
     {
         RoadSegmentConfigSO segmentConfig = RoadSelector.GetRandom();
 
-        RoadController newRoad = Object.Instantiate(
-            _config.RoadPrefab,
-            _nextSpawnPosition,
-            Quaternion.identity,
-            _parent
-        )
-        .GetComponent<RoadController>()
-        .Initialize(_train, _gameStateManager, _manConfig, _manVisualConfig, segmentConfig);
+        RoadController newRoad = _roadFactory.Create(_config, segmentConfig, _nextSpawnPosition, _parent);
+        newRoad.SetDependencies(_train, _gameStateManager);
 
         _roads.Add(newRoad);
         newRoad.OnRoadStateChanged += OnRoadStateChanged;
