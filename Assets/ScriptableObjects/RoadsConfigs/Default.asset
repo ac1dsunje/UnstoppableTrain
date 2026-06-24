@@ -15,6 +15,8 @@ MonoBehaviour:
   <ChoosingRoadChance>k__BackingField: 20
   <StationRoadChance>k__BackingField: 10
   <MaxRoads>k__BackingField: 10
-  <MovingRoadPrefab>k__BackingField: {fileID: 3058819273101387152, guid: fd9b1700837b19a45964cef707393612, type: 3}
-  <ChoosingRoadPrefab>k__BackingField: {fileID: 7180160364947763013, guid: a0f0f5b926970ad4f8721fddfdd8f9c4, type: 3}
-  <StationRoadPrefab>k__BackingField: {fileID: 7180160364947763013, guid: 2a3e7ad53118bf54d9fc8c31a35e7961, type: 3}
+  <RoadPrefab>k__BackingField: {fileID: 3058819273101387152, guid: fd9b1700837b19a45964cef707393612, type: 3}
+  <SegmentConfigs>k__BackingField:
+  - {fileID: 11400000, guid: b0308dacf13f1d64e89158c83e176556, type: 2}
+  - {fileID: 11400000, guid: 13907809f5d6a3f42810d6f1d5f69902, type: 2}
+  - {fileID: 11400000, guid: 87f30bcba177ae3419da3c8b42011d38, type: 2}

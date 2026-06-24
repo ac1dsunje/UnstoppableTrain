@@ -28,7 +28,7 @@ public class TrainController : MonoBehaviour, ITrainMovement
     public void SetCurrentRoad(RoadController currentRoad)
     {
         _currentRoad = currentRoad;
-        if (currentRoad.GetRoadType == RoadType.Station)
+        if (currentRoad.RoadType == RoadType.Station)
         {
             _stats.stationsPassed++;
             OnStationPassed?.Invoke();

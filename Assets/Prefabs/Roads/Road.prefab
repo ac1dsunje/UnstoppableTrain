@@ -41,16 +41,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3058819273101387152}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aeb18e5e86b6c5c4d92757dc815a3507, type: 3}
+  m_Script: {fileID: 11500000, guid: f2ab1047729b14142bfe500cef6c9fcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovingRoadController
-  roadLength: 10
-  RailPrefab: {fileID: 7920926727020237154, guid: 06d98aa38d293fb4885a7ca1b56506f6, type: 3}
-  _environmentAtlas: {fileID: 11400000, guid: 1a54b416ac81dfb42876517c7f20aee2, type: 2}
-  _maxMenOnTheRail: 3
-  _onEnterSound:
-    <Clips>k__BackingField: []
-    <Volume>k__BackingField: 1
-    <MinPitch>k__BackingField: 0.9
-    <MaxPitch>k__BackingField: 1.1
-  _config: {fileID: 11400000, guid: b0308dacf13f1d64e89158c83e176556, type: 2}
+  _config: {fileID: 0}

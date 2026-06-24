@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using Random = UnityEngine.Random;
 using Object = UnityEngine.Object;
 
 public class RoadManager : IDisposable
@@ -40,6 +39,8 @@ public class RoadManager : IDisposable
         _gameStateManager = gameStateManager;
         _train = train;
 
+        RoadSelector.SetConfigs(_config.SegmentConfigs);
+
         for (int i = 0; i < _config.MaxRoads; i++)
         {
             SpawnNextRoad();
@@ -48,16 +49,16 @@ public class RoadManager : IDisposable
 
     private void SpawnNextRoad()
     {
-        int rand = Random.Range(0, 100);
-        GameObject prefabToSpawn;
+        RoadSegmentConfigSO segmentConfig = RoadSelector.GetRandom();
 
-        if (rand < _config.ChoosingRoadChance) prefabToSpawn = _config.ChoosingRoadPrefab;
-        else if (rand < _config.ChoosingRoadChance + _config.StationRoadChance) prefabToSpawn = _config.StationRoadPrefab;
-        else prefabToSpawn = _config.MovingRoadPrefab;
-
-        RoadController newRoad = Object.Instantiate(prefabToSpawn, _nextSpawnPosition, Quaternion.identity, _parent)
-            .GetComponent<RoadController>()
-            .Initialize(_train, _gameStateManager, _manConfig, _manVisualConfig);
+        RoadController newRoad = Object.Instantiate(
+            _config.RoadPrefab,
+            _nextSpawnPosition,
+            Quaternion.identity,
+            _parent
+        )
+        .GetComponent<RoadController>()
+        .Initialize(_train, _gameStateManager, _manConfig, _manVisualConfig, segmentConfig);
 
         _roads.Add(newRoad);
         newRoad.OnRoadStateChanged += OnRoadStateChanged;
