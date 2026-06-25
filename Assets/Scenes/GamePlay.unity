@@ -629,7 +629,7 @@ MonoBehaviour:
   _coroutineRunner: {fileID: 562004070}
   _roadConfig: {fileID: 11400000, guid: 586540639a5d548408ad61f0ca475a18, type: 2}
   _messageDelay: 1.2
-  _trainPrefab: {fileID: 8869947801639233936, guid: 6e5dfcc0e967fb54a82e89a57ec0a78f, type: 3}
+  _trainPrefab: {fileID: 8869947801639233936, guid: c8679d89676a52644a74edd3ba0acdb0, type: 3}
   TrainSpawnPosition: {x: 1.5, y: 1.3, z: -20}
   _trainData: {fileID: 11400000, guid: 50fbbd64f1990544887d2287be5c80ab, type: 2}
   _uiManager: {fileID: 473642107}
