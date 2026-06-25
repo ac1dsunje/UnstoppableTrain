@@ -38,7 +38,6 @@ public class LayingManController : MonoBehaviour
         {
             OnDeath?.Invoke(this);
             MediaEvents.TriggerEvent(transform.position, _config.ManConfig.OnDeathSound);
-            Destroy(gameObject);
         }
     }
 }

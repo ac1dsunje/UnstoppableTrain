@@ -34,7 +34,7 @@ public class RailController : MonoBehaviour
             transform.position.z + step * 2
         );
 
-        LayingManController layingMan = _layingManFactory.Create(pos, transform);
+        LayingManController layingMan = _layingManFactory.Get(pos, transform);
 
         _layingMen.Add(layingMan);
         layingMan.OnDeath += OnLayingManDeath;
@@ -52,7 +52,7 @@ public class RailController : MonoBehaviour
     {
         if (other.CompareTag("Train"))
         {
-            SetRailActive();
+            OnThisActive?.Invoke(true);
         }
     }
 
@@ -60,16 +60,16 @@ public class RailController : MonoBehaviour
     {
         if (other.CompareTag("Train"))
         {
-            SetRailUnActive();
+            OnThisActive?.Invoke(false);
         }
     }
 
-    private void SetRailActive() => OnThisActive?.Invoke(true);
-    private void SetRailUnActive() => OnThisActive?.Invoke(false);
-
     private void OnLayingManDeath(LayingManController layingMan)
     {
+        layingMan.OnDeath -= OnLayingManDeath;
+
         _layingMen.Remove(layingMan);
+        _layingManFactory.Release(layingMan);
 
         if (_layingMen.Count == 0)
         {
