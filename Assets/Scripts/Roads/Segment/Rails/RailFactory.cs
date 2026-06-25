@@ -1,36 +1,30 @@
 ﻿using UnityEngine;
-using Random = UnityEngine.Random;
 
-public class RailFactory
+public class RailFactory : PooledComponentFactory<RailController>
 {
     private readonly LayingManFactory _layingManFactory;
 
-    public RailFactory(LayingManFactory layingManFactory)
+    public RailFactory(LayingManFactory layingManFactory, PoolConfig poolConfig)
+        : base(poolConfig)
     {
         _layingManFactory = layingManFactory;
     }
 
-    public RailController Create(RoadSegmentConfigSO config, Vector3 position, Transform parent, float xOffset, bool xFlip)
+    protected override RailController Create(GameObject prefab)
     {
-        RailController rail = Object.Instantiate(
-            config.RailPrefab,
-            position,
-            Quaternion.identity,
-            parent
-        ).GetComponent<RailController>();
+        return Object.Instantiate(prefab).GetComponent<RailController>();
+    }
 
-        int rand = Random.Range(0, config.EnvironmentAtlas.EnvironmentObjects.Count);
-        Transform railTransform = rail.transform;
-
-        Transform envTransform = Object.Instantiate(
-            config.EnvironmentAtlas.EnvironmentObjects[rand],
-            new Vector3(railTransform.position.x + 2 * xOffset, railTransform.position.y, railTransform.position.z),
-            Quaternion.identity,
-            railTransform
-        ).transform;
-
-        if (xFlip) envTransform.localScale = new Vector3(-1, 1, 1);
-
+    public RailController Get(
+        RoadSegmentConfigSO config,
+        Vector3 position,
+        Transform parent,
+        float xOffset,
+        bool xFlip)
+    {
+        var rail = GetItem(config.RailPrefab);
+        rail.transform.SetParent(parent, false);
+        rail.transform.position = position;
         rail.Initialize(_layingManFactory);
         return rail;
     }

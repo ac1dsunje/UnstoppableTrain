@@ -16,23 +16,38 @@ public class GamePlayEntryPoint : MonoBehaviour
     [SerializeField] private TrainSO _trainData;
 
     [Header("UI")]
-    [SerializeField] private UIManager _uiManager;
+    [SerializeField] private MainOverlayManager _mainOverlayPrefab;
+    [SerializeField] private EventOverlayManager _eventOverlayPrefab;
+    [SerializeField] private EndOverlayManager _endOverlayPrefab;
+
     [SerializeField] private Canvas _canvas;
+
+    [Header("Sound")]
+    [SerializeField] private GameObject _sfxPrefab;
 
     [Header("Difficulty")]
     [SerializeField] private DifficultySO difficulty;
 
     [Header("People")]
     [SerializeField] private ManGeneralConfigSO _manConfig;
-    [SerializeField] private ManVisualConfigSO _manVisualConfig;
+    [SerializeField] private GameObject _layingManPrefab;
 
     [Header("Passenger")]
     [SerializeField] private GameObject _passengerPrefab;
+
+    [Header("Pools")]
+    [SerializeField] private PoolConfig _roadPoolConfig;
+    [SerializeField] private PoolConfig _railsPoolConfig;
+    [SerializeField] private PoolConfig _environmentPoolConfig;
+    [SerializeField] private PoolConfig _layingManPoolConfig;
+    [SerializeField] private PoolConfig _soundPoolConfig;
 
     private GameStateManager _gameStateManager;
     private TrainController _train;
     private GameEventsManager _eventsManager;
     private RoadManager _roadManager;
+    private SFXManager _soundFXManager;
+    private UIManager _uiManager;
 
     private void Awake()
     {
@@ -56,9 +71,14 @@ public class GamePlayEntryPoint : MonoBehaviour
             traitBehaviourFactory
         );
 
-        LayingManFactory layingManFactory = new(_manConfig, _manVisualConfig, manDataFactory);
-        RailFactory railFactory = new(layingManFactory);
-        RoadFactory roadFactory = new(railFactory);
+        LayingManFactory layingManFactory = new(_manConfig, _layingManPrefab, manDataFactory, _layingManPoolConfig);
+        EnvironmentFactory environmentFactory = new(_environmentPoolConfig);
+        RailFactory railFactory = new(layingManFactory, _railsPoolConfig);
+        RoadFactory roadFactory = new(railFactory, environmentFactory, _roadConfig.RoadPrefab, _roadPoolConfig);
+
+        var sfxParent = new GameObject("Sounds").transform;
+        SoundFactory soundFactory = new(_sfxPrefab, _soundPoolConfig, sfxParent);
+        _soundFXManager = new SFXManager(soundFactory, _coroutineRunner);
 
         _train = SpawnTrain();
         _train.Initialize(passengerFactory, _trainData);
@@ -74,7 +94,7 @@ public class GamePlayEntryPoint : MonoBehaviour
         _roadManager = new(_roadConfig, roadsParent, roadFactory);
         _roadManager.Initialize(_gameStateManager, _train);
 
-        _uiManager.Initialize(_gameStateManager, _train, _eventsManager, _canvas);
+        _uiManager = new UIManager(_gameStateManager, _train, _eventsManager, _canvas, _mainOverlayPrefab, _eventOverlayPrefab, _endOverlayPrefab);
     }
 
     private void Start()
@@ -101,7 +121,9 @@ public class GamePlayEntryPoint : MonoBehaviour
         if (!_gameStateManager.IsInState<EndState>()) return;
 
         _roadManager.Dispose();
+        _soundFXManager.Dispose();
         _gameStateManager.Dispose();
+        _uiManager.Dispose();
         StartCoroutine(SceneLoader.RestartGameAsync());
     }
 

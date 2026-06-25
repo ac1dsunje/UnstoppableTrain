@@ -1,50 +1,44 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Object = UnityEngine.Object;
 
-public class UIManager : MonoBehaviour
+public class UIManager: IDisposable
 {
-    [SerializeField] private MainOverlayManager _mainOverlayPrefab;
-    [SerializeField] private EventOverlayManager _eventOverlayPrefab;
-    [SerializeField] private EndOverlayManager _endOverlayPrefab;
-
     private MainOverlayManager _mainOverlay;
     private EventOverlayManager _eventOverlay;
     private EndOverlayManager _endOverlay;
     private GameStateManager _gameStateManager;
 
-    public UIManager Initialize(
+    public UIManager(
         GameStateManager gameStateManager,
         TrainController train,
         GameEventsManager eventsManager,
-        Canvas canvas)
+        Canvas canvas,
+        MainOverlayManager mainOverlayPrefab,
+        EventOverlayManager eventOverlayPrefab,
+        EndOverlayManager endOverlayPrefab)
     {
         _gameStateManager = gameStateManager;
 
-        // Создаем оверлеи из префабов
-        _mainOverlay = Instantiate(_mainOverlayPrefab, canvas.transform)
+        _mainOverlay = Object.Instantiate(mainOverlayPrefab, canvas.transform)
             .Initialize(train);
 
-        _eventOverlay = Instantiate(_eventOverlayPrefab, canvas.transform)
+        _eventOverlay = Object.Instantiate(eventOverlayPrefab, canvas.transform)
             .Initialize(gameStateManager, eventsManager);
 
-        _endOverlay = Instantiate(_endOverlayPrefab, canvas.transform);
+        _endOverlay = Object.Instantiate(endOverlayPrefab, canvas.transform);
 
-        // Подписываемся на изменения состояний
         gameStateManager.OnStateChanged += OnStateChanged;
 
-        // Показываем начальный экран
         _mainOverlay.ShowScreen();
-
-        return this;
     }
 
     private void OnStateChanged(System.Type stateType)
     {
-        // Скрываем все оверлеи
         _mainOverlay.HideScreen();
         _eventOverlay.HideScreen();
         _endOverlay.HideScreen();
 
-        // Показываем нужный
         if (stateType == typeof(MovingState) || stateType == typeof(ChoosingState))
         {
             _mainOverlay.ShowScreen();
@@ -59,11 +53,8 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
+    public void Dispose()
     {
-        if (_gameStateManager != null)
-        {
-            _gameStateManager.OnStateChanged -= OnStateChanged;
-        }
+        _gameStateManager.OnStateChanged -= OnStateChanged;
     }
 }

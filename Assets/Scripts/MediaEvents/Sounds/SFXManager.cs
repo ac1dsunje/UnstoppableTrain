@@ -1,10 +1,19 @@
-﻿using UnityEngine;
+﻿using System;
 using System.Collections;
+using UnityEngine;
 
-public class SoundFXManager : ObjectPoolManager<AudioSource>
+public class SFXManager : IDisposable
 {
-    private void OnEnable() => MediaEvents.OnSoundNeeded += HandleSoundNeeded;
-    private void OnDisable() => MediaEvents.OnSoundNeeded -= HandleSoundNeeded;
+    private readonly SoundFactory _soundFactory;
+    private readonly CoroutineRunner _coroutineRunner;
+
+    public SFXManager(SoundFactory soundFactory, CoroutineRunner coroutineRunner)
+    {
+        _soundFactory = soundFactory;
+        _coroutineRunner = coroutineRunner;
+
+        MediaEvents.OnSoundNeeded += HandleSoundNeeded;
+    }
 
     private void HandleSoundNeeded(SoundData sound, Vector3 pos) => PlaySound(sound, pos);
 
@@ -12,39 +21,27 @@ public class SoundFXManager : ObjectPoolManager<AudioSource>
     {
         if (soundData == null || !soundData.HasSounds) return;
 
-        AudioClip clip = soundData.Clips[Random.Range(0, soundData.Clips.Length)];
-        float pitch = Random.Range(soundData.MinPitch, soundData.MaxPitch);
+        AudioClip clip = soundData.Clips[UnityEngine.Random.Range(0, soundData.Clips.Length)];
+        float pitch = UnityEngine.Random.Range(soundData.MinPitch, soundData.MaxPitch);
         float duration = clip.length / pitch;
 
-        AudioSource audioSource = Get();
-        audioSource.transform.position = spawnPosition;
+        AudioSource audioSource = _soundFactory.Get(spawnPosition);
         audioSource.clip = clip;
         audioSource.volume = Mathf.Clamp01(soundData.Volume);
         audioSource.pitch = pitch;
         audioSource.Play();
 
-        StartCoroutine(ReturnAfterDelay(audioSource, duration));
+        _coroutineRunner.StartCoroutine(ReturnAfterDelay(audioSource, duration));
     }
 
     private IEnumerator ReturnAfterDelay(AudioSource source, float delay)
     {
         yield return new WaitForSeconds(delay);
-        Release(source);
+        _soundFactory.Release(source);
     }
 
-    protected override AudioSource Create()
+    public void Dispose()
     {
-        GameObject go = new GameObject("PooledAudio");
-        go.transform.SetParent(transform);
-        return go.AddComponent<AudioSource>();
-    }
-
-    protected override void OnRelease(AudioSource item)
-    {
-        item.Stop();
-        item.clip = null;
-        item.pitch = 1f;
-        item.volume = 1f;
-        base.OnRelease(item);
+        MediaEvents.OnSoundNeeded -= HandleSoundNeeded;
     }
 }

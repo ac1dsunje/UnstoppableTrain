@@ -26,10 +26,11 @@ public class LayingManController : MonoBehaviour
         IsActive = true;
     }
 
-    private void Start()
+    public void SetupData()
     {
         Data = _manDataFactory.Create();
         _skinManager?.Apply(Data);
+        IsActive = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -38,7 +39,6 @@ public class LayingManController : MonoBehaviour
         {
             OnDeath?.Invoke(this);
             MediaEvents.TriggerEvent(transform.position, _config.ManConfig.OnDeathSound);
-            Destroy(gameObject);
         }
     }
 }

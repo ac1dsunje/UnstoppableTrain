@@ -272,53 +272,6 @@ MonoBehaviour:
   _followingOffset: {x: 0, y: 5, z: -5}
   _birdOffset: {x: 0, y: 7, z: 8}
   _time: 1
---- !u!1 &356564015
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 356564016}
-  - component: {fileID: 356564017}
-  m_Layer: 0
-  m_Name: SoundManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &356564016
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 356564015}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1094652989}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &356564017
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 356564015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18dca50318f6f0f4a82f752c0355b494, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SoundFXManager
-  prefab: {fileID: 6480810655366852008, guid: 2aa4273f2d8f149409ccafc7177f7313, type: 3}
-  defaultCapacity: 10
-  maxSize: 100
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,53 +399,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
---- !u!1 &473642103
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 473642104}
-  - component: {fileID: 473642107}
-  m_Layer: 0
-  m_Name: UIManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &473642104
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 473642103}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1094652989}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &473642107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 473642103}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7de116f3eeea664aa6c4e483f91a4a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UIManager
-  _mainOverlayPrefab: {fileID: 5053848884766511079, guid: e7e5c401529295e43bdb0fb9a9e6de08, type: 3}
-  _eventOverlayPrefab: {fileID: 875320095802246290, guid: 7063153bfe396b044b29441ec5786ac7, type: 3}
-  _endOverlayPrefab: {fileID: 5524983846275265461, guid: 1ca3d48b53884e1449d8cb27a4fd04e9, type: 3}
 --- !u!1 &511945413
 GameObject:
   m_ObjectHideFlags: 0
@@ -632,12 +538,20 @@ MonoBehaviour:
   _trainPrefab: {fileID: 8869947801639233936, guid: c8679d89676a52644a74edd3ba0acdb0, type: 3}
   TrainSpawnPosition: {x: 1.5, y: 1.3, z: -20}
   _trainData: {fileID: 11400000, guid: 50fbbd64f1990544887d2287be5c80ab, type: 2}
-  _uiManager: {fileID: 473642107}
+  _mainOverlayPrefab: {fileID: 5053848884766511079, guid: e7e5c401529295e43bdb0fb9a9e6de08, type: 3}
+  _eventOverlayPrefab: {fileID: 875320095802246290, guid: 7063153bfe396b044b29441ec5786ac7, type: 3}
+  _endOverlayPrefab: {fileID: 5524983846275265461, guid: 1ca3d48b53884e1449d8cb27a4fd04e9, type: 3}
   _canvas: {fileID: 511945416}
+  _sfxPrefab: {fileID: 2632590778216675516, guid: 2aa4273f2d8f149409ccafc7177f7313, type: 3}
   difficulty: {fileID: 11400000, guid: 40c9d19b76b501645844106ae1ad4e7c, type: 2}
   _manConfig: {fileID: 11400000, guid: 684bc56918d409649a8e1adfcfbee89d, type: 2}
-  _manVisualConfig: {fileID: 11400000, guid: 42555b2dc3b46244081b1ffd638bd06a, type: 2}
+  _layingManPrefab: {fileID: 564454119608622762, guid: cf995d632dcb2fd40be2e4dbfbb159da, type: 3}
   _passengerPrefab: {fileID: 564454119608622762, guid: 82c31e912af5e5346a17599f7ab38838, type: 3}
+  _roadPoolConfig: {fileID: 11400000, guid: 80b1875203222f4428906acfd6466f4c, type: 2}
+  _railsPoolConfig: {fileID: 11400000, guid: 6091ac872e8a6a244af9e671ff1f80a2, type: 2}
+  _environmentPoolConfig: {fileID: 11400000, guid: 48c04c36fed90df478deca2d004ac80d, type: 2}
+  _layingManPoolConfig: {fileID: 11400000, guid: 2da8c549d886f374f9949906ec9b15b3, type: 2}
+  _soundPoolConfig: {fileID: 11400000, guid: f5432f5075a74c14eb4c2b23c6540e56, type: 2}
 --- !u!4 &562004069
 Transform:
   m_ObjectHideFlags: 0
@@ -744,8 +658,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1579466958}
-  - {fileID: 473642104}
-  - {fileID: 356564016}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1326772473

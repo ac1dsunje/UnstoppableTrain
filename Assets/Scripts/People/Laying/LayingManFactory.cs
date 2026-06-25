@@ -1,31 +1,35 @@
 ﻿using UnityEngine;
 
-public class LayingManFactory
+public class LayingManFactory : PooledComponentFactory<LayingManController>
 {
     private readonly ManGeneralConfigSO _manConfig;
-    private readonly ManVisualConfigSO _manVisualConfig;
+    private readonly GameObject _layingManPrefab;
     private readonly ManDataFactory _manDataFactory;
 
     public LayingManFactory(
-        ManGeneralConfigSO manConfig, 
-        ManVisualConfigSO manVisualConfig,
-        ManDataFactory manDataFactory)
+        ManGeneralConfigSO manConfig,
+        GameObject layingManPrefab,
+        ManDataFactory manDataFactory,
+        PoolConfig poolConfig) : base(poolConfig)
     {
         _manConfig = manConfig;
-        _manVisualConfig = manVisualConfig;
+        _layingManPrefab = layingManPrefab;
         _manDataFactory = manDataFactory;
     }
 
-    public LayingManController Create(Vector3 position, Transform parent)
+    protected override LayingManController Create(GameObject prefab)
     {
-        LayingManController man = Object.Instantiate(
-            _manVisualConfig.LayingManPrefab,
-            position,
-            Quaternion.identity,
-            parent
-        ).GetComponent<LayingManController>();
-
+        var man = Object.Instantiate(prefab).GetComponent<LayingManController>();
         man.Initialize(_manConfig, _manDataFactory);
+        return man;
+    }
+
+    public LayingManController Get(Vector3 position, Transform parent)
+    {
+        var man = GetItem(_layingManPrefab);
+        man.transform.SetParent(parent, false);
+        man.transform.position = position;
+        man.SetupData();
         return man;
     }
 }
