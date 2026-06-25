@@ -16,7 +16,10 @@ public class GamePlayEntryPoint : MonoBehaviour
     [SerializeField] private TrainSO _trainData;
 
     [Header("UI")]
-    [SerializeField] private UIManager _uiManager;
+    [SerializeField] private MainOverlayManager _mainOverlayPrefab;
+    [SerializeField] private EventOverlayManager _eventOverlayPrefab;
+    [SerializeField] private EndOverlayManager _endOverlayPrefab;
+
     [SerializeField] private Canvas _canvas;
 
     [Header("Sound")]
@@ -44,6 +47,7 @@ public class GamePlayEntryPoint : MonoBehaviour
     private GameEventsManager _eventsManager;
     private RoadManager _roadManager;
     private SFXManager _soundFXManager;
+    private UIManager _uiManager;
 
     private void Awake()
     {
@@ -90,7 +94,7 @@ public class GamePlayEntryPoint : MonoBehaviour
         _roadManager = new(_roadConfig, roadsParent, roadFactory);
         _roadManager.Initialize(_gameStateManager, _train);
 
-        _uiManager.Initialize(_gameStateManager, _train, _eventsManager, _canvas);
+        _uiManager = new UIManager(_gameStateManager, _train, _eventsManager, _canvas, _mainOverlayPrefab, _eventOverlayPrefab, _endOverlayPrefab);
     }
 
     private void Start()
@@ -119,6 +123,7 @@ public class GamePlayEntryPoint : MonoBehaviour
         _roadManager.Dispose();
         _soundFXManager.Dispose();
         _gameStateManager.Dispose();
+        _uiManager.Dispose();
         StartCoroutine(SceneLoader.RestartGameAsync());
     }
 
