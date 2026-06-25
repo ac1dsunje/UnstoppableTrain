@@ -7,7 +7,6 @@ using Object = UnityEngine.Object;
 public class RoadManager : IDisposable
 {
     private readonly RoadsConfigSO _config;
-    private readonly MonoBehaviour _coroutineRunner;
     private readonly Transform _parent;
     private readonly RoadFactory _roadFactory;
 
@@ -16,16 +15,13 @@ public class RoadManager : IDisposable
 
     private List<RoadController> _roads = new();
     private Vector3 _nextSpawnPosition = Vector3.zero;
-    private static readonly WaitForSeconds _waitFor1Seconds = new WaitForSeconds(1f);
 
     public RoadManager(
         RoadsConfigSO config,
-        MonoBehaviour coroutineRunner,
         Transform parent,
         RoadFactory roadFactory)
     {
         _config = config;
-        _coroutineRunner = coroutineRunner;
         _parent = parent;
         _roadFactory = roadFactory;
     }
@@ -65,13 +61,12 @@ public class RoadManager : IDisposable
         else
         {
             road.OnRoadStateChanged -= OnRoadStateChanged;
-            _coroutineRunner.StartCoroutine(DestroyOldAndSetNewRoad(road));
+            DestroyOldAndSetNewRoad(road);
         }
     }
 
-    private IEnumerator DestroyOldAndSetNewRoad(RoadController road)
+    private void DestroyOldAndSetNewRoad(RoadController road)
     {
-        yield return _waitFor1Seconds;
         _roads.Remove(road);
         Object.Destroy(road.gameObject);
         SpawnNextRoad();
