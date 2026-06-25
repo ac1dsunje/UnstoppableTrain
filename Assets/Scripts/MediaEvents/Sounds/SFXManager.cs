@@ -1,28 +1,19 @@
-﻿using UnityEngine;
-using UnityEngine.Pool;
+﻿using System;
 using System.Collections;
+using UnityEngine;
 
-public class SoundFXManager : MonoBehaviour
+public class SFXManager : IDisposable
 {
-    [SerializeField] private PoolConfig _soundPoolConfig;
+    private readonly SoundFactory _soundFactory;
+    private readonly CoroutineRunner _coroutineRunner;
 
-    private ObjectPool<AudioSource> _pool;
-
-    private void Awake()
+    public SFXManager(SoundFactory soundFactory, CoroutineRunner coroutineRunner)
     {
-        _pool = new ObjectPool<AudioSource>(
-            createFunc: Create,
-            actionOnGet: OnGet,
-            actionOnRelease: OnRelease,
-            actionOnDestroy: OnDestroyItem,
-            collectionCheck: false,
-            defaultCapacity: _soundPoolConfig.DefaultCapacity,
-            maxSize: _soundPoolConfig.MaxSize
-        );
-    }
+        _soundFactory = soundFactory;
+        _coroutineRunner = coroutineRunner;
 
-    private void OnEnable() => MediaEvents.OnSoundNeeded += HandleSoundNeeded;
-    private void OnDisable() => MediaEvents.OnSoundNeeded -= HandleSoundNeeded;
+        MediaEvents.OnSoundNeeded += HandleSoundNeeded;
+    }
 
     private void HandleSoundNeeded(SoundData sound, Vector3 pos) => PlaySound(sound, pos);
 
@@ -30,43 +21,27 @@ public class SoundFXManager : MonoBehaviour
     {
         if (soundData == null || !soundData.HasSounds) return;
 
-        AudioClip clip = soundData.Clips[Random.Range(0, soundData.Clips.Length)];
-        float pitch = Random.Range(soundData.MinPitch, soundData.MaxPitch);
+        AudioClip clip = soundData.Clips[UnityEngine.Random.Range(0, soundData.Clips.Length)];
+        float pitch = UnityEngine.Random.Range(soundData.MinPitch, soundData.MaxPitch);
         float duration = clip.length / pitch;
 
-        AudioSource audioSource = _pool.Get();
-        audioSource.transform.position = spawnPosition;
+        AudioSource audioSource = _soundFactory.Get(spawnPosition);
         audioSource.clip = clip;
         audioSource.volume = Mathf.Clamp01(soundData.Volume);
         audioSource.pitch = pitch;
         audioSource.Play();
 
-        StartCoroutine(ReturnAfterDelay(audioSource, duration));
+        _coroutineRunner.StartCoroutine(ReturnAfterDelay(audioSource, duration));
     }
 
     private IEnumerator ReturnAfterDelay(AudioSource source, float delay)
     {
         yield return new WaitForSeconds(delay);
-        _pool.Release(source);
+        _soundFactory.Release(source);
     }
 
-    private AudioSource Create()
+    public void Dispose()
     {
-        GameObject go = new GameObject("PooledAudio");
-        go.transform.SetParent(transform);
-        return go.AddComponent<AudioSource>();
+        MediaEvents.OnSoundNeeded -= HandleSoundNeeded;
     }
-
-    private void OnGet(AudioSource item) => item.gameObject.SetActive(true);
-
-    private void OnRelease(AudioSource item)
-    {
-        item.Stop();
-        item.clip = null;
-        item.pitch = 1f;
-        item.volume = 1f;
-        item.gameObject.SetActive(false);
-    }
-
-    private void OnDestroyItem(AudioSource item) => Destroy(item.gameObject);
 }

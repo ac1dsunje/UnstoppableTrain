@@ -19,6 +19,9 @@ public class GamePlayEntryPoint : MonoBehaviour
     [SerializeField] private UIManager _uiManager;
     [SerializeField] private Canvas _canvas;
 
+    [Header("Sound")]
+    [SerializeField] private GameObject _sfxPrefab;
+
     [Header("Difficulty")]
     [SerializeField] private DifficultySO difficulty;
 
@@ -34,11 +37,13 @@ public class GamePlayEntryPoint : MonoBehaviour
     [SerializeField] private PoolConfig _railsPoolConfig;
     [SerializeField] private PoolConfig _environmentPoolConfig;
     [SerializeField] private PoolConfig _layingManPoolConfig;
+    [SerializeField] private PoolConfig _soundPoolConfig;
 
     private GameStateManager _gameStateManager;
     private TrainController _train;
     private GameEventsManager _eventsManager;
     private RoadManager _roadManager;
+    private SFXManager _soundFXManager;
 
     private void Awake()
     {
@@ -66,6 +71,10 @@ public class GamePlayEntryPoint : MonoBehaviour
         EnvironmentFactory environmentFactory = new(_environmentPoolConfig);
         RailFactory railFactory = new(layingManFactory, _railsPoolConfig);
         RoadFactory roadFactory = new(railFactory, environmentFactory, _roadConfig.RoadPrefab, _roadPoolConfig);
+
+        var sfxParent = new GameObject("Sounds").transform;
+        SoundFactory soundFactory = new(_sfxPrefab, _soundPoolConfig, sfxParent);
+        _soundFXManager = new SFXManager(soundFactory, _coroutineRunner);
 
         _train = SpawnTrain();
         _train.Initialize(passengerFactory, _trainData);
@@ -108,6 +117,7 @@ public class GamePlayEntryPoint : MonoBehaviour
         if (!_gameStateManager.IsInState<EndState>()) return;
 
         _roadManager.Dispose();
+        _soundFXManager.Dispose();
         _gameStateManager.Dispose();
         StartCoroutine(SceneLoader.RestartGameAsync());
     }
