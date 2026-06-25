@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -43,7 +42,7 @@ public class RoadManager : IDisposable
     {
         RoadSegmentConfigSO segmentConfig = RoadSelector.GetRandom();
 
-        RoadController newRoad = _roadFactory.Create(_config, segmentConfig, _nextSpawnPosition, _parent);
+        RoadController newRoad = _roadFactory.Get(segmentConfig, _nextSpawnPosition, _parent);
         newRoad.SetDependencies(_train, _gameStateManager);
 
         _roads.Add(newRoad);
@@ -68,7 +67,7 @@ public class RoadManager : IDisposable
     private void DestroyOldAndSetNewRoad(RoadController road)
     {
         _roads.Remove(road);
-        Object.Destroy(road.gameObject);
+        _roadFactory.Release(road);
         SpawnNextRoad();
     }
 
@@ -78,7 +77,8 @@ public class RoadManager : IDisposable
         {
             if (road != null)
             {
-                road.OnRoadStateChanged -= OnRoadStateChanged;
+                road.OnRoadStateChanged -= OnRoadStateChanged; 
+                _roadFactory.Release(road);
             }
         }
         _roads.Clear();

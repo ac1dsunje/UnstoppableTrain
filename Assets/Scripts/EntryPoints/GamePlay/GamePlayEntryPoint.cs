@@ -58,7 +58,7 @@ public class GamePlayEntryPoint : MonoBehaviour
 
         LayingManFactory layingManFactory = new(_manConfig, _manVisualConfig, manDataFactory);
         RailFactory railFactory = new(layingManFactory);
-        RoadFactory roadFactory = new(railFactory);
+        RoadFactory roadFactory = new(railFactory, _roadConfig);
 
         _train = SpawnTrain();
         _train.Initialize(passengerFactory, _trainData);

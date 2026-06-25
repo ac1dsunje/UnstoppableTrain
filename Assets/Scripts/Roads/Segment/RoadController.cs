@@ -168,8 +168,8 @@ public class RoadController : MonoBehaviour
                 foreach (var passenger in remainingRail.LayingMen)
                 {
                     _train.TryTakeNewPassenger(passenger.Data);
-                    Destroy(passenger.gameObject);
                 }
+                remainingRail.ClearLayingMen();
                 break;
 
             case RoadType.Moving:

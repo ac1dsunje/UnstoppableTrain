@@ -40,12 +40,27 @@ public class RailController : MonoBehaviour
         layingMan.OnDeath += OnLayingManDeath;
     }
 
+    public void ClearLayingMen()
+    {
+        foreach (var man in _layingMen)
+        {
+            man.OnDeath -= OnLayingManDeath;
+            _layingManFactory.Release(man);
+        }
+        _layingMen.Clear();
+    }
+
     private void OnDestroy()
     {
         foreach (var item in _layingMen)
         {
             item.OnDeath -= OnLayingManDeath;
         }
+    }
+
+    private void OnDisable()
+    {
+        ClearLayingMen();
     }
 
     private void OnTriggerEnter(Collider other)
