@@ -71,7 +71,7 @@ public class GamePlayEntryPoint : MonoBehaviour
         _train.GetComponent<TrainMovement>().Initialize(_gameStateManager);
 
         var roadsParent = new GameObject("Roads").transform;
-        _roadManager = new(_roadConfig, _coroutineRunner, roadsParent, roadFactory);
+        _roadManager = new(_roadConfig, roadsParent, roadFactory);
         _roadManager.Initialize(_gameStateManager, _train);
 
         _uiManager.Initialize(_gameStateManager, _train, _eventsManager, _canvas);
