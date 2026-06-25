@@ -19,7 +19,6 @@ public class UIManager : MonoBehaviour
     {
         _gameStateManager = gameStateManager;
 
-        // Создаем оверлеи из префабов
         _mainOverlay = Instantiate(_mainOverlayPrefab, canvas.transform)
             .Initialize(train);
 
@@ -28,10 +27,8 @@ public class UIManager : MonoBehaviour
 
         _endOverlay = Instantiate(_endOverlayPrefab, canvas.transform);
 
-        // Подписываемся на изменения состояний
         gameStateManager.OnStateChanged += OnStateChanged;
 
-        // Показываем начальный экран
         _mainOverlay.ShowScreen();
 
         return this;
@@ -39,12 +36,10 @@ public class UIManager : MonoBehaviour
 
     private void OnStateChanged(System.Type stateType)
     {
-        // Скрываем все оверлеи
         _mainOverlay.HideScreen();
         _eventOverlay.HideScreen();
         _endOverlay.HideScreen();
 
-        // Показываем нужный
         if (stateType == typeof(MovingState) || stateType == typeof(ChoosingState))
         {
             _mainOverlay.ShowScreen();
