@@ -4,18 +4,23 @@ using UnityEngine.Pool;
 public class RoadFactory
 {
     private readonly RailFactory _railFactory;
-    private readonly RoadsConfigSO _roadConfig;
+    private readonly EnvironmentFactory _environmentFactory;
 
-    // todo: add to constructor
-    private readonly int _defaultCapacity = 10;
-    private readonly int _maxSize = 10;
+    private readonly GameObject _roadPrefab;
+    private readonly PoolConfig _poolConfig;
 
     private readonly ObjectPool<RoadController> _pool;
 
-    public RoadFactory(RailFactory railFactory, RoadsConfigSO roadConfig)
+    public RoadFactory(
+        RailFactory railFactory,
+        EnvironmentFactory environmentFactory,
+        GameObject roadPrefab,
+        PoolConfig poolConfig)
     {
         _railFactory = railFactory;
-        _roadConfig = roadConfig;
+        _environmentFactory = environmentFactory;
+        _roadPrefab = roadPrefab;
+        _poolConfig = poolConfig;
 
         _pool = new(
             createFunc: Create,
@@ -23,8 +28,8 @@ public class RoadFactory
             actionOnRelease: OnRelease,
             actionOnDestroy: OnDestroyItem,
             collectionCheck: false,
-            defaultCapacity: _defaultCapacity,
-            maxSize: _maxSize
+            defaultCapacity: _poolConfig.DefaultCapacity,
+            maxSize: _poolConfig.MaxSize
         );
     }
 
@@ -35,7 +40,8 @@ public class RoadFactory
         road.transform.SetParent(parent, false);
         road.transform.position = position;
 
-        road.Initialize(_railFactory, segmentConfig);
+        road.Initialize(_railFactory, _environmentFactory, segmentConfig);
+        road.SetupData();
 
         return road;
     }
@@ -47,15 +53,10 @@ public class RoadFactory
 
     private RoadController Create()
     {
-        RoadController road = Object.Instantiate(
-            _roadConfig.RoadPrefab
-        ).GetComponent<RoadController>();
-        return road;
+        return Object.Instantiate(_roadPrefab).GetComponent<RoadController>();
     }
 
     private void OnGet(RoadController item) => item.gameObject.SetActive(true);
-
     private void OnRelease(RoadController item) => item.gameObject.SetActive(false);
-
     private void OnDestroyItem(RoadController item) => Object.Destroy(item.gameObject);
 }

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 public class RoadManager : IDisposable
 {
@@ -75,11 +74,8 @@ public class RoadManager : IDisposable
     {
         foreach (var road in _roads)
         {
-            if (road != null)
-            {
-                road.OnRoadStateChanged -= OnRoadStateChanged; 
-                _roadFactory.Release(road);
-            }
+            road.OnRoadStateChanged -= OnRoadStateChanged; 
+            _roadFactory.Release(road);
         }
         _roads.Clear();
     }

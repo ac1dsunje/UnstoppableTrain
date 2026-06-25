@@ -6,37 +6,48 @@ public class RoadController : MonoBehaviour
 {
     private RoadSegmentConfigSO _config;
     private RailFactory _railFactory;
-
+    private EnvironmentFactory _environmentFactory;
     private float xOffset = 1.5f;
 
     public event Action<RoadController, bool> OnRoadStateChanged;
-
     public RoadType RoadType => _config.RoadType;
     public float RoadLength => _config.RoadLength;
     public bool IsLeftActive { get; private set; }
     public bool IsRightActive { get; private set; }
 
     private bool _isRoadActive;
-    private RailController _leftRail;
-    private RailController _rightRail;
 
-    public RailController LeftRail => _leftRail;
-    public RailController RightRail => _rightRail;
+    public RailController LeftRail { get; private set; }
+    public RailController RightRail { get; private set; }
+    private GameObject _leftEnvironment;
+    private GameObject _rightEnvironment;
 
     private TrainController _train;
     private GameStateManager _gameStateManager;
 
     public RoadController Initialize(
         RailFactory railFactory,
+        EnvironmentFactory environmentFactory,
         RoadSegmentConfigSO segmentConfig)
     {
         _railFactory = railFactory;
+        _environmentFactory = environmentFactory;
         _config = segmentConfig;
 
-        CreateRails();
-        SubscribeToRailEvents();
-
         return this;
+    }
+
+    public void SetupData()
+    {
+        IsLeftActive = false;
+        IsRightActive = false;
+        _isRoadActive = false;
+
+        CreateRails();
+        CreateEnvironments();
+
+        SubscribeToRailEvents();
+        InitializeRoad();
     }
 
     public void SetDependencies(TrainController train, GameStateManager gameStateManager)
@@ -45,55 +56,78 @@ public class RoadController : MonoBehaviour
         _gameStateManager = gameStateManager;
     }
 
-    private void SubscribeToRailEvents()
-    {
-        _leftRail.OnThisActive += OnLeftRailStateChanged;
-        _rightRail.OnThisActive += OnRightRailStateChanged;
-
-        _leftRail.OnAllLayingMenDied += OnLeftRailCleared;
-        _rightRail.OnAllLayingMenDied += OnRightRailCleared;
-    }
-
-    private void UnsubscribeFromRailEvents()
-    {
-        if (_leftRail != null)
-        {
-            _leftRail.OnThisActive -= OnLeftRailStateChanged;
-            _leftRail.OnAllLayingMenDied -= OnLeftRailCleared;
-        }
-
-        if (_rightRail != null)
-        {
-            _rightRail.OnThisActive -= OnRightRailStateChanged;
-            _rightRail.OnAllLayingMenDied -= OnRightRailCleared;
-        }
-    }
-
-    private void OnDisable()
-    {
-        UnsubscribeFromRailEvents();
-    }
-
-    private void Start()
-    {
-        InitializeRoad();
-    }
-
     private void CreateRails()
     {
-        _leftRail = CreateRail(-xOffset, true);
-        _rightRail = CreateRail(xOffset, false);
+        LeftRail = CreateRail(-xOffset, true);
+        RightRail = CreateRail(xOffset, false);
     }
 
     private RailController CreateRail(float xOff, bool xFlip)
     {
-        return _railFactory.Create(
+        return _railFactory.Get(
             _config,
             new Vector3(transform.position.x + xOff, transform.position.y, transform.position.z),
             transform,
             xOff,
             xFlip
         );
+    }
+
+    private void CreateEnvironments()
+    {
+        _leftEnvironment = CreateEnvironment(-xOffset, true);
+        _rightEnvironment = CreateEnvironment(xOffset, false);
+    }
+
+    private GameObject CreateEnvironment(float xOff, bool xFlip)
+    {
+        if (_config.EnvironmentAtlas == null || _config.EnvironmentAtlas.EnvironmentObjects.Count == 0)
+            return null;
+
+        int rand = Random.Range(0, _config.EnvironmentAtlas.EnvironmentObjects.Count);
+        var prefab = _config.EnvironmentAtlas.EnvironmentObjects[rand];
+
+        Vector3 scale = xFlip ? new Vector3(-1, 1, 1) : Vector3.one;
+
+        return _environmentFactory.Get(
+            prefab,
+            new Vector3(transform.position.x + 3 * xOff, transform.position.y, transform.position.z),
+            transform,
+            scale
+        );
+    }
+
+    private void SubscribeToRailEvents()
+    {
+        LeftRail.OnThisActive += OnLeftRailStateChanged;
+        LeftRail.OnAllLayingMenDied += OnLeftRailCleared;
+
+        RightRail.OnThisActive += OnRightRailStateChanged;
+        RightRail.OnAllLayingMenDied += OnRightRailCleared;
+    }
+
+    private void UnsubscribeFromRailEvents()
+    {
+        LeftRail.OnThisActive -= OnLeftRailStateChanged;
+        LeftRail.OnAllLayingMenDied -= OnLeftRailCleared;
+
+        RightRail.OnThisActive -= OnRightRailStateChanged;
+        RightRail.OnAllLayingMenDied -= OnRightRailCleared;
+    }
+
+    private void OnDisable()
+    {
+        UnsubscribeFromRailEvents();
+        ReleaseAll();
+    }
+
+    private void ReleaseAll()
+    {
+        _railFactory.Release(LeftRail);
+        _railFactory.Release(RightRail);
+
+        _environmentFactory.Release(_leftEnvironment);
+        _environmentFactory.Release(_rightEnvironment);
     }
 
     private void OnLeftRailStateChanged(bool state) { IsLeftActive = state; UpdateRoadState(); }
@@ -118,8 +152,8 @@ public class RoadController : MonoBehaviour
 
     private void ActivateMenOnRails()
     {
-        foreach (var man in _leftRail.LayingMen) man.SetActiveState();
-        foreach (var man in _rightRail.LayingMen) man.SetActiveState();
+        foreach (var man in LeftRail.LayingMen) man.SetActiveState();
+        foreach (var man in RightRail.LayingMen) man.SetActiveState();
     }
 
     private void InitializeRoad()
@@ -187,6 +221,6 @@ public class RoadController : MonoBehaviour
         RightRail.SpawnManyLayingMen(randRight);
     }
 
-    private void OnLeftRailCleared() => OnRailCleared(_leftRail, _rightRail);
-    private void OnRightRailCleared() => OnRailCleared(_rightRail, _leftRail);
+    private void OnLeftRailCleared() => OnRailCleared(LeftRail, RightRail);
+    private void OnRightRailCleared() => OnRailCleared(RightRail, LeftRail);
 }

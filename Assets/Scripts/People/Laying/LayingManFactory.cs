@@ -4,23 +4,23 @@ using UnityEngine.Pool;
 public class LayingManFactory
 {
     private readonly ManGeneralConfigSO _manConfig;
-    private readonly ManVisualConfigSO _manVisualConfig;
+    private readonly GameObject _layingManPrefab;
     private readonly ManDataFactory _manDataFactory;
 
-    // todo: add to constructor
-    private readonly int _defaultCapacity = 6;
-    private readonly int _maxSize = 10;
+    private readonly PoolConfig _poolConfig;
 
     private readonly ObjectPool<LayingManController> _pool;
 
     public LayingManFactory(
         ManGeneralConfigSO manConfig, 
-        ManVisualConfigSO manVisualConfig,
-        ManDataFactory manDataFactory)
+        GameObject layingManPrefab,
+        ManDataFactory manDataFactory,
+        PoolConfig poolConfig)
     {
         _manConfig = manConfig;
-        _manVisualConfig = manVisualConfig;
+        _layingManPrefab = layingManPrefab;
         _manDataFactory = manDataFactory;
+        _poolConfig = poolConfig;
 
         _pool = new(
             createFunc: Create,
@@ -28,8 +28,8 @@ public class LayingManFactory
             actionOnRelease: OnRelease,
             actionOnDestroy: OnDestroyItem,
             collectionCheck: false,
-            defaultCapacity: _defaultCapacity,
-            maxSize: _maxSize
+            defaultCapacity: _poolConfig.DefaultCapacity,
+            maxSize: _poolConfig.MaxSize
         );
     }
 
@@ -38,7 +38,9 @@ public class LayingManFactory
         var man = _pool.Get();
 
         man.transform.SetParent(parent, false);
-        man.transform.position = position;
+        man.transform.position = position; 
+        
+        man.SetupData();
 
         return man;
     }
@@ -51,10 +53,11 @@ public class LayingManFactory
     private LayingManController Create()
     {
         var man = Object.Instantiate(
-            _manVisualConfig.LayingManPrefab
+            _layingManPrefab
         ).GetComponent<LayingManController>();
 
         man.Initialize(_manConfig, _manDataFactory);
+        man.SetupData();
 
         return man;
     }

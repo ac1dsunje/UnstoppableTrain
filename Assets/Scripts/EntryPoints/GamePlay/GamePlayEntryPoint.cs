@@ -24,10 +24,16 @@ public class GamePlayEntryPoint : MonoBehaviour
 
     [Header("People")]
     [SerializeField] private ManGeneralConfigSO _manConfig;
-    [SerializeField] private ManVisualConfigSO _manVisualConfig;
+    [SerializeField] private GameObject _layingManPrefab;
 
     [Header("Passenger")]
     [SerializeField] private GameObject _passengerPrefab;
+
+    [Header("Pools")]
+    [SerializeField] private PoolConfig _roadPoolConfig;
+    [SerializeField] private PoolConfig _railsPoolConfig;
+    [SerializeField] private PoolConfig _environmentPoolConfig;
+    [SerializeField] private PoolConfig _layingManPoolConfig;
 
     private GameStateManager _gameStateManager;
     private TrainController _train;
@@ -56,9 +62,10 @@ public class GamePlayEntryPoint : MonoBehaviour
             traitBehaviourFactory
         );
 
-        LayingManFactory layingManFactory = new(_manConfig, _manVisualConfig, manDataFactory);
-        RailFactory railFactory = new(layingManFactory);
-        RoadFactory roadFactory = new(railFactory, _roadConfig);
+        LayingManFactory layingManFactory = new(_manConfig, _layingManPrefab, manDataFactory, _layingManPoolConfig);
+        EnvironmentFactory environmentFactory = new(_environmentPoolConfig);
+        RailFactory railFactory = new(layingManFactory, _railsPoolConfig);
+        RoadFactory roadFactory = new(railFactory, environmentFactory, _roadConfig.RoadPrefab, _roadPoolConfig);
 
         _train = SpawnTrain();
         _train.Initialize(passengerFactory, _trainData);

@@ -636,8 +636,12 @@ MonoBehaviour:
   _canvas: {fileID: 511945416}
   difficulty: {fileID: 11400000, guid: 40c9d19b76b501645844106ae1ad4e7c, type: 2}
   _manConfig: {fileID: 11400000, guid: 684bc56918d409649a8e1adfcfbee89d, type: 2}
-  _manVisualConfig: {fileID: 11400000, guid: 42555b2dc3b46244081b1ffd638bd06a, type: 2}
+  _layingManPrefab: {fileID: 564454119608622762, guid: cf995d632dcb2fd40be2e4dbfbb159da, type: 3}
   _passengerPrefab: {fileID: 564454119608622762, guid: 82c31e912af5e5346a17599f7ab38838, type: 3}
+  _roadPoolConfig: {fileID: 11400000, guid: 80b1875203222f4428906acfd6466f4c, type: 2}
+  _railsPoolConfig: {fileID: 11400000, guid: 6091ac872e8a6a244af9e671ff1f80a2, type: 2}
+  _environmentPoolConfig: {fileID: 11400000, guid: 48c04c36fed90df478deca2d004ac80d, type: 2}
+  _layingManPoolConfig: {fileID: 11400000, guid: 2da8c549d886f374f9949906ec9b15b3, type: 2}
 --- !u!4 &562004069
 Transform:
   m_ObjectHideFlags: 0

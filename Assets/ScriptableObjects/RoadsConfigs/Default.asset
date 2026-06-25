@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7a7ada802e59594681a6e8c33dda2d6, type: 3}
   m_Name: Default
   m_EditorClassIdentifier: Assembly-CSharp::RoadsConfigSO
-  <ChoosingRoadChance>k__BackingField: 20
-  <StationRoadChance>k__BackingField: 10
-  <MaxRoads>k__BackingField: 10
+  <MaxRoads>k__BackingField: 7
   <RoadPrefab>k__BackingField: {fileID: 3058819273101387152, guid: fd9b1700837b19a45964cef707393612, type: 3}
+  <PoolConfig>k__BackingField:
+    <DefaultCapacity>k__BackingField: 10
+    <MaxSize>k__BackingField: 10
   <SegmentConfigs>k__BackingField:
   - {fileID: 11400000, guid: b0308dacf13f1d64e89158c83e176556, type: 2}
   - {fileID: 11400000, guid: 13907809f5d6a3f42810d6f1d5f69902, type: 2}
