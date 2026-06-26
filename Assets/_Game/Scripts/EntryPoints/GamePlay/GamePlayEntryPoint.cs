@@ -4,10 +4,13 @@ public class GamePlayEntryPoint : MonoBehaviour
 {
     [Header("Game")]
     [SerializeField] private InputHandler _input;
-    [SerializeField] private CameraController _cam;
     [SerializeField] private CoroutineRunner _coroutineRunner;
     [SerializeField] private RoadsConfigSO _roadConfig;
     [SerializeField] private float _messageDelay = 1.2f;
+
+    [Header("Camera")]
+    [SerializeField] private CameraController _cam;
+    [SerializeField] private CameraConfigSO _cameraConfig;
 
     [Header("Train")]
     [SerializeField] private GameObject _trainPrefab;
@@ -95,7 +98,7 @@ public class GamePlayEntryPoint : MonoBehaviour
 
         _train.Initialize(passengerFactory, _trainData, _movementStrategy);
 
-        _cam.Initialize(_train.transform);
+        _cam.Initialize(_train.transform, _cameraConfig);
 
         _eventsManager = new(_coroutineRunner, _train, _messageDelay);
 

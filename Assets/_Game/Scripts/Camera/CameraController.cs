@@ -2,16 +2,17 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private CameraConfigSO _config;
+    private CameraConfigSO _config;
 
     private Transform _target;
     private bool _isFollowingPlayer;
     private Quaternion _defaultRotation;
 
-    public CameraController Initialize(Transform target)
+    public CameraController Initialize(Transform target, CameraConfigSO config)
     {
         _target = target;
         _defaultRotation = transform.rotation;
+        _config = config;
         SetFollowView();
         return this;
     }

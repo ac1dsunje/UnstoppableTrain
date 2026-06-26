@@ -269,7 +269,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfe25462b737b3b419bf76aa18d639c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
-  _config: {fileID: 11400000, guid: dcef734d9de2dc14192c65376be8b75f, type: 2}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -529,10 +528,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GamePlayEntryPoint
   _input: {fileID: 1579466959}
-  _cam: {fileID: 330585548}
   _coroutineRunner: {fileID: 562004070}
   _roadConfig: {fileID: 11400000, guid: 586540639a5d548408ad61f0ca475a18, type: 2}
   _messageDelay: 1.2
+  _cam: {fileID: 330585548}
+  _cameraConfig: {fileID: 11400000, guid: dcef734d9de2dc14192c65376be8b75f, type: 2}
   _trainPrefab: {fileID: 8869947801639233936, guid: c8679d89676a52644a74edd3ba0acdb0, type: 3}
   TrainSpawnPosition: {x: 1.5, y: 1, z: -20}
   _trainData: {fileID: 11400000, guid: 50fbbd64f1990544887d2287be5c80ab, type: 2}
