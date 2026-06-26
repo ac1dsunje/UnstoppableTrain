@@ -7,7 +7,7 @@ public class RoadController : MonoBehaviour
     private RoadSegmentConfigSO _config;
     private RailFactory _railFactory;
     private EnvironmentFactory _environmentFactory;
-    private float xOffset = 1.5f;
+    private readonly float xOffset = 1.5f;
 
     private Transform _railContainer;
     private Transform _environmentContainer;
