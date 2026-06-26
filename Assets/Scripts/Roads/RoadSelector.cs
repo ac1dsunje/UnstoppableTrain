@@ -4,22 +4,21 @@ using Random = UnityEngine.Random;
 public class RoadSelector
 {
     private List<RoadSegmentConfigSO> _configs = new();
+    private readonly float _totalWeight;
     
     public RoadSelector(IEnumerable<RoadSegmentConfigSO> configs)
     {
         _configs = new List<RoadSegmentConfigSO>(configs);
+
+        foreach (var config in _configs)
+        {
+            _totalWeight += config.Weight;
+        }
     }
 
     public RoadSegmentConfigSO GetRandom()
     {
-
-        float totalWeight = 0f;
-        foreach (var config in _configs)
-        {
-            totalWeight += config.Weight;
-        }
-
-        float roll = Random.Range(0f, totalWeight);
+        float roll = Random.Range(0f, _totalWeight);
 
         foreach (var config in _configs)
         {
