@@ -3,9 +3,9 @@
 public class SkinHatManager : ISkinComponent
 {
     private readonly Transform _hatHolder;
-    private readonly ManSkinConfigSO _config;
+    private readonly SkinHatSO _config;
 
-    public SkinHatManager(Transform hatHolder, ManSkinConfigSO config)
+    public SkinHatManager(Transform hatHolder, SkinHatSO config)
     {
         _hatHolder = hatHolder;
         _config = config;

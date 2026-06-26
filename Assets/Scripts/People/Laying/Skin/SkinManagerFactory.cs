@@ -9,12 +9,12 @@ public static class SkinManagerFactory
 
         if (config.SkinComponents.HasFlag(SkinComponentType.Material))
         {
-            components.Add(new SkinMaterialManager(shape, config));
+            components.Add(new SkinMaterialManager(shape, config.MaterialConfig));
         }
 
         if (config.SkinComponents.HasFlag(SkinComponentType.Hat))
         {
-            components.Add(new SkinHatManager(hatHolder, config));
+            components.Add(new SkinHatManager(hatHolder, config.HatsConfig));
         }
 
         if (components.Count == 0)

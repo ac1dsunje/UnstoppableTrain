@@ -3,9 +3,9 @@
 public class SkinMaterialManager : ISkinComponent
 {
     private readonly MeshRenderer _shape;
-    private readonly ManSkinConfigSO _config;
+    private readonly SkinMaterialSO _config;
 
-    public SkinMaterialManager(MeshRenderer shape, ManSkinConfigSO config)
+    public SkinMaterialManager(MeshRenderer shape, SkinMaterialSO config)
     {
         _shape = shape;
         _config = config;
