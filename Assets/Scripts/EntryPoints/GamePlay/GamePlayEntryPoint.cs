@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public class GamePlayEntryPoint : MonoBehaviour
 {
@@ -98,7 +99,16 @@ public class GamePlayEntryPoint : MonoBehaviour
         _roadManager.Initialize(_gameStateManager, _train);
 
         PassengerInfoSlotUIFactory passengerInfoSlotUIFactory = new(_passengerInfoSlotUIPrefab, _passengerPoolConfig);
-        _uiManager = new UIManager(_gameStateManager, _train, _eventsManager, _canvas, _mainOverlayPrefab, _eventOverlayPrefab, _endOverlayPrefab, passengerInfoSlotUIFactory);
+
+        var mainOverlay = Object.Instantiate(_mainOverlayPrefab, _canvas.transform)
+            .Initialize(_train, passengerInfoSlotUIFactory);
+
+        var eventOverlay = Object.Instantiate(_eventOverlayPrefab, _canvas.transform)
+            .Initialize(_gameStateManager, _eventsManager);
+
+        var endOverlay = Object.Instantiate(_endOverlayPrefab, _canvas.transform);
+
+        _uiManager = new UIManager(_gameStateManager, mainOverlay, eventOverlay, endOverlay);
     }
 
     private void Start()
