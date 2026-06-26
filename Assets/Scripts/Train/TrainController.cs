@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class TrainController : MonoBehaviour, ITrainMovement
+public class TrainController : MonoBehaviour, ITrainDataProvider
 {
     private Transform _passengersContainer;
+    private ITrainMovementStrategy _movementStrategy;
 
     private TrainSO _data;
     private TrainStats _stats = new();
@@ -18,16 +19,28 @@ public class TrainController : MonoBehaviour, ITrainMovement
     public event Action<TrainStats> OnStatsUpdated;
     public event Action OnStationPassed;
     public event Action OnAllDriversLeft;
-
-    public TrainController Initialize(PassengerFactory passengerFactory, TrainSO data)
+    public TrainController Initialize(PassengerFactory passengerFactory, TrainSO data, ITrainMovementStrategy movementStrategy)
     {
         _data = data;
         _passengerFactory = passengerFactory;
+        _movementStrategy = movementStrategy;
+
+        _movementStrategy.Initialize(transform, GetComponent<Rigidbody>(), this);
 
         CreatePassengersContainer();
-
         SpawnInitialTeam();
+
         return this;
+    }
+
+    private void Update()
+    {
+        _movementStrategy?.Tick(Time.deltaTime);
+    }
+
+    private void FixedUpdate()
+    {
+        _movementStrategy?.FixedTick(Time.fixedDeltaTime);
     }
 
     private void CreatePassengersContainer()
@@ -51,15 +64,8 @@ public class TrainController : MonoBehaviour, ITrainMovement
     public RoadController GetCurrentRoad() => _currentRoad;
     public float GetSpeed() => _data.MoveSpeed * _speedScale;
 
-    public void Stop()
-    {
-        _speedScale = 0f;
-    }
-
-    public void Resume()
-    {
-        _speedScale = 1f;
-    }
+    public void Stop() => _speedScale = 0f;
+    public void Resume() => _speedScale = 1f;
 
     public List<PassengerController> GetPassengers() => _stats.Passengers;
 

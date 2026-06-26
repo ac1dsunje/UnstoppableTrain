@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1760095338225452417}
   - component: {fileID: 7920293998929501353}
-  - component: {fileID: 5384228613855419829}
   - component: {fileID: 397420497538933905}
   - component: {fileID: 3246017481244349592}
   m_Layer: 0
@@ -48,19 +47,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1352eb1c888e9e84f89cb23465aa72de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrainMovement
---- !u!114 &5384228613855419829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8869947801639233936}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd8b740cfd609564bb984e7ea2c3d4d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TrainMovement
-  _switchRailsSpeed: 5
 --- !u!65 &397420497538933905
 BoxCollider:
   m_ObjectHideFlags: 0

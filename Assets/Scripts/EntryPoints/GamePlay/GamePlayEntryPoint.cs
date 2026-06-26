@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using Object = UnityEngine.Object;
+﻿using UnityEngine;
 
 public class GamePlayEntryPoint : MonoBehaviour
 {
@@ -47,6 +45,7 @@ public class GamePlayEntryPoint : MonoBehaviour
 
     private GameStateManager _gameStateManager;
     private TrainController _train;
+    private ITrainMovementStrategy _movementStrategy;
     private GameEventsManager _eventsManager;
     private RoadManager _roadManager;
     private SFXManager _soundFXManager;
@@ -85,14 +84,18 @@ public class GamePlayEntryPoint : MonoBehaviour
         _soundFXManager = new SFXManager(soundFactory, _coroutineRunner);
 
         _train = SpawnTrain();
-        _train.Initialize(passengerFactory, _trainData);
+
+        _movementStrategy = new StandardMovementStrategy(switchRailsSpeed: 5f);
+
+        _train.Initialize(passengerFactory, _trainData, _movementStrategy);
+
         _cam.Initialize(_train.transform);
 
         _eventsManager = new(_coroutineRunner, _train, _messageDelay);
 
         _gameStateManager = BuildGameStateManager(_train);
 
-        _train.GetComponent<TrainMovement>().Initialize(_gameStateManager);
+        _movementStrategy.BindInput(_gameStateManager);
 
         RoadSelector roadSelector = new(_roadConfig.SegmentConfigs);
 
@@ -129,6 +132,8 @@ public class GamePlayEntryPoint : MonoBehaviour
         _input.OnLeft -= _gameStateManager.TryMoveLeft;
         _input.OnRight -= _gameStateManager.TryMoveRight;
         _input.OnRestart -= TryRestart;
+
+        _movementStrategy?.UnbindInput();
     }
 
     private void TryRestart()
