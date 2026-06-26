@@ -10,17 +10,19 @@ public class LayingManController : MonoBehaviour
     private ManDataFactory _manDataFactory;
     private ISkinComponent _skinManager;
     private SkinManagerFactory _skinManagerFactory;
+    private MediaEventsBus _mediaEventsBus;
 
     public ManData Data { get; private set; }
     public event Action<LayingManController> OnDeath;
 
     public bool IsActive { get; private set; }
 
-    public void Initialize(ManGeneralConfigSO config, ManDataFactory manDataFactory, SkinManagerFactory skinManagerFactory)
+    public void Initialize(ManGeneralConfigSO config, ManDataFactory manDataFactory, SkinManagerFactory skinManagerFactory, MediaEventsBus mediaEventsBus)
     {
         _config = config;
         _manDataFactory = manDataFactory;
         _skinManagerFactory = skinManagerFactory;
+        _mediaEventsBus = mediaEventsBus;
 
         _skinManager = _skinManagerFactory.Create(_config.SkinConfig, _shape, HatHolder);
     }
@@ -42,7 +44,7 @@ public class LayingManController : MonoBehaviour
         if (other.CompareTag("Train"))
         {
             OnDeath?.Invoke(this);
-            MediaEvents.TriggerEvent(transform.position, _config.SoundConfig.OnDeathSound);
+            _mediaEventsBus.TriggerEvent(transform.position, _config.SoundConfig.OnDeathSound);
         }
     }
 }

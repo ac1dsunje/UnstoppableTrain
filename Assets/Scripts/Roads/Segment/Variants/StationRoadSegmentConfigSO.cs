@@ -11,7 +11,7 @@ public class StationRoadSegmentConfigSO : RoadSegmentConfigSO
     {
         if (context.GameStateManager.TryEnterStationEvent())
         {
-            MediaEvents.TriggerEvent(context.Road.transform.position, OnEnterSound);
+            context.MediaEventsBus.TriggerEvent(context.Road.transform.position, OnEnterSound);
         }
     }
 

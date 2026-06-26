@@ -6,18 +6,21 @@ public class LayingManFactory : PooledComponentFactory<LayingManController>
     private readonly GameObject _layingManPrefab;
     private readonly ManDataFactory _manDataFactory;
     private readonly SkinManagerFactory _skinManagerFactory;
+    private readonly MediaEventsBus _mediaEventsBus;
 
     public LayingManFactory(
         ManGeneralConfigSO manConfig,
         GameObject layingManPrefab,
         ManDataFactory manDataFactory,
         PoolConfig poolConfig,
-        SkinManagerFactory skinManagerFactory) : base(poolConfig)
+        SkinManagerFactory skinManagerFactory,
+        MediaEventsBus mediaEventsBus) : base(poolConfig)
     {
         _manConfig = manConfig;
         _layingManPrefab = layingManPrefab;
         _manDataFactory = manDataFactory;
         _skinManagerFactory = skinManagerFactory;
+        _mediaEventsBus = mediaEventsBus;
     }
 
     public LayingManController Get(Vector3 position, Transform parent)
@@ -32,7 +35,7 @@ public class LayingManFactory : PooledComponentFactory<LayingManController>
     protected override LayingManController Create(GameObject prefab)
     {
         var man = Object.Instantiate(prefab).GetComponent<LayingManController>();
-        man.Initialize(_manConfig, _manDataFactory, _skinManagerFactory);
+        man.Initialize(_manConfig, _manDataFactory, _skinManagerFactory, _mediaEventsBus);
         return man;
     }
 }

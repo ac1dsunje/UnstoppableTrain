@@ -5,17 +5,20 @@ public class RoadFactory : PooledComponentFactory<RoadController>
     private readonly RailFactory _railFactory;
     private readonly EnvironmentFactory _environmentFactory;
     private readonly GameObject _roadPrefab;
+    private readonly MediaEventsBus _mediaEventsBus;
 
     public RoadFactory(
         RailFactory railFactory,
         EnvironmentFactory environmentFactory,
         GameObject roadPrefab,
-        PoolConfig poolConfig)
+        PoolConfig poolConfig,
+        MediaEventsBus mediaEventsBus)
         : base(poolConfig)
     {
         _railFactory = railFactory;
         _environmentFactory = environmentFactory;
         _roadPrefab = roadPrefab;
+        _mediaEventsBus = mediaEventsBus;
     }
 
     protected override RoadController Create(GameObject prefab)
@@ -37,7 +40,7 @@ public class RoadFactory : PooledComponentFactory<RoadController>
         road.transform.SetParent(parent, false);
         road.transform.position = position;
 
-        road.Initialize(_railFactory, _environmentFactory, segmentConfig, train, gameStateManager);
+        road.Initialize(_railFactory, _environmentFactory, segmentConfig, train, gameStateManager, _mediaEventsBus);
         road.SetupData();
 
         return road;

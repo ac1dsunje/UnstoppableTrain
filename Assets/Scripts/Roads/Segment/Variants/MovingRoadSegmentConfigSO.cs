@@ -9,7 +9,7 @@ public class MovingRoadSegmentConfigSO : RoadSegmentConfigSO
     {
         if (context.GameStateManager.TryEnterEventState())
         {
-            MediaEvents.TriggerEvent(context.Road.transform.position, OnEnterSound);
+            context.MediaEventsBus.TriggerEvent(context.Road.transform.position, OnEnterSound);
         }
     }
 

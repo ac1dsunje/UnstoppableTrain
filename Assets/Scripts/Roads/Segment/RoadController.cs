@@ -31,12 +31,13 @@ public class RoadController : MonoBehaviour
         EnvironmentFactory environmentFactory,
         RoadSegmentConfigSO segmentConfig,
         TrainController train,
-        GameStateManager gameStateManager)
+        GameStateManager gameStateManager,
+        MediaEventsBus mediaEventsBus)
     {
         _railFactory = railFactory;
         _environmentFactory = environmentFactory;
         _config = segmentConfig;
-        _context = new RoadContext(this, train, gameStateManager);
+        _context = new RoadContext(this, train, gameStateManager, mediaEventsBus);
 
         return this;
     }

@@ -6,13 +6,15 @@ public class SFXManager : IDisposable
 {
     private readonly SoundFactory _soundFactory;
     private readonly CoroutineRunner _coroutineRunner;
+    private readonly MediaEventsBus _mediaEventsBus;
 
-    public SFXManager(SoundFactory soundFactory, CoroutineRunner coroutineRunner)
+    public SFXManager(SoundFactory soundFactory, CoroutineRunner coroutineRunner, MediaEventsBus mediaEvents)
     {
         _soundFactory = soundFactory;
         _coroutineRunner = coroutineRunner;
+        _mediaEventsBus = mediaEvents;
 
-        MediaEvents.OnSoundNeeded += HandleSoundNeeded;
+        _mediaEventsBus.OnSoundNeeded += HandleSoundNeeded;
     }
 
     private void HandleSoundNeeded(SoundData sound, Vector3 pos) => PlaySound(sound, pos);
@@ -42,6 +44,6 @@ public class SFXManager : IDisposable
 
     public void Dispose()
     {
-        MediaEvents.OnSoundNeeded -= HandleSoundNeeded;
+        _mediaEventsBus.OnSoundNeeded -= HandleSoundNeeded;
     }
 }

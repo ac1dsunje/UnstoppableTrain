@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Random = UnityEngine.Random;
 
 [CreateAssetMenu(fileName = "ChoosingRoad", menuName = "Game/Roads/Choosing Road")]
 public class ChoosingRoadSegmentConfigSO : RoadSegmentConfigSO
@@ -16,7 +15,7 @@ public class ChoosingRoadSegmentConfigSO : RoadSegmentConfigSO
     public override void OnActivated(RoadContext context)
     {
         context.GameStateManager.EnterIn<ChoosingState>();
-        MediaEvents.TriggerEvent(context.Road.transform.position, OnEnterSound);
+        context.MediaEventsBus.TriggerEvent(context.Road.transform.position, OnEnterSound);
     }
 
     public override void OnRailCleared(RoadContext context, RailController clearedRail, RailController remainingRail)

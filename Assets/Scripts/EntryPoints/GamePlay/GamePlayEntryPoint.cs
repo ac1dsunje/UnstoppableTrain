@@ -74,16 +74,18 @@ public class GamePlayEntryPoint : MonoBehaviour
             _passengerPoolConfig
         );
 
+        MediaEventsBus mediaEventsBus = new();
+
         SkinManagerFactory skinManagerFactory = new();
 
-        LayingManFactory layingManFactory = new(_manConfig, _layingManPrefab, manDataFactory, _layingManPoolConfig, skinManagerFactory);
+        LayingManFactory layingManFactory = new(_manConfig, _layingManPrefab, manDataFactory, _layingManPoolConfig, skinManagerFactory, mediaEventsBus);
         EnvironmentFactory environmentFactory = new(_environmentPoolConfig);
         RailFactory railFactory = new(layingManFactory, _railsPoolConfig);
-        RoadFactory roadFactory = new(railFactory, environmentFactory, _roadConfig.RoadPrefab, _roadPoolConfig);
+        RoadFactory roadFactory = new(railFactory, environmentFactory, _roadConfig.RoadPrefab, _roadPoolConfig, mediaEventsBus);
 
         var sfxParent = new GameObject("Sounds").transform;
         SoundFactory soundFactory = new(_sfxPrefab, _soundPoolConfig, sfxParent);
-        _soundFXManager = new SFXManager(soundFactory, _coroutineRunner);
+        _soundFXManager = new SFXManager(soundFactory, _coroutineRunner, mediaEventsBus);
 
         _train = SpawnTrain();
 
