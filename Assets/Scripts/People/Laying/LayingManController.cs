@@ -39,7 +39,7 @@ public class LayingManController : MonoBehaviour
         if (other.CompareTag("Train"))
         {
             OnDeath?.Invoke(this);
-            MediaEvents.TriggerEvent(transform.position, _config.ManConfig.OnDeathSound);
+            MediaEvents.TriggerEvent(transform.position, _config.SoundConfig.OnDeathSound);
         }
     }
 }
