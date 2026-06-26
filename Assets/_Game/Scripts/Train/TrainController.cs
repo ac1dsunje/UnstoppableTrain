@@ -8,7 +8,7 @@ public class TrainController : MonoBehaviour, ITrainDataProvider
     private Transform _passengersContainer;
     private ITrainMovementStrategy _movementStrategy;
 
-    private TrainSO _data;
+    private TrainDataSO _data;
     private TrainStats _stats = new();
     public TrainStats GetStats => _stats;
 
@@ -19,7 +19,7 @@ public class TrainController : MonoBehaviour, ITrainDataProvider
     public event Action<TrainStats> OnStatsUpdated;
     public event Action OnStationPassed;
     public event Action OnAllDriversLeft;
-    public TrainController Initialize(PassengerFactory passengerFactory, TrainSO data, ITrainMovementStrategy movementStrategy)
+    public TrainController Initialize(PassengerFactory passengerFactory, TrainDataSO data, ITrainMovementStrategy movementStrategy)
     {
         _data = data;
         _passengerFactory = passengerFactory;

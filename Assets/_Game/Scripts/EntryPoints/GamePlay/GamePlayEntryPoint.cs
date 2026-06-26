@@ -12,7 +12,7 @@ public class GamePlayEntryPoint : MonoBehaviour
     [Header("Train")]
     [SerializeField] private GameObject _trainPrefab;
     [SerializeField] private Vector3 TrainSpawnPosition = new(1.5f, 1.3f, -20f);
-    [SerializeField] private TrainSO _trainData;
+    [SerializeField] private TrainDataSO _trainData;
 
     [Header("UI")]
     [SerializeField] private MainOverlayManager _mainOverlayPrefab;

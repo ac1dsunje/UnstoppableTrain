@@ -2,9 +2,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private Vector3 _followingOffset = new Vector3(0, 5, -10);
-    [SerializeField] private Vector3 _birdOffset = new Vector3(0, 15, 0);
-    [SerializeField] private float _time = 0.5f;
+    [SerializeField] private CameraConfigSO _config;
 
     private Transform _target;
     private bool _isFollowingPlayer;
@@ -28,18 +26,18 @@ public class CameraController : MonoBehaviour
 
     private void FollowPlayer()
     {
-        Vector3 targetPosition = _target.position + _followingOffset;
-        transform.position = Vector3.Lerp(transform.position, targetPosition, _time);
-        transform.rotation = Quaternion.Slerp(transform.rotation, _defaultRotation, _time);
+        Vector3 targetPosition = _target.position + _config.FollowingOffset;
+        transform.position = Vector3.Lerp(transform.position, targetPosition, _config.Time);
+        transform.rotation = Quaternion.Slerp(transform.rotation, _defaultRotation, _config.Time);
     }
 
     private void BirdView()
     {
-        Vector3 targetPosition = _target.position + _birdOffset;
-        transform.position = Vector3.Lerp(transform.position, targetPosition, _time);
+        Vector3 targetPosition = _target.position + _config.BirdOffset;
+        transform.position = Vector3.Lerp(transform.position, targetPosition, _config.Time);
 
         Quaternion birdViewRotation = Quaternion.Euler(90f, 0f, 0f);
-        transform.rotation = Quaternion.Slerp(transform.rotation, birdViewRotation, _time);
+        transform.rotation = Quaternion.Slerp(transform.rotation, birdViewRotation, _config.Time);
     }
 
     public void SetBirdView() => _isFollowingPlayer = false;

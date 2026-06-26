@@ -18,6 +18,7 @@ RenderSettings:
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 1
   m_FogDensity: 0.01
+  m_LinearFogStart: 0
   m_LinearFogEnd: 25
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
@@ -268,9 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfe25462b737b3b419bf76aa18d639c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
-  _followingOffset: {x: 0, y: 5, z: -5}
-  _birdOffset: {x: 0, y: 7, z: 9}
-  _time: 1
+  _config: {fileID: 11400000, guid: dcef734d9de2dc14192c65376be8b75f, type: 2}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
