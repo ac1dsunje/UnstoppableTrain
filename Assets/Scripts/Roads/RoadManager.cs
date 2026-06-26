@@ -19,19 +19,22 @@ public class RoadManager : IDisposable
         RoadsConfigSO config,
         Transform parent,
         RoadFactory roadFactory,
-        RoadSelector roadSelector)
+        RoadSelector roadSelector,
+        GameStateManager gameStateManager,
+        TrainController train)
     {
         _config = config;
         _parent = parent;
         _roadFactory = roadFactory;
         _roadSelector = roadSelector;
-    }
-
-    public void Initialize(GameStateManager gameStateManager, TrainController train)
-    {
         _gameStateManager = gameStateManager;
         _train = train;
 
+        SpawnInitialRoads();
+    }
+
+    private void SpawnInitialRoads()
+    {
         for (int i = 0; i < _config.MaxRoads; i++)
         {
             SpawnNextRoad();
