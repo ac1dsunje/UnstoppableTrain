@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: ManSkinHatConfig
   m_EditorClassIdentifier: Assembly-CSharp::SkinHatSO
   <DriverHatPrefab>k__BackingField: {fileID: 530067326265777661, guid: a68347ca5ca3d8341aee9cca66781d47, type: 3}
-  <DoctorHatPrefab>k__BackingField: {fileID: 4383771327414738886, guid: 973ea22f463b2e24b9bf9840369ec97a, type: 3}
+  <DoctorHatPrefab>k__BackingField: {fileID: 4077034715214517720, guid: f09587bd9f92c8340b54554dc8ac0d74, type: 3}
   <MechanicHatPrefab>k__BackingField: {fileID: 1568941991326762917, guid: 4de3a56cd58090545aa525e3bfdc15a5, type: 3}
