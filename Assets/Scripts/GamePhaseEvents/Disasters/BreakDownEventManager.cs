@@ -19,7 +19,7 @@ public class BreakdownEventManager : PhaseManagerBase
         SendPhaseMessage("The engine has broken down!");
         yield return new WaitForSeconds(_messageDelay);
 
-        int mechanicCount = RoleFactory.CountRole(passengers, Role.Mechanic);
+        int mechanicCount = RoleStatistics.CountRole(passengers, Role.Mechanic);
         float repairDelay = (_messageDelay * _timeScaler) / (mechanicCount > 0 ? mechanicCount + 1 : 1);
 
         string mechanicsWord = mechanicCount == 1 ? "mechanic" : "mechanics";
