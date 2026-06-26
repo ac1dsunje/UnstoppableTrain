@@ -17,19 +17,19 @@ public class LayingManFactory : PooledComponentFactory<LayingManController>
         _manDataFactory = manDataFactory;
     }
 
-    protected override LayingManController Create(GameObject prefab)
-    {
-        var man = Object.Instantiate(prefab).GetComponent<LayingManController>();
-        man.Initialize(_manConfig, _manDataFactory);
-        return man;
-    }
-
     public LayingManController Get(Vector3 position, Transform parent)
     {
         var man = GetItem(_layingManPrefab);
         man.transform.SetParent(parent, false);
         man.transform.position = position;
         man.SetupData();
+        return man;
+    }
+
+    protected override LayingManController Create(GameObject prefab)
+    {
+        var man = Object.Instantiate(prefab).GetComponent<LayingManController>();
+        man.Initialize(_manConfig, _manDataFactory);
         return man;
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TrainController : MonoBehaviour, ITrainMovement
 {
-    [SerializeField] private Transform _passengersContainer;
+    private Transform _passengersContainer;
 
     private TrainSO _data;
     private TrainStats _stats = new();
@@ -23,8 +23,17 @@ public class TrainController : MonoBehaviour, ITrainMovement
     {
         _data = data;
         _passengerFactory = passengerFactory;
+
+        CreatePassengersContainer();
+
         SpawnInitialTeam();
         return this;
+    }
+
+    private void CreatePassengersContainer()
+    {
+        _passengersContainer = new GameObject("PassengerContainer").transform;
+        _passengersContainer.SetParent(transform);
     }
 
     public void SetCurrentRoad(RoadController currentRoad)
@@ -59,13 +68,14 @@ public class TrainController : MonoBehaviour, ITrainMovement
     {
         if (_stats.Passengers.Count >= GetMaxCapacity()) return;
 
-        PassengerController passenger = _passengerFactory.Create(this, data, _passengersContainer);
+        PassengerController passenger = _passengerFactory.Get(this, data, _passengersContainer);
         AddPassengerToStats(passenger);
     }
 
     public void GetPassengerOut(PassengerController passenger)
     {
         _stats.Passengers.Remove(passenger);
+        _passengerFactory.Release(passenger);
 
         if (passenger.GetData.role == Role.Driver &&
             !_stats.Passengers.Any(p => p.GetData.role == Role.Driver))
@@ -79,13 +89,13 @@ public class TrainController : MonoBehaviour, ITrainMovement
 
     private void SpawnInitialTeam()
     {
-        PassengerController driver = _passengerFactory.CreateWithRandomData(this, _passengersContainer, role: Role.Driver, stationsNeeded: 3);
+        PassengerController driver = _passengerFactory.GetWithRandomData(this, _passengersContainer, role: Role.Driver, stationsNeeded: 3);
         AddPassengerToStats(driver);
 
-        PassengerController mechanic = _passengerFactory.CreateWithRandomData(this, _passengersContainer, role: Role.Mechanic, stationsNeeded: 2);
+        PassengerController mechanic = _passengerFactory.GetWithRandomData(this, _passengersContainer, role: Role.Mechanic, stationsNeeded: 2);
         AddPassengerToStats(mechanic);
 
-        PassengerController doctor = _passengerFactory.CreateWithRandomData(this, _passengersContainer, role: Role.Doctor, stationsNeeded: 2);
+        PassengerController doctor = _passengerFactory.GetWithRandomData(this, _passengersContainer, role: Role.Doctor, stationsNeeded: 2);
         AddPassengerToStats(doctor);
     }
 

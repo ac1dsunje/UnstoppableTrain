@@ -40,6 +40,7 @@ public class GamePlayEntryPoint : MonoBehaviour
     [SerializeField] private PoolConfig _railsPoolConfig;
     [SerializeField] private PoolConfig _environmentPoolConfig;
     [SerializeField] private PoolConfig _layingManPoolConfig;
+    [SerializeField] private PoolConfig _passengerPoolConfig;
     [SerializeField] private PoolConfig _soundPoolConfig;
 
     private GameStateManager _gameStateManager;
@@ -68,7 +69,8 @@ public class GamePlayEntryPoint : MonoBehaviour
         PassengerFactory passengerFactory = new(
             _passengerPrefab,
             manDataFactory,
-            traitBehaviourFactory
+            traitBehaviourFactory,
+            _passengerPoolConfig
         );
 
         LayingManFactory layingManFactory = new(_manConfig, _layingManPrefab, manDataFactory, _layingManPoolConfig);

@@ -55,13 +55,11 @@ public class PassengerController : MonoBehaviour
     {
         _train.OnStationPassed -= CheckStationIndex;
         _train.GetPassengerOut(this);
-        Destroy(gameObject);
     }
 
     public void Kill()
     {
         _train.OnStationPassed -= CheckStationIndex;
         _train.GetPassengerOut(this);
-        Destroy(gameObject);
     }
 }
