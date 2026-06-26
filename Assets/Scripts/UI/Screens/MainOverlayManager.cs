@@ -6,22 +6,25 @@ public class MainOverlayManager : ScreenManager
 {
     [SerializeField] private TextMeshProUGUI _chunksPassedText;
     [SerializeField] private Transform _passengersInfoContainer;
-    [SerializeField] private PassengerInfoSlotUI _passengerInfoSlotPrefab;
 
     private TrainController _train;
+    private PassengerInfoSlotUIFactory _passengerInfoSlotUIFactory;
 
-    private List<PassengerInfoSlotUI> _passengersSlots = new();
-    private List<PassengerController> _passengersControllers = new();
+    private readonly Dictionary<PassengerController, PassengerInfoSlotUI> _passengerSlots = new();
+
+    private readonly List<PassengerController> _keysToRemove = new();
 
     private void OnDisable()
     {
         _train.OnStatsUpdated -= UpdateStats;
     }
 
-    public MainOverlayManager Initialize(TrainController train)
+    public MainOverlayManager Initialize(TrainController train, PassengerInfoSlotUIFactory passengerInfoSlotUIFactory)
     {
         _train = train;
         _train.OnStatsUpdated += UpdateStats;
+
+        _passengerInfoSlotUIFactory = passengerInfoSlotUIFactory;
 
         UpdateStats(_train.GetStats);
         return this;
@@ -40,45 +43,50 @@ public class MainOverlayManager : ScreenManager
     {
         if (passengers == null) return;
 
-        DeletePassengers(passengers);
-        AddOrRefreshPassengers(passengers);
+        RemoveObsoleteSlots(passengers);
+        AddOrRefreshSlots(passengers);
     }
 
-    private void DeletePassengers(List<PassengerController> passengers)
+    private void RemoveObsoleteSlots(List<PassengerController> actualPassengers)
     {
-        for (int i = _passengersControllers.Count - 1; i >= 0; i--)
-        {
-            var controller = _passengersControllers[i];
-            if (controller == null || !passengers.Contains(controller))
-            {
-                if (_passengersSlots[i] != null)
-                    Destroy(_passengersSlots[i].gameObject);
+        _keysToRemove.Clear();
 
-                _passengersSlots.RemoveAt(i);
-                _passengersControllers.RemoveAt(i);
+        foreach (var pair in _passengerSlots)
+        {
+            if (pair.Key == null || !actualPassengers.Contains(pair.Key))
+            {
+                _keysToRemove.Add(pair.Key);
+                _passengerInfoSlotUIFactory.Release(pair.Value);
             }
+        }
+
+        foreach (var key in _keysToRemove)
+        {
+            _passengerSlots.Remove(key);
         }
     }
 
-    private void AddOrRefreshPassengers(List<PassengerController> passengers)
+    private void AddOrRefreshSlots(List<PassengerController> passengers)
     {
         foreach (var passenger in passengers)
         {
             if (passenger == null) continue;
 
-            int index = _passengersControllers.IndexOf(passenger);
-            if (index == -1)
-                SpawnPassenger(passenger);
+            if (_passengerSlots.TryGetValue(passenger, out var slot))
+            {
+                slot.Refresh();
+            }
             else
-                _passengersSlots[index].Refresh();
+            {
+                CreatePassengerSlot(passenger);
+            }
         }
     }
 
-    private void SpawnPassenger(PassengerController passenger)
+    private void CreatePassengerSlot(PassengerController passenger)
     {
-        var item = Instantiate(_passengerInfoSlotPrefab, _passengersInfoContainer);
-        var slotUI = item.GetComponent<PassengerInfoSlotUI>().Initialize(passenger.GetData);
-        _passengersControllers.Add(passenger);
-        _passengersSlots.Add(slotUI);
+        var slot = _passengerInfoSlotUIFactory.Get(_passengersInfoContainer, passenger.GetData);
+
+        _passengerSlots.Add(passenger, slot);
     }
 }

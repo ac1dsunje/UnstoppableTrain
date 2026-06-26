@@ -34,6 +34,7 @@ public class GamePlayEntryPoint : MonoBehaviour
 
     [Header("Passenger")]
     [SerializeField] private GameObject _passengerPrefab;
+    [SerializeField] private GameObject _passengerInfoSlotUIPrefab;
 
     [Header("Pools")]
     [SerializeField] private PoolConfig _roadPoolConfig;
@@ -96,7 +97,8 @@ public class GamePlayEntryPoint : MonoBehaviour
         _roadManager = new(_roadConfig, roadsParent, roadFactory);
         _roadManager.Initialize(_gameStateManager, _train);
 
-        _uiManager = new UIManager(_gameStateManager, _train, _eventsManager, _canvas, _mainOverlayPrefab, _eventOverlayPrefab, _endOverlayPrefab);
+        PassengerInfoSlotUIFactory passengerInfoSlotUIFactory = new(_passengerInfoSlotUIPrefab, _passengerPoolConfig);
+        _uiManager = new UIManager(_gameStateManager, _train, _eventsManager, _canvas, _mainOverlayPrefab, _eventOverlayPrefab, _endOverlayPrefab, passengerInfoSlotUIFactory);
     }
 
     private void Start()

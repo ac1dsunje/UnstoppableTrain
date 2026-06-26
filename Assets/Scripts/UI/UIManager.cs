@@ -16,12 +16,13 @@ public class UIManager: IDisposable
         Canvas canvas,
         MainOverlayManager mainOverlayPrefab,
         EventOverlayManager eventOverlayPrefab,
-        EndOverlayManager endOverlayPrefab)
+        EndOverlayManager endOverlayPrefab,
+        PassengerInfoSlotUIFactory passengerInfoSlotUIFactory)
     {
         _gameStateManager = gameStateManager;
 
         _mainOverlay = Object.Instantiate(mainOverlayPrefab, canvas.transform)
-            .Initialize(train);
+            .Initialize(train, passengerInfoSlotUIFactory);
 
         _eventOverlay = Object.Instantiate(eventOverlayPrefab, canvas.transform)
             .Initialize(gameStateManager, eventsManager);
