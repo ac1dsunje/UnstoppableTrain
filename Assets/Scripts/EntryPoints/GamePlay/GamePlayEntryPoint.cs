@@ -76,7 +76,9 @@ public class GamePlayEntryPoint : MonoBehaviour
 
         MediaEventsBus mediaEventsBus = new();
 
-        SkinManagerFactory skinManagerFactory = new();
+        SkinHatFactory hatFactory = new(_layingManPoolConfig);
+
+        SkinManagerFactory skinManagerFactory = new(hatFactory);
 
         LayingManFactory layingManFactory = new(_manConfig, _layingManPrefab, manDataFactory, _layingManPoolConfig, skinManagerFactory, mediaEventsBus);
         EnvironmentFactory environmentFactory = new(_environmentPoolConfig);

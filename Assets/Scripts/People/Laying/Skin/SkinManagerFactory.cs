@@ -3,6 +3,12 @@ using UnityEngine;
 
 public class SkinManagerFactory
 {
+    private readonly SkinHatFactory _hatFactory;
+    public SkinManagerFactory(SkinHatFactory hatFactory)
+    {
+        _hatFactory = hatFactory;
+    }
+
     public ISkinComponent Create(ManSkinConfigSO config, MeshRenderer shape, Transform hatHolder)
     {
         var components = new List<ISkinComponent>();
@@ -14,7 +20,7 @@ public class SkinManagerFactory
 
         if (config.SkinComponents.HasFlag(SkinComponentType.Hat))
         {
-            components.Add(new SkinHatManager(hatHolder, config.HatsConfig));
+            components.Add(new SkinHatManager(hatHolder, config.HatsConfig, _hatFactory));
         }
 
         if (components.Count == 0)
