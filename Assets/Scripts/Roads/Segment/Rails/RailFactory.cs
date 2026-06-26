@@ -18,9 +18,7 @@ public class RailFactory : PooledComponentFactory<RailController>
     public RailController Get(
         RoadSegmentConfigSO config,
         Vector3 position,
-        Transform parent,
-        float xOffset,
-        bool xFlip)
+        Transform parent)
     {
         var rail = GetItem(config.RailPrefab);
         rail.transform.SetParent(parent, false);

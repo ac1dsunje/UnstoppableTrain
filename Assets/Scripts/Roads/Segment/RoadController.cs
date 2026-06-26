@@ -9,6 +9,9 @@ public class RoadController : MonoBehaviour
     private EnvironmentFactory _environmentFactory;
     private float xOffset = 1.5f;
 
+    private Transform _railContainer;
+    private Transform _environmentContainer;
+
     public event Action<RoadController, bool> OnRoadStateChanged;
     public RoadType RoadType => _config.RoadType;
     public float RoadLength => _config.RoadLength;
@@ -37,6 +40,14 @@ public class RoadController : MonoBehaviour
         return this;
     }
 
+    public void SetContainers()
+    {
+        _railContainer = new GameObject("RailsContainter").transform;
+        _railContainer.SetParent(transform);
+        _environmentContainer = new GameObject("EnvironmentsContainer").transform;
+        _environmentContainer.SetParent(transform);
+    }
+
     public void SetupData()
     {
         IsLeftActive = false;
@@ -58,18 +69,16 @@ public class RoadController : MonoBehaviour
 
     private void CreateRails()
     {
-        LeftRail = CreateRail(-xOffset, true);
-        RightRail = CreateRail(xOffset, false);
+        LeftRail = CreateRail(-xOffset);
+        RightRail = CreateRail(xOffset);
     }
 
-    private RailController CreateRail(float xOff, bool xFlip)
+    private RailController CreateRail(float xOff)
     {
         return _railFactory.Get(
             _config,
             new Vector3(transform.position.x + xOff, transform.position.y, transform.position.z),
-            transform,
-            xOff,
-            xFlip
+            _railContainer
         );
     }
 
@@ -92,7 +101,7 @@ public class RoadController : MonoBehaviour
         return _environmentFactory.Get(
             prefab,
             new Vector3(transform.position.x + 3 * xOff, transform.position.y, transform.position.z),
-            transform,
+            _environmentContainer,
             scale
         );
     }

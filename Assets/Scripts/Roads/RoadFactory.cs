@@ -53,7 +53,9 @@ public class RoadFactory
 
     private RoadController Create()
     {
-        return Object.Instantiate(_roadPrefab).GetComponent<RoadController>();
+        RoadController road = Object.Instantiate(_roadPrefab).GetComponent<RoadController>();
+        road.SetContainers();
+        return road;
     }
 
     private void OnGet(RoadController item) => item.gameObject.SetActive(true);
