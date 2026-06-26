@@ -15,5 +15,5 @@ MonoBehaviour:
   <SkinComponents>k__BackingField: 1
   <WallflowerMat>k__BackingField: {fileID: 2100000, guid: 133680aeea8bad54f9a5fe1818b513eb, type: 2}
   <PsychopathMat>k__BackingField: {fileID: 2100000, guid: 700471b62e0f20b448a83f0ea00af33a, type: 2}
-  <LeaderMat>k__BackingField: {fileID: 0}
-  <EmpathMat>k__BackingField: {fileID: 0}
+  <LeaderMat>k__BackingField: {fileID: 2100000, guid: 25c1b0b950664794a8ca695aa95be424, type: 2}
+  <EmpathMat>k__BackingField: {fileID: 2100000, guid: 1680de365e3614c47b4bf1064817ada1, type: 2}
