@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BreakdownEventManager : PhaseManagerBase
@@ -19,7 +20,7 @@ public class BreakdownEventManager : PhaseManagerBase
         SendPhaseMessage("The engine has broken down!");
         yield return new WaitForSeconds(_messageDelay);
 
-        int mechanicCount = RoleStatistics.CountRole(passengers, Role.Mechanic);
+        int mechanicCount = passengers.Count(p => p.GetData.role == Role.Mechanic);
         float repairDelay = (_messageDelay * _timeScaler) / (mechanicCount > 0 ? mechanicCount + 1 : 1);
 
         string mechanicsWord = mechanicCount == 1 ? "mechanic" : "mechanics";

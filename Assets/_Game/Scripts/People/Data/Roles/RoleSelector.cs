@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Random = UnityEngine.Random;
 
+public enum Role
+{
+    Driver,
+    Mechanic,
+    Doctor,
+    NoSkill
+}
+
 [Serializable]
 public struct RoleWeight
 {

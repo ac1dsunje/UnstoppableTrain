@@ -148,8 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02b331472e7a0714b9b8ae2412f60dc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bootstrap
-  GamePlay: Assets/Scenes/GamePlay.unity
-  LoadingScene: Assets/Scenes/LoadingScene.unity
+  GamePlay: Assets/_Game/Scenes/GamePlay.unity
+  LoadingScene: Assets/_Game/Scenes/LoadingScene.unity
 --- !u!4 &2143103627
 Transform:
   m_ObjectHideFlags: 0
