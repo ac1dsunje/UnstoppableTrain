@@ -7,6 +7,7 @@ public class RoadManager : IDisposable
     private readonly RoadsConfigSO _config;
     private readonly Transform _parent;
     private readonly RoadFactory _roadFactory;
+    private readonly RoadSelector _roadSelector;
 
     private GameStateManager _gameStateManager;
     private TrainController _train;
@@ -17,19 +18,19 @@ public class RoadManager : IDisposable
     public RoadManager(
         RoadsConfigSO config,
         Transform parent,
-        RoadFactory roadFactory)
+        RoadFactory roadFactory,
+        RoadSelector roadSelector)
     {
         _config = config;
         _parent = parent;
         _roadFactory = roadFactory;
+        _roadSelector = roadSelector;
     }
 
     public void Initialize(GameStateManager gameStateManager, TrainController train)
     {
         _gameStateManager = gameStateManager;
         _train = train;
-
-        RoadSelector.SetConfigs(_config.SegmentConfigs);
 
         for (int i = 0; i < _config.MaxRoads; i++)
         {
@@ -39,7 +40,7 @@ public class RoadManager : IDisposable
 
     private void SpawnNextRoad()
     {
-        RoadSegmentConfigSO segmentConfig = RoadSelector.GetRandom();
+        RoadSegmentConfigSO segmentConfig = _roadSelector.GetRandom();
 
         RoadController newRoad = _roadFactory.Get(segmentConfig, _nextSpawnPosition, _parent);
         newRoad.SetDependencies(_train, _gameStateManager);

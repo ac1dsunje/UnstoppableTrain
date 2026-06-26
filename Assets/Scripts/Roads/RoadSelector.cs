@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using Random = UnityEngine.Random;
 
-public static class RoadSelector
+public class RoadSelector
 {
-    private static List<RoadSegmentConfigSO> _configs = new();
-
-    public static void SetConfigs(IEnumerable<RoadSegmentConfigSO> configs)
+    private List<RoadSegmentConfigSO> _configs = new();
+    
+    public RoadSelector(IEnumerable<RoadSegmentConfigSO> configs)
     {
         _configs = new List<RoadSegmentConfigSO>(configs);
     }
 
-    public static RoadSegmentConfigSO GetRandom()
+    public RoadSegmentConfigSO GetRandom()
     {
 
         float totalWeight = 0f;
