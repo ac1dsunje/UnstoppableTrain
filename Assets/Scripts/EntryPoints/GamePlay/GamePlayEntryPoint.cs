@@ -74,7 +74,9 @@ public class GamePlayEntryPoint : MonoBehaviour
             _passengerPoolConfig
         );
 
-        LayingManFactory layingManFactory = new(_manConfig, _layingManPrefab, manDataFactory, _layingManPoolConfig);
+        SkinManagerFactory skinManagerFactory = new();
+
+        LayingManFactory layingManFactory = new(_manConfig, _layingManPrefab, manDataFactory, _layingManPoolConfig, skinManagerFactory);
         EnvironmentFactory environmentFactory = new(_environmentPoolConfig);
         RailFactory railFactory = new(layingManFactory, _railsPoolConfig);
         RoadFactory roadFactory = new(railFactory, environmentFactory, _roadConfig.RoadPrefab, _roadPoolConfig);

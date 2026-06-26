@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public static class SkinManagerFactory
+public class SkinManagerFactory
 {
-    public static ISkinComponent Create(ManSkinConfigSO config, MeshRenderer shape, Transform hatHolder)
+    public ISkinComponent Create(ManSkinConfigSO config, MeshRenderer shape, Transform hatHolder)
     {
         var components = new List<ISkinComponent>();
 

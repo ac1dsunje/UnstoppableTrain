@@ -9,17 +9,20 @@ public class LayingManController : MonoBehaviour
     private ManGeneralConfigSO _config;
     private ManDataFactory _manDataFactory;
     private ISkinComponent _skinManager;
+    private SkinManagerFactory _skinManagerFactory;
 
     public ManData Data { get; private set; }
     public event Action<LayingManController> OnDeath;
 
     public bool IsActive { get; private set; }
 
-    public void Initialize(ManGeneralConfigSO config, ManDataFactory manDataFactory)
+    public void Initialize(ManGeneralConfigSO config, ManDataFactory manDataFactory, SkinManagerFactory skinManagerFactory)
     {
         _config = config;
         _manDataFactory = manDataFactory;
-        _skinManager = SkinManagerFactory.Create(_config.SkinConfig, _shape, HatHolder);
+        _skinManagerFactory = skinManagerFactory;
+
+        _skinManager = _skinManagerFactory.Create(_config.SkinConfig, _shape, HatHolder);
     }
 
     public void SetActiveState()

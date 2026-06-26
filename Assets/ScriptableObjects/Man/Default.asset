@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d29c0b3ccb4d1644f85c712370b0edc5, type: 3}
   m_Name: Default
   m_EditorClassIdentifier: Assembly-CSharp::ManGeneralConfigSO
-  <ManConfig>k__BackingField: {fileID: 11400000, guid: b48a9a8151db89243830065856b77ed6, type: 2}
+  <SoundConfig>k__BackingField: {fileID: 11400000, guid: b48a9a8151db89243830065856b77ed6, type: 2}
   <SkinConfig>k__BackingField: {fileID: 11400000, guid: f9210cedff47c7f4a99e52bf87208b62, type: 2}
