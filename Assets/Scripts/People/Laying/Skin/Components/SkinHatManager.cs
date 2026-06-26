@@ -2,12 +2,12 @@
 
 public class SkinHatManager : ISkinComponent
 {
-    private readonly MeshRenderer _shape;
+    private readonly Transform _hatHolder;
     private readonly ManSkinConfigSO _config;
 
-    public SkinHatManager(MeshRenderer shape, ManSkinConfigSO config)
+    public SkinHatManager(Transform hatHolder, ManSkinConfigSO config)
     {
-        _shape = shape;
+        _hatHolder = hatHolder;
         _config = config;
     }
 
@@ -21,16 +21,15 @@ public class SkinHatManager : ISkinComponent
         switch (role)
         {
             case Role.NoSkill:
-                Debug.Log("Apply NoSkill hat");
                 break;
             case Role.Doctor:
-                Debug.Log("Apply Doctor hat");
-                break;
+                Object.Instantiate(_config.DoctorHatPrefab, _hatHolder);
+        break;
             case Role.Driver:
-                Debug.Log("Apply Driver hat");
+                Object.Instantiate(_config.DriverHatPrefab, _hatHolder);
                 break;
             case Role.Mechanic:
-                Debug.Log("Apply Mechanic hat");
+                Object.Instantiate(_config.MechanicHatPrefab, _hatHolder);
                 break;
         }
     }

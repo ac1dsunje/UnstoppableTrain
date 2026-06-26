@@ -3,7 +3,7 @@ using UnityEngine;
 
 public static class SkinManagerFactory
 {
-    public static ISkinComponent Create(ManSkinConfigSO config, MeshRenderer shape)
+    public static ISkinComponent Create(ManSkinConfigSO config, MeshRenderer shape, Transform hatHolder)
     {
         var components = new List<ISkinComponent>();
 
@@ -14,7 +14,7 @@ public static class SkinManagerFactory
 
         if (config.SkinComponents.HasFlag(SkinComponentType.Hat))
         {
-            components.Add(new SkinHatManager(shape, config));
+            components.Add(new SkinHatManager(hatHolder, config));
         }
 
         if (components.Count == 0)

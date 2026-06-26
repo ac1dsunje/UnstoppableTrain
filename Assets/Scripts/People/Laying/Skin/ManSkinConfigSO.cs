@@ -18,4 +18,8 @@ public class ManSkinConfigSO : ScriptableObject
     [field: SerializeField] public Material PsychopathMat { get; private set; }
     [field: SerializeField] public Material LeaderMat { get; private set; }
     [field: SerializeField] public Material EmpathMat { get; private set; }
+
+    [field: SerializeField] public GameObject DriverHatPrefab { get; private set; }
+    [field: SerializeField] public GameObject DoctorHatPrefab { get; private set; }
+    [field: SerializeField] public GameObject MechanicHatPrefab { get; private set; }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 public class LayingManController : MonoBehaviour
 {
     [SerializeField] private MeshRenderer _shape;
+    [SerializeField] private Transform HatHolder; 
 
     private ManGeneralConfigSO _config;
     private ManDataFactory _manDataFactory;
@@ -18,7 +19,7 @@ public class LayingManController : MonoBehaviour
     {
         _config = config;
         _manDataFactory = manDataFactory;
-        _skinManager = SkinManagerFactory.Create(_config.SkinConfig, _shape);
+        _skinManager = SkinManagerFactory.Create(_config.SkinConfig, _shape, HatHolder);
     }
 
     public void SetActiveState()

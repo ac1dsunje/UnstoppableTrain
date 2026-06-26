@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 405f665fbafa19842a9bc4ea664a0a71, type: 3}
   m_Name: Default
   m_EditorClassIdentifier: Assembly-CSharp::SkinConfigSO
-  <SkinComponents>k__BackingField: 1
+  <SkinComponents>k__BackingField: -1
   <WallflowerMat>k__BackingField: {fileID: 2100000, guid: 133680aeea8bad54f9a5fe1818b513eb, type: 2}
   <PsychopathMat>k__BackingField: {fileID: 2100000, guid: 700471b62e0f20b448a83f0ea00af33a, type: 2}
   <LeaderMat>k__BackingField: {fileID: 2100000, guid: 25c1b0b950664794a8ca695aa95be424, type: 2}
   <EmpathMat>k__BackingField: {fileID: 2100000, guid: 1680de365e3614c47b4bf1064817ada1, type: 2}
+  <DriverHatPrefab>k__BackingField: {fileID: 530067326265777661, guid: a68347ca5ca3d8341aee9cca66781d47, type: 3}
+  <DoctorHatPrefab>k__BackingField: {fileID: 4383771327414738886, guid: 973ea22f463b2e24b9bf9840369ec97a, type: 3}
+  <MechanicHatPrefab>k__BackingField: {fileID: 1568941991326762917, guid: 4de3a56cd58090545aa525e3bfdc15a5, type: 3}
