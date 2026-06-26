@@ -7,13 +7,14 @@ public class RoadController : MonoBehaviour
     private RoadSegmentConfigSO _config;
     private RailFactory _railFactory;
     private EnvironmentFactory _environmentFactory;
-    private readonly float xOffset = 1.5f;
+    private RoadContext _context;
 
     private Transform _railContainer;
     private Transform _environmentContainer;
 
     public event Action<RoadController, bool> OnRoadStateChanged;
-    public RoadType RoadType => _config.RoadType;
+
+    public RoadSegmentConfigSO Config => _config;
     public float RoadLength => _config.RoadLength;
     public bool IsLeftActive { get; private set; }
     public bool IsRightActive { get; private set; }
@@ -25,24 +26,24 @@ public class RoadController : MonoBehaviour
     private GameObject _leftEnvironment;
     private GameObject _rightEnvironment;
 
-    private TrainController _train;
-    private GameStateManager _gameStateManager;
-
     public RoadController Initialize(
         RailFactory railFactory,
         EnvironmentFactory environmentFactory,
-        RoadSegmentConfigSO segmentConfig)
+        RoadSegmentConfigSO segmentConfig,
+        TrainController train,
+        GameStateManager gameStateManager)
     {
         _railFactory = railFactory;
         _environmentFactory = environmentFactory;
         _config = segmentConfig;
+        _context = new RoadContext(this, train, gameStateManager);
 
         return this;
     }
 
     public void SetContainers()
     {
-        _railContainer = new GameObject("RailsContainter").transform;
+        _railContainer = new GameObject("RailsContainer").transform;
         _railContainer.SetParent(transform);
         _environmentContainer = new GameObject("EnvironmentsContainer").transform;
         _environmentContainer.SetParent(transform);
@@ -58,19 +59,15 @@ public class RoadController : MonoBehaviour
         CreateEnvironments();
 
         SubscribeToRailEvents();
-        InitializeRoad();
-    }
 
-    public void SetDependencies(TrainController train, GameStateManager gameStateManager)
-    {
-        _train = train;
-        _gameStateManager = gameStateManager;
+        _config.OnSetup(_context);
     }
 
     private void CreateRails()
     {
-        LeftRail = CreateRail(-xOffset);
-        RightRail = CreateRail(xOffset);
+        float offset = _config.RailXOffset;
+        LeftRail = CreateRail(-offset);
+        RightRail = CreateRail(offset);
     }
 
     private RailController CreateRail(float xOff)
@@ -84,8 +81,9 @@ public class RoadController : MonoBehaviour
 
     private void CreateEnvironments()
     {
-        _leftEnvironment = CreateEnvironment(-xOffset, true);
-        _rightEnvironment = CreateEnvironment(xOffset, false);
+        float envOffset = _config.RailXOffset * _config.EnvironmentXMultiplier;
+        _leftEnvironment = CreateEnvironment(-envOffset, true);
+        _rightEnvironment = CreateEnvironment(envOffset, false);
     }
 
     private GameObject CreateEnvironment(float xOff, bool xFlip)
@@ -100,7 +98,7 @@ public class RoadController : MonoBehaviour
 
         return _environmentFactory.Get(
             prefab,
-            new Vector3(transform.position.x + 3 * xOff, transform.position.y, transform.position.z),
+            new Vector3(transform.position.x + xOff, transform.position.y, transform.position.z),
             _environmentContainer,
             scale
         );
@@ -132,11 +130,11 @@ public class RoadController : MonoBehaviour
 
     private void ReleaseAll()
     {
-        _railFactory.Release(LeftRail);
-        _railFactory.Release(RightRail);
+        if (LeftRail != null) _railFactory.Release(LeftRail);
+        if (RightRail != null) _railFactory.Release(RightRail);
 
-        _environmentFactory.Release(_leftEnvironment);
-        _environmentFactory.Release(_rightEnvironment);
+        if (_leftEnvironment != null) _environmentFactory.Release(_leftEnvironment);
+        if (_rightEnvironment != null) _environmentFactory.Release(_rightEnvironment);
     }
 
     private void OnLeftRailStateChanged(bool state) { IsLeftActive = state; UpdateRoadState(); }
@@ -165,69 +163,14 @@ public class RoadController : MonoBehaviour
         foreach (var man in RightRail.LayingMen) man.SetActiveState();
     }
 
-    private void InitializeRoad()
-    {
-        switch (_config.RoadType)
-        {
-            case RoadType.Choosing:
-                SpawnLayingMen();
-                break;
-            case RoadType.Moving:
-            case RoadType.Station:
-                break;
-        }
-    }
-
     private void OnRoadActivated()
     {
-        switch (_config.RoadType)
-        {
-            case RoadType.Moving:
-                if (_gameStateManager.TryEnterEventState())
-                {
-                    MediaEvents.TriggerEvent(transform.position, _config.OnEnterSound);
-                }
-                break;
-
-            case RoadType.Choosing:
-                _gameStateManager.EnterIn<ChoosingState>();
-                MediaEvents.TriggerEvent(transform.position, _config.OnEnterSound);
-                break;
-
-            case RoadType.Station:
-                if (_gameStateManager.TryEnterStationEvent())
-                {
-                    MediaEvents.TriggerEvent(transform.position, _config.OnEnterSound);
-                }
-                break;
-        }
+        _config.OnActivated(_context);
     }
 
     private void OnRailCleared(RailController clearedRail, RailController remainingRail)
     {
-        switch (_config.RoadType)
-        {
-            case RoadType.Choosing:
-                foreach (var passenger in remainingRail.LayingMen)
-                {
-                    _train.TryTakeNewPassenger(passenger.Data);
-                }
-                remainingRail.ClearLayingMen();
-                break;
-
-            case RoadType.Moving:
-            case RoadType.Station:
-                break;
-        }
-    }
-
-    private void SpawnLayingMen()
-    {
-        int randLeft = Random.Range(1, _config.MaxMenOnTheRail + 1);
-        LeftRail.SpawnManyLayingMen(randLeft);
-
-        int randRight = Random.Range(1, _config.MaxMenOnTheRail + 1);
-        RightRail.SpawnManyLayingMen(randRight);
+        _config.OnRailCleared(_context, clearedRail, remainingRail);
     }
 
     private void OnLeftRailCleared() => OnRailCleared(LeftRail, RightRail);

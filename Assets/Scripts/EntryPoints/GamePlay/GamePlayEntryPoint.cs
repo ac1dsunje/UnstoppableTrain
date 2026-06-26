@@ -94,7 +94,7 @@ public class GamePlayEntryPoint : MonoBehaviour
 
         _train.GetComponent<TrainMovement>().Initialize(_gameStateManager);
 
-        var roadSelector = new RoadSelector(_roadConfig.SegmentConfigs);
+        RoadSelector roadSelector = new(_roadConfig.SegmentConfigs);
 
         var roadsParent = new GameObject("Roads").transform;
         _roadManager = new(_roadConfig, roadsParent, roadFactory, roadSelector, _gameStateManager, _train);

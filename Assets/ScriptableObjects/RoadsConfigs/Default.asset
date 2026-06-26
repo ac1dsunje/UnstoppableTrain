@@ -14,10 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoadsConfigSO
   <MaxRoads>k__BackingField: 7
   <RoadPrefab>k__BackingField: {fileID: 3058819273101387152, guid: fd9b1700837b19a45964cef707393612, type: 3}
-  <PoolConfig>k__BackingField:
-    <DefaultCapacity>k__BackingField: 10
-    <MaxSize>k__BackingField: 10
   <SegmentConfigs>k__BackingField:
-  - {fileID: 11400000, guid: b0308dacf13f1d64e89158c83e176556, type: 2}
-  - {fileID: 11400000, guid: 13907809f5d6a3f42810d6f1d5f69902, type: 2}
-  - {fileID: 11400000, guid: 87f30bcba177ae3419da3c8b42011d38, type: 2}
+  - {fileID: 11400000, guid: 28ba87ada5bd3034ca041072e2b44cc6, type: 2}
+  - {fileID: 11400000, guid: ac18f96dac1fae748ad33a2a4c4340d0, type: 2}
+  - {fileID: 11400000, guid: e152bef23fb1c6f4280843315946d2df, type: 2}

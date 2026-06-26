@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "Environment Atlas", menuName = "Environment/Environment atlas")]
 
-public class EnvironmentAtlas : ScriptableObject
+public class EnvironmentAtlasSO : ScriptableObject
 {
     public List<GameObject> EnvironmentObjects;
 }

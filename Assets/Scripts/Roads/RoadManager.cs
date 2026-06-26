@@ -8,9 +8,8 @@ public class RoadManager : IDisposable
     private readonly Transform _parent;
     private readonly RoadFactory _roadFactory;
     private readonly RoadSelector _roadSelector;
-
-    private GameStateManager _gameStateManager;
-    private TrainController _train;
+    private readonly GameStateManager _gameStateManager;
+    private readonly TrainController _train;
 
     private List<RoadController> _roads = new();
     private Vector3 _nextSpawnPosition = Vector3.zero;
@@ -45,8 +44,13 @@ public class RoadManager : IDisposable
     {
         RoadSegmentConfigSO segmentConfig = _roadSelector.GetRandom();
 
-        RoadController newRoad = _roadFactory.Get(segmentConfig, _nextSpawnPosition, _parent);
-        newRoad.SetDependencies(_train, _gameStateManager);
+        RoadController newRoad = _roadFactory.Get(
+            segmentConfig,
+            _nextSpawnPosition,
+            _parent,
+            _train,
+            _gameStateManager
+        );
 
         _roads.Add(newRoad);
         newRoad.OnRoadStateChanged += OnRoadStateChanged;
@@ -78,7 +82,7 @@ public class RoadManager : IDisposable
     {
         foreach (var road in _roads)
         {
-            road.OnRoadStateChanged -= OnRoadStateChanged; 
+            road.OnRoadStateChanged -= OnRoadStateChanged;
             _roadFactory.Release(road);
         }
         _roads.Clear();
