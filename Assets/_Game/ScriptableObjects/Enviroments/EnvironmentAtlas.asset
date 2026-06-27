@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TreeSO
   EnvironmentObjects:
   - {fileID: 7920926727020237154, guid: 8504e3bb088b8914e8f227a4781875d2, type: 3}
+  - {fileID: 7920926727020237154, guid: 6c131b10335490b4fb9a0b32c8eb6409, type: 3}
+  - {fileID: 7920926727020237154, guid: 0534278663b0c4d4294ace1a77c2832d, type: 3}
+  - {fileID: 7920926727020237154, guid: 524213bed7adb1343b50a85af331441f, type: 3}
