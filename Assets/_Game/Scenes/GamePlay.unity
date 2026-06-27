@@ -539,6 +539,7 @@ MonoBehaviour:
   _mainOverlayPrefab: {fileID: 5053848884766511079, guid: e7e5c401529295e43bdb0fb9a9e6de08, type: 3}
   _eventOverlayPrefab: {fileID: 875320095802246290, guid: 7063153bfe396b044b29441ec5786ac7, type: 3}
   _endOverlayPrefab: {fileID: 5524983846275265461, guid: 1ca3d48b53884e1449d8cb27a4fd04e9, type: 3}
+  _choosingOverlayPrefab: {fileID: 3562226070952285786, guid: f0a77a29dc6b7c14c80286b4a1e0fb48, type: 3}
   _canvas: {fileID: 511945416}
   _sfxPrefab: {fileID: 2632590778216675516, guid: 2aa4273f2d8f149409ccafc7177f7313, type: 3}
   difficulty: {fileID: 11400000, guid: 40c9d19b76b501645844106ae1ad4e7c, type: 2}

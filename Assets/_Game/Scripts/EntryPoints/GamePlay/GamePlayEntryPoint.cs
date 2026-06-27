@@ -21,6 +21,7 @@ public class GamePlayEntryPoint : MonoBehaviour
     [SerializeField] private MainOverlayManager _mainOverlayPrefab;
     [SerializeField] private EventOverlayManager _eventOverlayPrefab;
     [SerializeField] private EndOverlayManager _endOverlayPrefab;
+    [SerializeField] private ChoosingOverlayManager _choosingOverlayPrefab;
 
     [SerializeField] private Canvas _canvas;
 
@@ -121,7 +122,9 @@ public class GamePlayEntryPoint : MonoBehaviour
 
         var endOverlay = Object.Instantiate(_endOverlayPrefab, _canvas.transform);
 
-        _uiManager = new UIManager(_gameStateManager, mainOverlay, eventOverlay, endOverlay);
+        var choosingOverlay = Object.Instantiate(_choosingOverlayPrefab, _canvas.transform);
+
+        _uiManager = new UIManager(_gameStateManager, mainOverlay, eventOverlay, endOverlay, choosingOverlay);
     }
 
     private void Start()

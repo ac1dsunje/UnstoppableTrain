@@ -5,18 +5,21 @@ public class UIManager : IDisposable
     private readonly MainOverlayManager _mainOverlay;
     private readonly EventOverlayManager _eventOverlay;
     private readonly EndOverlayManager _endOverlay;
+    private readonly ChoosingOverlayManager _choosingOverlay;
     private readonly GameStateManager _gameStateManager;
 
     public UIManager(
         GameStateManager gameStateManager,
         MainOverlayManager mainOverlay,
         EventOverlayManager eventOverlay,
-        EndOverlayManager endOverlay)
+        EndOverlayManager endOverlay,
+        ChoosingOverlayManager choosingOverlay)
     {
         _gameStateManager = gameStateManager;
         _mainOverlay = mainOverlay;
         _eventOverlay = eventOverlay;
         _endOverlay = endOverlay;
+        _choosingOverlay = choosingOverlay;
 
         _gameStateManager.OnStateChanged += OnStateChanged;
 
@@ -28,9 +31,15 @@ public class UIManager : IDisposable
         _mainOverlay.HideScreen();
         _eventOverlay.HideScreen();
         _endOverlay.HideScreen();
+        _choosingOverlay.HideScreen();
 
-        if (stateType == typeof(MovingState) || stateType == typeof(ChoosingState))
+        if (stateType == typeof(MovingState))
             _mainOverlay.ShowScreen();
+        else if (stateType == typeof(ChoosingState))
+        {
+            _choosingOverlay.ShowScreen();
+            _mainOverlay.ShowScreen();
+        }
         else if (stateType == typeof(EventState))
             _eventOverlay.ShowScreen();
         else if (stateType == typeof(EndState))
