@@ -16,8 +16,7 @@ MonoBehaviour:
   <Weight>k__BackingField: 15
   <OnEnterSound>k__BackingField:
     <Clips>k__BackingField:
-    - {fileID: 8300000, guid: b895d039e3356a14dabda17839e2f674, type: 3}
-    - {fileID: 8300000, guid: c2d3d8a6f96b24148973718cd862d8bd, type: 3}
+    - {fileID: 8300000, guid: ae49f6e4676812240a8dbddadafcda7b, type: 3}
     <Volume>k__BackingField: 0.35
     <MinPitch>k__BackingField: 0.9
     <MaxPitch>k__BackingField: 1.1
