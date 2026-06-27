@@ -83,17 +83,18 @@ public class RoadController : MonoBehaviour
     private void CreateEnvironments()
     {
         float envOffset = _config.RailXOffset * _config.EnvironmentXMultiplier;
-        _leftEnvironment = CreateEnvironment(-envOffset, true);
-        _rightEnvironment = CreateEnvironment(envOffset, false);
+
+        int rand = Random.Range(0, _config.EnvironmentAtlas.EnvironmentObjects.Count); 
+        var prefab = _config.EnvironmentAtlas.EnvironmentObjects[rand];
+
+        _leftEnvironment = CreateEnvironment(-envOffset, true, prefab);
+        _rightEnvironment = CreateEnvironment(envOffset, false, prefab);
     }
 
-    private GameObject CreateEnvironment(float xOff, bool xFlip)
+    private GameObject CreateEnvironment(float xOff, bool xFlip, GameObject prefab)
     {
         if (_config.EnvironmentAtlas == null || _config.EnvironmentAtlas.EnvironmentObjects.Count == 0)
             return null;
-
-        int rand = Random.Range(0, _config.EnvironmentAtlas.EnvironmentObjects.Count);
-        var prefab = _config.EnvironmentAtlas.EnvironmentObjects[rand];
 
         Vector3 scale = xFlip ? new Vector3(-1, 1, 1) : Vector3.one;
 
