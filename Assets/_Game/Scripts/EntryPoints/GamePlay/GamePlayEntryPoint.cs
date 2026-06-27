@@ -27,6 +27,7 @@ public class GamePlayEntryPoint : MonoBehaviour
 
     [Header("Sound")]
     [SerializeField] private GameObject _sfxPrefab;
+    [SerializeField] private GameObject _trainSoundPrefab;
 
     [Header("Difficulty")]
     [SerializeField] private DifficultySO difficulty;
@@ -89,15 +90,14 @@ public class GamePlayEntryPoint : MonoBehaviour
         RailFactory railFactory = new(layingManFactory, _railsPoolConfig);
         RoadFactory roadFactory = new(railFactory, environmentFactory, _roadConfig.RoadPrefab, _roadPoolConfig, mediaEventsBus);
 
-        var sfxParent = new GameObject("Sounds").transform;
-        SoundFactory soundFactory = new(_sfxPrefab, _soundPoolConfig, sfxParent);
-        _soundFXManager = new SFXManager(soundFactory, _coroutineRunner, mediaEventsBus);
-
         _train = SpawnTrain();
+
+        GameObject trainSound = Object.Instantiate(_trainSoundPrefab, _train.transform);
+        var trainSoundSource = trainSound.GetComponent<AudioSource>();
 
         _movementStrategy = new StandardMovementStrategy(switchRailsSpeed: 5f);
 
-        _train.Initialize(passengerFactory, _trainData, _movementStrategy);
+        _train.Initialize(passengerFactory, _trainData, _movementStrategy, trainSoundSource);
 
         _cam.Initialize(_train.transform, _cameraConfig);
 
@@ -123,6 +123,10 @@ public class GamePlayEntryPoint : MonoBehaviour
         var endOverlay = Object.Instantiate(_endOverlayPrefab, _canvas.transform);
 
         var choosingOverlay = Object.Instantiate(_choosingOverlayPrefab, _canvas.transform);
+
+        var sfxParent = new GameObject("Sounds").transform;
+        SoundFactory soundFactory = new(_sfxPrefab, _soundPoolConfig, sfxParent);
+        _soundFXManager = new SFXManager(soundFactory, _coroutineRunner, mediaEventsBus);
 
         _uiManager = new UIManager(_gameStateManager, mainOverlay, eventOverlay, endOverlay, choosingOverlay);
     }

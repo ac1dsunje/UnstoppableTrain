@@ -15,15 +15,17 @@ public class TrainController : MonoBehaviour, ITrainDataProvider
     private RoadController _currentRoad;
     private float _speedScale = 1f;
     private PassengerFactory _passengerFactory;
+    private AudioSource _trainMovingSound;
 
     public event Action<TrainStats> OnStatsUpdated;
     public event Action OnStationPassed;
     public event Action OnAllDriversLeft;
-    public TrainController Initialize(PassengerFactory passengerFactory, TrainDataSO data, ITrainMovementStrategy movementStrategy)
+    public TrainController Initialize(PassengerFactory passengerFactory, TrainDataSO data, ITrainMovementStrategy movementStrategy, AudioSource trainMovingSound)
     {
         _data = data;
         _passengerFactory = passengerFactory;
         _movementStrategy = movementStrategy;
+        _trainMovingSound = trainMovingSound;
 
         _movementStrategy.Initialize(transform, GetComponent<Rigidbody>(), this);
 
@@ -64,8 +66,16 @@ public class TrainController : MonoBehaviour, ITrainDataProvider
     public RoadController GetCurrentRoad() => _currentRoad;
     public float GetSpeed() => _data.MoveSpeed * _speedScale;
 
-    public void Stop() => _speedScale = 0f;
-    public void Resume() => _speedScale = 1f;
+    public void Stop() 
+    {
+        _speedScale = 0f;
+        _trainMovingSound?.Stop();
+    }
+    public void Resume()
+    {
+        _speedScale = 1f;
+        _trainMovingSound?.Play();
+    }
 
     public List<PassengerController> GetPassengers() => _stats.Passengers;
 
