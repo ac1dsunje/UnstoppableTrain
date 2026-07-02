@@ -49,12 +49,13 @@ public class GamePlayEntryPoint : MonoBehaviour
     [SerializeField] private PoolConfig _soundPoolConfig;
 
     private GameStateManager _gameStateManager;
+    private TrainView _trainView;
     private TrainController _train;
-    private ITrainMovementStrategy _movementStrategy;
     private GameEventsManager _eventsManager;
     private RoadManager _roadManager;
     private SFXManager _soundFXManager;
     private UIManager _uiManager;
+    private PassengerFactory _passengerFactory;
 
     private void Awake()
     {
@@ -72,7 +73,7 @@ public class GamePlayEntryPoint : MonoBehaviour
 
         TraitBehaviourFactory traitBehaviourFactory = new(difficulty.traitsConfig);
 
-        PassengerFactory passengerFactory = new(
+        _passengerFactory = new(
             _passengerPrefab,
             manDataFactory,
             traitBehaviourFactory,
@@ -90,22 +91,13 @@ public class GamePlayEntryPoint : MonoBehaviour
         RailFactory railFactory = new(layingManFactory, _railsPoolConfig);
         RoadFactory roadFactory = new(railFactory, environmentFactory, _roadConfig.RoadPrefab, _roadPoolConfig, mediaEventsBus);
 
-        _train = SpawnTrain();
+        SpawnTrain();
 
-        GameObject trainSound = Object.Instantiate(_trainSoundPrefab, _train.transform);
-        var trainSoundSource = trainSound.GetComponent<AudioSource>();
-
-        _movementStrategy = new StandardMovementStrategy(switchRailsSpeed: 5f);
-
-        _train.Initialize(passengerFactory, _trainData, _movementStrategy, trainSoundSource);
-
-        _cam.Initialize(_train.transform, _cameraConfig);
+        _cam.Initialize(_trainView.transform, _cameraConfig);
 
         _eventsManager = new(_coroutineRunner, _train, _messageDelay);
 
         _gameStateManager = BuildGameStateManager(_train);
-
-        _movementStrategy.BindInput(_gameStateManager);
 
         RoadSelector roadSelector = new(_roadConfig.SegmentConfigs);
 
@@ -114,15 +106,15 @@ public class GamePlayEntryPoint : MonoBehaviour
 
         PassengerInfoSlotUIFactory passengerInfoSlotUIFactory = new(_passengerInfoSlotUIPrefab, _passengerPoolConfig);
 
-        var mainOverlay = Object.Instantiate(_mainOverlayPrefab, _canvas.transform)
+        var mainOverlay = Instantiate(_mainOverlayPrefab, _canvas.transform)
             .Initialize(_train, passengerInfoSlotUIFactory);
 
-        var eventOverlay = Object.Instantiate(_eventOverlayPrefab, _canvas.transform)
+        var eventOverlay = Instantiate(_eventOverlayPrefab, _canvas.transform)
             .Initialize(_gameStateManager, _eventsManager);
 
-        var endOverlay = Object.Instantiate(_endOverlayPrefab, _canvas.transform);
+        var endOverlay = Instantiate(_endOverlayPrefab, _canvas.transform);
 
-        var choosingOverlay = Object.Instantiate(_choosingOverlayPrefab, _canvas.transform);
+        var choosingOverlay = Instantiate(_choosingOverlayPrefab, _canvas.transform);
 
         var sfxParent = new GameObject("Sounds").transform;
         SoundFactory soundFactory = new(_sfxPrefab, _soundPoolConfig, sfxParent);
@@ -148,8 +140,6 @@ public class GamePlayEntryPoint : MonoBehaviour
         _input.OnLeft -= _gameStateManager.TryMoveLeft;
         _input.OnRight -= _gameStateManager.TryMoveRight;
         _input.OnRestart -= TryRestart;
-
-        _movementStrategy?.UnbindInput();
     }
 
     private void TryRestart()
@@ -163,10 +153,20 @@ public class GamePlayEntryPoint : MonoBehaviour
         StartCoroutine(SceneLoader.RestartGameAsync());
     }
 
-    private TrainController SpawnTrain()
+    private void SpawnTrain()
     {
-        return Instantiate(_trainPrefab, TrainSpawnPosition, Quaternion.identity)
-            .GetComponent<TrainController>();
+        _trainView = Instantiate(_trainPrefab, TrainSpawnPosition, Quaternion.identity)
+            .GetComponent<TrainView>().Initialize(5f);
+
+        var passengersContainer = new GameObject("PassengerContainer").transform;
+        passengersContainer.SetParent(_trainView.transform);
+
+        GameObject trainSound = Instantiate(_trainSoundPrefab, _trainView.transform);
+        var trainSoundSource = trainSound.GetComponent<AudioSource>();
+
+        TrainModel model = new(_trainData);
+
+        _train = new TrainController(_passengerFactory, model, _trainView, trainSoundSource, passengersContainer);
     }
 
     private GameStateManager BuildGameStateManager(TrainController train)

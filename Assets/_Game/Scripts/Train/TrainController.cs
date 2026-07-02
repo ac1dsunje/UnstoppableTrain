@@ -3,87 +3,70 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class TrainController : MonoBehaviour, ITrainDataProvider
+public class TrainController
 {
-    private Transform _passengersContainer;
-    private ITrainMovementStrategy _movementStrategy;
-
-    private TrainDataSO _data;
-    private TrainStats _stats = new();
-    public TrainStats GetStats => _stats;
-
-    private RoadController _currentRoad;
-    private float _speedScale = 1f;
-    private PassengerFactory _passengerFactory;
-    private AudioSource _trainMovingSound;
+    private readonly Transform _passengersContainer;
+    private readonly ITrainView _view;
+    private readonly TrainModel _model;
+    private readonly PassengerFactory _passengerFactory;
+    private readonly AudioSource _trainMovingSound;
 
     public event Action<TrainStats> OnStatsUpdated;
     public event Action OnStationPassed;
     public event Action OnAllDriversLeft;
-    public TrainController Initialize(PassengerFactory passengerFactory, TrainDataSO data, ITrainMovementStrategy movementStrategy, AudioSource trainMovingSound)
+    public TrainController(PassengerFactory passengerFactory, TrainModel model, ITrainView view, AudioSource trainMovingSound, Transform passengersContainer)
     {
-        _data = data;
         _passengerFactory = passengerFactory;
-        _movementStrategy = movementStrategy;
+        _model = model;
+        _view = view;
         _trainMovingSound = trainMovingSound;
-
-        _movementStrategy.Initialize(transform, GetComponent<Rigidbody>(), this);
-
-        CreatePassengersContainer();
+        _passengersContainer = passengersContainer;
         SpawnInitialTeam();
-
-        return this;
-    }
-
-    private void Update()
-    {
-        _movementStrategy?.Tick(Time.deltaTime);
-    }
-
-    private void FixedUpdate()
-    {
-        _movementStrategy?.FixedTick(Time.fixedDeltaTime);
-    }
-
-    private void CreatePassengersContainer()
-    {
-        _passengersContainer = new GameObject("PassengerContainer").transform;
-        _passengersContainer.SetParent(transform);
     }
 
     public void SetCurrentRoad(RoadController currentRoad)
     {
-        _currentRoad = currentRoad;
+        _model.CurrentRoad = currentRoad;
 
         if (currentRoad.Config.IsStation)
         {
-            _stats.stationsPassed++;
+            _model.Stats.stationsPassed++;
             OnStationPassed?.Invoke();
-            OnStatsUpdated?.Invoke(_stats);
+            OnStatsUpdated?.Invoke(_model.Stats);
         }
     }
 
-    public RoadController GetCurrentRoad() => _currentRoad;
-    public float GetSpeed() => _data.MoveSpeed * _speedScale;
-
     public void Stop() 
     {
-        _speedScale = 0f;
-        _trainMovingSound?.Stop();
+        _view.SetSpeed(0f * _model.MoveSpeed);
+        _trainMovingSound.Stop();
     }
     public void Resume()
     {
-        _speedScale = 1f;
-        _trainMovingSound?.Play();
+        _view.SetSpeed(1f * _model.MoveSpeed);
+        _trainMovingSound.Play();
     }
 
-    public List<PassengerController> GetPassengers() => _stats.Passengers;
+    public void MoveLeft()
+    {
+        var currentRoad = _model.CurrentRoad;
+        if (currentRoad == null || currentRoad.IsLeftActive) return;
+        _view.Move(currentRoad.LeftRail.transform);
+    }
 
-    private int GetMaxCapacity() => _data.MaxAmount;
+    public void MoveRight()
+    {
+        var currentRoad = _model.CurrentRoad;
+        if (currentRoad == null || currentRoad.IsRightActive) return;
+        _view.Move(currentRoad.RightRail.transform);
+    }
+
+    public List<PassengerController> GetPassengers() => _model.Stats.Passengers;
+    public TrainStats GetStats() => _model.Stats;
 
     public void TryTakeNewPassenger(ManData data)
     {
-        if (_stats.Passengers.Count >= GetMaxCapacity()) return;
+        if (_model.Stats.Passengers.Count >= _model.MaxAmount) return;
 
         PassengerController passenger = _passengerFactory.Get(this, data, _passengersContainer);
         AddPassengerToStats(passenger);
@@ -91,17 +74,17 @@ public class TrainController : MonoBehaviour, ITrainDataProvider
 
     public void GetPassengerOut(PassengerController passenger)
     {
-        _stats.Passengers.Remove(passenger);
+        _model.Stats.Passengers.Remove(passenger);
         _passengerFactory.Release(passenger);
 
         if (passenger.GetData.role == Role.Driver &&
-            !_stats.Passengers.Any(p => p.GetData.role == Role.Driver))
+            !_model.Stats.Passengers.Any(p => p.GetData.role == Role.Driver))
         {
             OnAllDriversLeft?.Invoke();
             return;
         }
 
-        OnStatsUpdated?.Invoke(_stats);
+        OnStatsUpdated?.Invoke(_model.Stats);
     }
 
     private void SpawnInitialTeam()
@@ -118,7 +101,7 @@ public class TrainController : MonoBehaviour, ITrainDataProvider
 
     private void AddPassengerToStats(PassengerController passenger)
     {
-        _stats.Passengers.Add(passenger);
-        OnStatsUpdated?.Invoke(_stats);
+        _model.Stats.Passengers.Add(passenger);
+        OnStatsUpdated?.Invoke(_model.Stats);
     }
 }

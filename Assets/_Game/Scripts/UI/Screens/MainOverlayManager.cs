@@ -26,7 +26,7 @@ public class MainOverlayManager : ScreenManager
 
         _passengerInfoSlotUIFactory = passengerInfoSlotUIFactory;
 
-        UpdateStats(_train.GetStats);
+        UpdateStats(_train.GetStats());
         return this;
     }
 

@@ -10,8 +10,6 @@ public class GameStateManager: IDisposable
     private IGameState _currentState;
     private bool _isEnd;
 
-    public event Action OnMoveLeft;
-    public event Action OnMoveRight;
     public event Action<Type> OnStateChanged;
 
     public GameStateManager(GameEventsManager eventsManager, TrainController train)
@@ -77,14 +75,14 @@ public class GameStateManager: IDisposable
     public void TryMoveLeft()
     {
         if (!IsInState<ChoosingState>()) return;
-        OnMoveLeft?.Invoke();
+        _train.MoveLeft();
         EnterIn<MovingState>();
     }
 
     public void TryMoveRight()
     {
         if (!IsInState<ChoosingState>()) return;
-        OnMoveRight?.Invoke();
+        _train.MoveRight();
         EnterIn<MovingState>();
     }
 
